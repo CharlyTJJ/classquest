@@ -170,7 +170,7 @@ button.tile:active { transform: translateY(0) scale(.99); }
   radial-gradient(circle at 15% 20%, #E8E1FF 0, transparent 40%),
   radial-gradient(circle at 85% 80%, #DDF5EF 0, transparent 40%), var(--bg); }
 .login-card { width: min(100%, 460px); background: var(--surface); border-radius: 30px; box-shadow: var(--shadow-lg); padding: clamp(24px, 5vw, 40px); animation: rise .5s var(--ease) both; }
-.login-card .hero { width: 120px; height: 120px; margin: -4px auto 8px; }
+.login-card .hero-img { width: 120px; height: 120px; margin: -4px auto 8px; }
 .login-card h1 { text-align: center; font-size: clamp(28px, 6vw, 36px); }
 .login-card .lead { text-align: center; color: var(--ink-2); margin: 8px 0 24px; }
 .field { display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px; }
@@ -359,6 +359,201 @@ button.tile:active { transform: translateY(0) scale(.99); }
 .team.turn { border-color: var(--accent); transform: scale(1.06); }
 .team .pts { min-width: 44px; height: 44px; border-radius: 999px; display: grid; place-items: center; color: #fff; font-size: 22px; padding: 0 10px; }
 .team .adj { width: 36px; height: 36px; border-radius: 50%; border: 0; background: #F1F2F8; font-weight: 700; font-size: 20px; }
+
+/* ==========================================================================
+   TEMA v2 — más contraste entre fondo y cajas, colores por sección,
+   perfil, tienda y avisos.
+   ========================================================================== */
+:root {
+  --bg: #E9ECFA;
+  --line: #DCE0F2;
+  --card-line: #DFE3F4;
+  --card-shadow: 0 5px 0 #D3D9EE, 0 14px 28px rgba(35, 38, 74, .08);
+  --card-shadow-hover: 0 8px 0 #CBD2EB, 0 20px 36px rgba(35, 38, 74, .12);
+}
+body {
+  background:
+    radial-gradient(circle at 0% 0%, rgba(167, 139, 250, .22) 0, transparent 34%),
+    radial-gradient(circle at 100% 100%, rgba(45, 212, 191, .18) 0, transparent 36%),
+    radial-gradient(circle at 100% 0%, rgba(251, 191, 36, .14) 0, transparent 28%),
+    var(--bg);
+  background-attachment: fixed;
+}
+.topbar { background: rgba(255, 255, 255, .92); border-bottom: 2px solid var(--card-line); box-shadow: 0 2px 10px rgba(35, 38, 74, .05); }
+.card, .tile, .stat, .medal, .shop-item, .results.card {
+  border: 2px solid var(--card-line);
+  box-shadow: var(--card-shadow);
+}
+button.tile:hover { box-shadow: var(--card-shadow-hover); transform: translateY(-3px); }
+button.tile:active { box-shadow: 0 2px 0 #D3D9EE; transform: translateY(3px); }
+.btn-ghost, .back-btn, .icon-btn, .chip-user { border: 2px solid var(--card-line); box-shadow: 0 3px 0 #D3D9EE; }
+.icon-btn.on { border-color: var(--brand); }
+.star-inline { display: inline-flex; width: 1.1em; height: 1.1em; vertical-align: -0.15em; }
+.star-inline svg { width: 100%; height: 100%; }
+.stars svg { width: 22px; height: 22px; }
+.stars.lg svg { width: 54px; height: 54px; }
+.stars-count { display: inline-flex; align-items: center; gap: 5px; font-weight: 700; }
+.small { font-size: 14px; }
+.btn-good { background: #16A34A; box-shadow: 0 4px 0 #0F7A37; }
+.btn-bad { background: #E5484D; box-shadow: 0 4px 0 #B4262B; }
+.btn-white { background: #fff; color: var(--brand); box-shadow: 0 4px 0 rgba(0, 0, 0, .15); }
+.btn-buy { background: linear-gradient(135deg, #FBBF24, #F59E0B); color: #4A2A00; box-shadow: 0 4px 0 #C27803; }
+.btn-sm { min-height: 44px; padding: 0 18px; font-size: 17px; }
+.btn-buy .star-on { color: #fff; filter: drop-shadow(0 1px 0 rgba(0, 0, 0, .25)); }
+.btn-buy .star-inline { width: 20px; height: 20px; }
+.link-btn { border: 0; background: none; color: var(--brand); font-weight: 700; text-decoration: underline; padding: 4px; }
+.form-msg.info { color: var(--ink-2); }
+
+/* cabecera de color (hero) */
+.hero {
+  position: relative; overflow: hidden; display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  border-radius: 28px; padding: 26px 28px; margin-bottom: 8px; color: #fff;
+  background: linear-gradient(135deg, #7C5CFC, #5236C9);
+  box-shadow: 0 6px 0 rgba(35, 38, 74, .18), 0 18px 34px rgba(35, 38, 74, .12);
+  animation: rise .45s var(--ease) both;
+}
+.hero .grow { flex: 1; min-width: 200px; position: relative; z-index: 1; }
+.hero h1 { color: #fff; font-size: clamp(30px, 4vw, 42px); text-shadow: 0 2px 0 rgba(0, 0, 0, .12); }
+.hero .sub { color: rgba(255, 255, 255, .92); font-size: 18px; margin-top: 4px; }
+.hero-kicker { font-weight: 700; text-transform: uppercase; letter-spacing: .06em; font-size: 14px; opacity: .9; }
+.hero-art { position: absolute; right: -16px; bottom: -26px; width: 160px; height: 160px; opacity: .22; pointer-events: none; }
+.hero .back-btn { background: rgba(255, 255, 255, .2); color: #fff; border-color: rgba(255, 255, 255, .35); box-shadow: none; position: relative; z-index: 1; }
+.hero .btn, .hero .balance-pill { position: relative; z-index: 1; }
+.hero-home { background: linear-gradient(135deg, #7C5CFC, #4F46E5); }
+.hero-progress { background: linear-gradient(135deg, #10B981, #0F766E); }
+.hero-shop { background: linear-gradient(135deg, #F472B6, #F59E0B); }
+.hero-shop .hero-art { opacity: .35; }
+
+/* colores de las secciones */
+.sec-vocabulary { --c1: #38BDF8; --c2: #0369A1; --tint: #E0F2FE; --ink-sec: #075985; }
+.sec-grammar { --c1: #A78BFA; --c2: #6D28D9; --tint: #EDE9FE; --ink-sec: #5B21B6; }
+.sec-challenge { --c1: #FBBF24; --c2: #C2410C; --tint: #FEF3C7; --ink-sec: #92400E; }
+.hero.sec-vocabulary, .hero.sec-grammar, .hero.sec-challenge { background: linear-gradient(135deg, var(--c1), var(--c2)); }
+
+/* cabecera de unidad */
+.unit-head { display: flex; align-items: center; gap: 14px; margin: 28px 0 14px; flex-wrap: wrap; }
+.unit-head h2 { font-size: clamp(24px, 3vw, 30px); flex: 1; min-width: 200px; }
+.unit-art { width: 58px; height: 58px; border-radius: 16px; background: #fff; border: 2px solid var(--card-line); padding: 6px; box-shadow: 0 3px 0 #D3D9EE; }
+.unit-meta { display: flex; align-items: center; gap: 12px; background: #fff; border: 2px solid var(--card-line); border-radius: 999px; padding: 8px 16px; font-weight: 600; box-shadow: 0 3px 0 #D3D9EE; }
+.unit-meta .bar { width: 120px; flex: none; }
+.grid-3 { grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); }
+
+/* tarjetas de sección */
+.tile-section { padding: 0; gap: 0; min-height: 0; }
+.sec-band { display: flex; align-items: center; gap: 14px; padding: 18px 20px; color: #fff; background: linear-gradient(135deg, var(--c1), var(--c2)); }
+.sec-band h3 { font-size: 26px; color: #fff; text-shadow: 0 2px 0 rgba(0, 0, 0, .15); }
+.sec-sub { font-size: 15px; font-weight: 600; opacity: .95; }
+.sec-icon { width: 58px; height: 58px; border-radius: 18px; background: rgba(255, 255, 255, .25); display: grid; place-items: center; flex: none; }
+.sec-icon svg { width: 34px; height: 34px; }
+.sec-body { padding: 16px 20px 18px; display: flex; flex-direction: column; gap: 12px; background: linear-gradient(180deg, var(--tint), #fff 70%); }
+.sec-row { display: flex; align-items: center; gap: 12px; justify-content: space-between; }
+.sec-body .bar > i { background: var(--c2); }
+.sec-body .play { color: var(--ink-sec); font-weight: 700; display: flex; align-items: center; gap: 6px; }
+.sec-body .play svg { width: 20px; height: 20px; }
+
+/* tarjetas de actividad */
+.tile-act { border-top: 6px solid var(--c2, var(--brand)); }
+.tile-act .tpl-icon { background: linear-gradient(135deg, var(--c1, #8B5CF6), var(--c2, #6D28D9)); }
+
+/* niveles de los retos */
+.level-head { display: flex; align-items: center; gap: 12px; margin: 24px 0 12px; }
+.level-chip { display: inline-flex; align-items: center; padding: 6px 18px; border-radius: 999px; font-weight: 800; color: #fff; font-size: 18px; letter-spacing: .02em; box-shadow: 0 3px 0 rgba(0, 0, 0, .15); }
+.level-chip.small { padding: 3px 12px; font-size: 14px; box-shadow: none; }
+.lv-easy { background: #16A34A; }
+.lv-medium { background: #D97706; }
+.lv-hard { background: #DC2626; }
+
+/* resultados */
+.results.card { padding: 32px 24px; border-radius: 30px; margin-top: 2vh; }
+.shop-hint { display: flex; align-items: center; gap: 10px; border: 2px dashed #F59E0B; background: #FFFBEB; color: #92400E; font-weight: 700; border-radius: 16px; padding: 12px 18px; }
+
+/* progreso y medallas */
+.stat { display: flex; align-items: center; gap: 14px; }
+.stat-icon { width: 54px; height: 54px; border-radius: 16px; display: grid; place-items: center; flex: none; color: #fff; }
+.stat-icon svg { width: 30px; height: 30px; }
+.st-stars { background: linear-gradient(135deg, #FFF8DB, #fff 70%); border-color: #F6DC8C; }
+.st-stars .stat-icon { background: #F59E0B; }
+.st-done { background: linear-gradient(135deg, #E3F7EE, #fff 70%); border-color: #A7E3C6; }
+.st-done .stat-icon { background: #16A34A; }
+.st-perfect { background: linear-gradient(135deg, #EDE9FE, #fff 70%); border-color: #CBBEFB; }
+.st-perfect .stat-icon { background: #7C3AED; }
+.medal { background: #fff; border-radius: var(--radius); }
+.medal.on { background: linear-gradient(180deg, #FFF6D5 0%, #fff 75%); border-color: #F2CF6B; box-shadow: 0 5px 0 #EBCB6E, 0 14px 28px rgba(35, 38, 74, .08); }
+.medal.on .disc { background: radial-gradient(circle at 35% 30%, #FFE58A, #F59E0B); color: #fff; box-shadow: 0 4px 0 #D08A06; }
+.medal.off { background: #F3F4FA; border: 2px dashed #C9CFE5; box-shadow: none; opacity: 1; filter: none; }
+.medal.off .disc { background: #E4E7F2; color: #A3A9C4; }
+.medal.off b, .medal.off span { color: #8A90B0; }
+.medal .disc svg { width: 44px; height: 44px; }
+.progress-card { margin-top: 18px; }
+.progress-card-head { display: flex; align-items: center; gap: 14px; margin-bottom: 6px; }
+.progress-card-head h3 { font-size: 22px; }
+.progress-sec { display: flex; align-items: center; gap: 8px; margin-top: 14px; padding: 6px 12px; border-radius: 12px; background: var(--tint); color: var(--ink-sec); font-weight: 700; }
+
+/* topbar: tienda, perfil y burbujas de aviso */
+.with-badge { position: relative; }
+.notif {
+  position: absolute; top: -7px; right: -7px; min-width: 24px; height: 24px; border-radius: 999px;
+  background: #EF4444; color: #fff; font-weight: 800; font-size: 15px; line-height: 1;
+  display: grid; place-items: center; border: 3px solid #fff; box-shadow: 0 2px 6px rgba(239, 68, 68, .45);
+  animation: pop .4s var(--ease) both, pulse 2s 1s infinite;
+}
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+.shop-btn { background: #FEF3C7; color: #B45309; border-color: #F6DC8C; }
+.chip-user { border: 2px solid var(--card-line); cursor: pointer; font: inherit; color: inherit; }
+.chip-user:hover { border-color: #C9C0FF; }
+.chip-stars { display: inline-flex; align-items: center; gap: 4px; background: #FEF3C7; color: #92400E; border-radius: 999px; padding: 2px 10px; font-weight: 800; }
+.avatar { background: none; }
+
+/* ventanas */
+.modal { border: 2px solid var(--card-line); }
+.modal .kicker { color: #16A34A; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 4px; }
+.modal-choice .row-actions .btn { min-width: 120px; }
+.unlock-art { width: 150px; height: 150px; margin: 0 auto 12px; animation: starpop .7s var(--ease) both; }
+.unlock-art.round svg { border-radius: 50%; box-shadow: 0 8px 22px rgba(35, 38, 74, .2); }
+
+/* perfil */
+.profile-modal { width: min(100%, 540px); padding-top: 24px; }
+.profile-avatar { width: 124px; height: 124px; margin: 0 auto 8px; border-radius: 50%; border: 6px solid #fff; box-shadow: 0 0 0 4px #C4B5FD, 0 10px 24px rgba(35, 38, 74, .18); overflow: hidden; }
+.profile-modal h2 { margin-bottom: 14px; }
+.profile-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 6px; }
+.pstat { background: #F4F2FF; border-radius: 18px; padding: 14px; display: flex; flex-direction: column; gap: 6px; align-items: center; }
+.pstat-gold { background: #FFF8DB; }
+.pnum { font-size: 24px; font-weight: 800; display: flex; align-items: center; gap: 6px; }
+.plabel { color: var(--ink-2); font-weight: 600; font-size: 15px; }
+.pstat .bar { width: 100%; }
+.profile-sub { font-size: 18px; margin: 18px 0 10px; color: var(--ink-2); }
+.owned-row { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.mini-av { position: relative; width: 66px; height: 66px; border-radius: 50%; border: 4px solid transparent; padding: 0; background: none; }
+.mini-av .mini-art, .mini-av .mini-art svg { width: 100%; height: 100%; display: block; }
+.mini-av.on { border-color: var(--brand); box-shadow: 0 0 0 3px #DDD6FE; }
+.fx-chip { position: relative; display: inline-flex; align-items: center; gap: 8px; border: 3px solid var(--card-line); background: #fff; border-radius: 999px; padding: 4px 14px 4px 4px; font-weight: 700; }
+.fx-chip-art { width: 34px; height: 34px; display: flex; }
+.fx-chip.on { border-color: var(--brand); background: #F4F2FF; }
+.new-tag { position: absolute; top: -8px; right: -8px; background: #EF4444; color: #fff; font-size: 11px; font-weight: 800; padding: 2px 7px; border-radius: 999px; border: 2px solid #fff; }
+
+/* tienda */
+.balance-pill { display: flex; align-items: center; gap: 8px; background: #fff; color: #92400E; border-radius: 20px; padding: 10px 18px; box-shadow: 0 4px 0 rgba(0, 0, 0, .15); }
+.balance-pill b { font-size: 32px; }
+.balance-pill .star-inline { width: 30px; height: 30px; }
+.shop-note { margin: 14px 4px 0; color: var(--ink-2); font-weight: 500; }
+.shop-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 180px), 1fr)); }
+.shop-item { background: #fff; border-radius: 22px; padding: 16px 12px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; animation: rise .45s var(--ease) both; }
+.shop-item b { font-size: 19px; }
+.shop-art { width: 104px; height: 104px; }
+.shop-art.round svg { border-radius: 50%; }
+.shop-item.using { border-color: #16A34A; box-shadow: 0 5px 0 #8FD8AE, 0 14px 28px rgba(35, 38, 74, .08); background: linear-gradient(180deg, #ECFDF3, #fff 70%); }
+.shop-item.too-dear .shop-art { filter: grayscale(.85); opacity: .6; }
+.chip-using { display: inline-flex; align-items: center; gap: 6px; background: #DCFCE7; color: #166534; font-weight: 800; padding: 8px 16px; border-radius: 999px; }
+.need { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.price-locked { display: inline-flex; align-items: center; gap: 4px; background: #F1F2F8; color: var(--ink-3); border-radius: 999px; padding: 6px 14px; font-weight: 800; }
+.fx-canvas { position: fixed; inset: 0; z-index: 400; pointer-events: none; }
+
+@media (max-width: 640px) {
+  .chip-name { display: none; }
+  .hero { padding: 20px; }
+  .unit-meta .bar { width: 70px; }
+  .profile-stats { grid-template-columns: 1fr; }
+}
 </style>
 
 </head>
@@ -399,13 +594,12 @@ button.tile:active { transform: translateY(0) scale(.99); }
     return String(answer || '').replace(/[.!?]+\s*$/, '').split(/\s+/).filter(function (w) { return w !== ''; });
   }
 
-  /** score 0–100 → 0–3 estrellas según umbrales [1★, 2★, 3★]. */
+  /** score 0–100 → 0–5 estrellas según umbrales [1★, 2★, 3★, 4★, 5★]. */
   function starsFor(score, thresholds) {
-    var t = thresholds || [40, 70, 90];
-    if (score >= t[2]) return 3;
-    if (score >= t[1]) return 2;
-    if (score >= t[0]) return 1;
-    return 0;
+    var t = (thresholds && thresholds.length) ? thresholds : [20, 40, 60, 80, 95];
+    var s = 0;
+    for (var i = 0; i < t.length; i++) if (score >= t[i]) s = i + 1;
+    return s;
   }
 
   return { norm: norm, grade: grade, sentenceTokens: sentenceTokens, starsFor: starsFor };
@@ -656,6 +850,10 @@ button.tile:active { transform: translateY(0) scale(.99); }
     refresh: I('<path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7"/>'),
     print: I('<path d="M7 9V3h10v6M7 17H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2M7 14h10v7H7z"/>'),
     star: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.6l2.9 6 6.6.8-4.9 4.6 1.3 6.5L12 17.3l-5.9 3.2 1.3-6.5L2.5 9.4l6.6-.8z"/></svg>',
+    shop: I('<path d="M4 9l1.6-5h12.8L20 9"/><path d="M4 9h16v1.5a2.7 2.7 0 0 1-5.3 0 2.7 2.7 0 0 1-5.4 0 2.7 2.7 0 0 1-5.3 0z"/><path d="M5.5 13.5V20h13v-6.5"/><path d="M10 20v-4h4v4"/>'),
+    book: I('<path d="M12 6.5C10 5 7 4.5 3.5 5v13c3.5-.5 6.5 0 8.5 1.5 2-1.5 5-2 8.5-1.5V5C17 4.5 14 5 12 6.5z"/><path d="M12 6.5v13"/>'),
+    puzzle: I('<path d="M9 4h3.5v2.2a1.8 1.8 0 1 0 3.6 0V4H20v5h-2.2a1.8 1.8 0 1 0 0 3.6H20V20h-5v-2.2a1.8 1.8 0 1 0-3.6 0V20H4v-6.5h2.2a1.8 1.8 0 1 0 0-3.6H4V4z"/>'),
+    sparkle: I('<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/>'),
     tpl: {
       multiple_choice: I('<rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><path d="M14.5 17l2 2 3.5-4"/>'),
       match_pairs: I('<rect x="2.5" y="4" width="7" height="6" rx="2"/><rect x="14.5" y="14" width="7" height="6" rx="2"/><path d="M9.5 7c5 0 0 10 5 10"/>'),
@@ -667,9 +865,56 @@ button.tile:active { transform: translateY(0) scale(.99); }
   /* ── componentes de interfaz ─────────────────────────────────────── */
   CQ.UI = {
     stars: function (n, max, cls) {
-      var wrap = h('span', { class: 'stars ' + (cls || ''), role: 'img', aria: { label: n + ' out of ' + (max || 3) + ' stars' } });
-      for (var i = 0; i < (max || 3); i++) wrap.appendChild(h('span', { class: i < n ? 'star-on' : 'star-off', svg: CQ.Icons.star }));
+      max = max || 5;
+      var wrap = h('span', { class: 'stars ' + (cls || ''), role: 'img', aria: { label: n + ' out of ' + max + ' stars' } });
+      for (var i = 0; i < max; i++) wrap.appendChild(h('span', { class: i < n ? 'star-on' : 'star-off', svg: CQ.Icons.star }));
       return wrap;
+    },
+    /** Burbuja roja de aviso. */
+    notif: function () { return h('span', { class: 'notif', aria: { label: 'New!' } }, '!'); },
+    /**
+     * Ventana modal genérica.
+     * opts = { body: [nodos], className, onClose, dismissable (true) } → { close, el }
+     */
+    modal: function (opts) {
+      var prev = document.activeElement;
+      var closed = false;
+      var close = function () {
+        if (closed) return;
+        closed = true;
+        ov.remove();
+        document.removeEventListener('keydown', onKey);
+        if (prev && prev.focus) prev.focus();
+        if (opts.onClose) opts.onClose();
+      };
+      var onKey = function (e) { if (e.key === 'Escape' && opts.dismissable !== false) close(); };
+      var box = h('div', { class: 'modal ' + (opts.className || ''), role: 'dialog', aria: { modal: 'true' } }, opts.body);
+      var ov = h('div', { class: 'overlay', onclick: function (e) { if (e.target === ov && opts.dismissable !== false) close(); } }, box);
+      document.body.appendChild(ov);
+      document.addEventListener('keydown', onKey);
+      var first = box.querySelector('button');
+      if (first) first.focus({ preventScroll: true });
+      return { close: close, el: box };
+    },
+    /** Pregunta Sí (verde) / No (rojo). opts.art = nodo opcional arriba. Promesa<boolean>. */
+    choice: function (title, text, yes, no, opts) {
+      opts = opts || {};
+      return new Promise(function (resolve) {
+        var answered = false;
+        var m = CQ.UI.modal({
+          className: 'modal-choice',
+          onClose: function () { if (!answered) resolve(false); },
+          body: [
+            opts.art || null,
+            opts.kicker ? h('div', { class: 'kicker' }, opts.kicker) : null,
+            h('h2', {}, title),
+            text ? h('p', {}, text) : null,
+            h('div', { class: 'row-actions' },
+              h('button', { class: 'btn btn-bad', onclick: function () { answered = true; m.close(); resolve(false); } }, no || 'No'),
+              h('button', { class: 'btn btn-good', onclick: function () { answered = true; m.close(); resolve(true); } }, yes || 'Yes'))
+          ]
+        });
+      });
     },
     bar: function (value, max) {
       var pct = max ? Math.round(value / max * 100) : 0;
@@ -868,6 +1113,133 @@ button.tile:active { transform: translateY(0) scale(.99); }
       '<path d="M54 66c3.5 3 8.5 3 12 0" fill="none" stroke="#23264A" stroke-width="2.6" stroke-linecap="round"/>')
   };
 
+  /* ── Avatares de la tienda (círculo de 120 px) ─────────────────────── */
+  var eyes = function (x1, x2, y, r) {
+    r = r || 4.5;
+    return '<circle cx="' + x1 + '" cy="' + y + '" r="' + r + '" fill="#23264A"/><circle cx="' + x2 + '" cy="' + y + '" r="' + r + '" fill="#23264A"/>' +
+      '<circle cx="' + (x1 + 1.5) + '" cy="' + (y - 1.5) + '" r="1.5" fill="#fff"/><circle cx="' + (x2 + 1.5) + '" cy="' + (y - 1.5) + '" r="1.5" fill="#fff"/>';
+  };
+  var bg = function (c) { return '<circle cx="60" cy="60" r="60" fill="' + c + '"/>'; };
+
+  ART['av-star'] = wrap(bg('#E9E3FF') +
+    '<path d="M60 22l10.6 21.4 23.6 3.4-17.1 16.6 4 23.5L60 75.8 38.9 86.9l4-23.5-17.1-16.6 23.6-3.4z" fill="#FFC53D" stroke="#F59E0B" stroke-width="3" stroke-linejoin="round"/>' +
+    eyes(52, 68, 56, 3.5) + '<path d="M53 65c4 3.5 10 3.5 14 0" fill="none" stroke="#23264A" stroke-width="3" stroke-linecap="round"/>');
+
+  ART['av-cat'] = wrap(bg('#FDE68A') +
+    '<path d="M30 54L34 20l22 20z" fill="#F97316"/><path d="M90 54L86 20 64 40z" fill="#F97316"/>' +
+    '<path d="M36 46l2-16 12 11z" fill="#FDBA74"/><path d="M84 46l-2-16-12 11z" fill="#FDBA74"/>' +
+    '<ellipse cx="60" cy="66" rx="35" ry="31" fill="#FB923C"/>' +
+    '<ellipse cx="60" cy="80" rx="17" ry="12" fill="#FFF7ED"/>' +
+    eyes(47, 73, 62) +
+    '<path d="M56 73h8l-4 4z" fill="#F472B6"/>' +
+    '<path d="M60 77q-4 5-8 2M60 77q4 5 8 2" stroke="#23264A" stroke-width="2" fill="none" stroke-linecap="round"/>' +
+    '<g stroke="#9A3412" stroke-width="1.6" stroke-linecap="round"><path d="M28 72l15 2M28 80l15-2M92 72l-15 2M92 80l-15-2"/></g>');
+
+  ART['av-dog'] = wrap(bg('#BFDBFE') +
+    '<ellipse cx="31" cy="60" rx="11" ry="24" fill="#8B5E3C" transform="rotate(18 31 60)"/>' +
+    '<ellipse cx="89" cy="60" rx="11" ry="24" fill="#8B5E3C" transform="rotate(-18 89 60)"/>' +
+    '<circle cx="60" cy="64" r="31" fill="#D4A373"/>' +
+    '<ellipse cx="73" cy="58" rx="10" ry="9" fill="#8B5E3C"/>' +
+    '<ellipse cx="60" cy="80" rx="16" ry="12" fill="#F5E6D3"/>' +
+    eyes(48, 72, 60) +
+    '<ellipse cx="60" cy="74" rx="6.5" ry="4.5" fill="#23264A"/>' +
+    '<path d="M60 78v5M54 84q6 4 12 0" stroke="#23264A" stroke-width="2" fill="none" stroke-linecap="round"/>' +
+    '<path d="M57 86h6v5a3 3 0 0 1-6 0z" fill="#F472B6"/>');
+
+  ART['av-frog'] = wrap(bg('#BBF7D0') +
+    '<circle cx="40" cy="42" r="15" fill="#22C55E"/><circle cx="80" cy="42" r="15" fill="#22C55E"/>' +
+    '<ellipse cx="60" cy="70" rx="40" ry="28" fill="#4ADE80"/>' +
+    '<circle cx="40" cy="42" r="9" fill="#fff"/><circle cx="80" cy="42" r="9" fill="#fff"/>' +
+    eyes(41, 81, 43, 4.5) +
+    '<circle cx="33" cy="76" r="5" fill="#F9A8D4" opacity=".7"/><circle cx="87" cy="76" r="5" fill="#F9A8D4" opacity=".7"/>' +
+    '<path d="M40 76q20 16 40 0" stroke="#166534" stroke-width="3.5" fill="none" stroke-linecap="round"/>' +
+    '<circle cx="55" cy="62" r="1.8" fill="#166534"/><circle cx="65" cy="62" r="1.8" fill="#166534"/>');
+
+  ART['av-fox'] = wrap(bg('#FED7AA') +
+    '<path d="M28 22l26 22-24 14z" fill="#EA580C"/><path d="M92 22L66 44l24 14z" fill="#EA580C"/>' +
+    '<path d="M33 31l14 12-13 7z" fill="#7C2D12"/><path d="M87 31L73 43l13 7z" fill="#7C2D12"/>' +
+    '<path d="M22 50Q60 26 98 50L60 100z" fill="#F97316"/>' +
+    '<path d="M30 64q30 6 60 0L60 100z" fill="#FFF7ED"/>' +
+    eyes(47, 73, 60) +
+    '<circle cx="60" cy="90" r="5" fill="#23264A"/>');
+
+  ART['av-owl'] = wrap(bg('#DDD6FE') +
+    '<path d="M30 30l12 16-16 2z" fill="#92400E"/><path d="M90 30L78 46l16 2z" fill="#92400E"/>' +
+    '<ellipse cx="60" cy="70" rx="36" ry="38" fill="#B45309"/>' +
+    '<ellipse cx="60" cy="88" rx="20" ry="18" fill="#FCD34D" opacity=".55"/>' +
+    '<circle cx="45" cy="58" r="15" fill="#FDE68A"/><circle cx="75" cy="58" r="15" fill="#FDE68A"/>' +
+    '<circle cx="45" cy="58" r="10" fill="#fff"/><circle cx="75" cy="58" r="10" fill="#fff"/>' +
+    eyes(45, 75, 58, 5.5) +
+    '<path d="M56 70h8l-4 9z" fill="#F97316"/>' +
+    '<path d="M50 90l4 4 4-4M62 90l4 4 4-4" stroke="#92400E" stroke-width="2" fill="none" stroke-linecap="round"/>');
+
+  ART['av-panda'] = wrap(bg('#E0E7FF') +
+    '<circle cx="33" cy="36" r="13" fill="#23264A"/><circle cx="87" cy="36" r="13" fill="#23264A"/>' +
+    '<circle cx="60" cy="66" r="35" fill="#fff" stroke="#E5E7EB" stroke-width="2"/>' +
+    '<ellipse cx="46" cy="62" rx="9" ry="12" fill="#23264A" transform="rotate(-25 46 62)"/>' +
+    '<ellipse cx="74" cy="62" rx="9" ry="12" fill="#23264A" transform="rotate(25 74 62)"/>' +
+    '<circle cx="47" cy="61" r="3.5" fill="#fff"/><circle cx="73" cy="61" r="3.5" fill="#fff"/>' +
+    '<ellipse cx="60" cy="76" rx="6" ry="4" fill="#23264A"/>' +
+    '<path d="M54 82q6 5 12 0" stroke="#23264A" stroke-width="2.4" fill="none" stroke-linecap="round"/>' +
+    '<circle cx="38" cy="78" r="5" fill="#FBCFE8"/><circle cx="82" cy="78" r="5" fill="#FBCFE8"/>');
+
+  ART['av-robot'] = wrap(bg('#CFFAFE') +
+    '<path d="M60 16v14" stroke="#64748B" stroke-width="4" stroke-linecap="round"/><circle cx="60" cy="15" r="6" fill="#EF4444"/>' +
+    '<rect x="20" y="52" width="10" height="20" rx="4" fill="#64748B"/><rect x="90" y="52" width="10" height="20" rx="4" fill="#64748B"/>' +
+    '<rect x="28" y="30" width="64" height="62" rx="16" fill="#94A3B8"/>' +
+    '<rect x="36" y="42" width="48" height="28" rx="9" fill="#1E293B"/>' +
+    '<circle cx="50" cy="56" r="6" fill="#22D3EE"/><circle cx="70" cy="56" r="6" fill="#22D3EE"/>' +
+    '<rect x="44" y="77" width="32" height="8" rx="4" fill="#475569"/>' +
+    '<path d="M52 77v8M60 77v8M68 77v8" stroke="#94A3B8" stroke-width="2"/>');
+
+  ART['av-unicorn'] = wrap(bg('#FCE7F3') +
+    '<circle cx="34" cy="44" r="11" fill="#C084FC"/><circle cx="30" cy="62" r="11" fill="#F472B6"/><circle cx="34" cy="80" r="11" fill="#60A5FA"/>' +
+    '<path d="M46 36l6-14 8 14z" fill="#fff" stroke="#F3E8FF" stroke-width="2"/>' +
+    '<ellipse cx="64" cy="68" rx="30" ry="32" fill="#fff" stroke="#F3E8FF" stroke-width="2"/>' +
+    '<path d="M64 6l8 30H56z" fill="#FBBF24"/><path d="M58 28l12-4M60 20l9-3" stroke="#F59E0B" stroke-width="2"/>' +
+    '<path d="M52 64q5 5 10 0M70 64q5 5 10 0" stroke="#23264A" stroke-width="3" fill="none" stroke-linecap="round"/>' +
+    '<circle cx="54" cy="78" r="5" fill="#FBCFE8"/><circle cx="82" cy="78" r="5" fill="#FBCFE8"/>' +
+    '<ellipse cx="68" cy="88" rx="12" ry="7" fill="#FCE7F3"/><circle cx="64" cy="88" r="1.8" fill="#BE185D"/><circle cx="72" cy="88" r="1.8" fill="#BE185D"/>');
+
+  /* ── Iconos de los efectos de celebración ──────────────────────────── */
+  var tile = function (c) { return '<rect x="6" y="6" width="108" height="108" rx="26" fill="' + c + '"/>'; };
+  var starPath = function (cx, cy, r, fill) {
+    var pts = [];
+    for (var i = 0; i < 10; i++) {
+      var a = Math.PI / 5 * i - Math.PI / 2, rr = i % 2 ? r * 0.45 : r;
+      pts.push((cx + rr * Math.cos(a)).toFixed(1) + ',' + (cy + rr * Math.sin(a)).toFixed(1));
+    }
+    return '<polygon points="' + pts.join(' ') + '" fill="' + fill + '"/>';
+  };
+  var heartPath = function (x, y, s, fill) {
+    return '<path transform="translate(' + x + ' ' + y + ') scale(' + s + ')" d="M0 6C0-2 12-4 12 4c0-8 12-6 12 2 0 8-12 14-12 18C12 20 0 14 0 6z" fill="' + fill + '"/>';
+  };
+  ART['fx-none'] = wrap(tile('#F1F5F9') + '<circle cx="60" cy="60" r="26" fill="none" stroke="#94A3B8" stroke-width="7"/><path d="M42 78l36-36" stroke="#94A3B8" stroke-width="7" stroke-linecap="round"/>');
+  ART['fx-confetti'] = wrap(tile('#EEF2FF') + [
+    [30, 30, 20, '#FF6F91'], [62, 24, -25, '#FFC53D'], [86, 40, 40, '#3DDC97'], [40, 58, -10, '#4C8DFF'],
+    [70, 62, 30, '#9B5DE5'], [28, 84, 15, '#FF8A3D'], [56, 88, -35, '#3DDC97'], [86, 82, 10, '#FF6F91']
+  ].map(function (c) { return '<rect x="' + (c[0] - 5) + '" y="' + (c[1] - 9) + '" width="10" height="18" rx="2" fill="' + c[3] + '" transform="rotate(' + c[2] + ' ' + c[0] + ' ' + c[1] + ')"/>'; }).join(''));
+  ART['fx-stars'] = wrap(tile('#FEF3C7') + starPath(60, 56, 28, '#FBBF24') + starPath(30, 86, 12, '#F59E0B') + starPath(90, 30, 12, '#F59E0B'));
+  ART['fx-hearts'] = wrap(tile('#FCE7F3') + heartPath(36, 30, 2, '#F43F5E') + heartPath(20, 72, 1.1, '#FB7185') + heartPath(78, 70, 1.1, '#EC4899'));
+  ART['fx-bubbles'] = wrap(tile('#E0F2FE') + [[48, 66, 24], [84, 40, 14], [80, 86, 10], [30, 34, 9]].map(function (b) {
+    return '<circle cx="' + b[0] + '" cy="' + b[1] + '" r="' + b[2] + '" fill="#BAE6FD" fill-opacity=".5" stroke="#38BDF8" stroke-width="3"/>' +
+      '<circle cx="' + (b[0] - b[2] * 0.35) + '" cy="' + (b[1] - b[2] * 0.35) + '" r="' + (b[2] * 0.22) + '" fill="#fff"/>';
+  }).join(''));
+  ART['fx-balloons'] = wrap(tile('#ECFDF5') + [[40, 46, '#F43F5E'], [62, 36, '#3B82F6'], [84, 50, '#FBBF24']].map(function (b) {
+    return '<path d="M' + b[0] + ' ' + (b[1] + 22) + 'q-4 14 2 30" stroke="#64748B" stroke-width="2" fill="none"/>' +
+      '<ellipse cx="' + b[0] + '" cy="' + b[1] + '" rx="15" ry="19" fill="' + b[2] + '"/>' +
+      '<ellipse cx="' + (b[0] - 5) + '" cy="' + (b[1] - 7) + '" rx="3.5" ry="6" fill="#fff" opacity=".6"/>';
+  }).join(''));
+  ART['fx-fireworks'] = wrap(tile('#1E1B4B') + [[60, 52, '#FBBF24', 30], [32, 82, '#F472B6', 16], [90, 84, '#38BDF8', 16]].map(function (f) {
+    var s = '';
+    for (var i = 0; i < 10; i++) {
+      var a = Math.PI * 2 / 10 * i;
+      s += '<path d="M' + (f[0] + Math.cos(a) * f[3] * 0.35).toFixed(1) + ' ' + (f[1] + Math.sin(a) * f[3] * 0.35).toFixed(1) +
+        'L' + (f[0] + Math.cos(a) * f[3]).toFixed(1) + ' ' + (f[1] + Math.sin(a) * f[3]).toFixed(1) + '" stroke="' + f[2] + '" stroke-width="4" stroke-linecap="round"/>';
+    }
+    return s;
+  }).join(''));
+
   /** Crea el elemento visual para un campo "media" del contenido. */
   function render(media, cls) {
     var parts = String(media || '').split('+').map(function (s) { return s.trim(); }).filter(Boolean);
@@ -891,6 +1263,167 @@ button.tile:active { transform: translateY(0) scale(.99); }
   }
 
   CQ.Art = { render: render, svg: svg, keys: Object.keys(ART) };
+})();
+</script>
+
+  <!-- client/js_effects -->
+<script>
+/* ==========================================================================
+   js_effects — Efectos de celebración al terminar una actividad (tienda).
+   CQ.Effects.play('fx-confetti')  → animación de ~3 s sobre la página.
+   No se reproduce si el dispositivo pide "reducir movimiento".
+   Para añadir un efecto: añade un generador a GEN con el mismo id que en
+   Shop.gs (SHOP_ITEMS) y su icono en js_art.html.
+   ========================================================================== */
+(function () {
+  'use strict';
+  var CQ = window.CQ;
+  var COLORS = ['#FF6F91', '#FFC53D', '#3DDC97', '#4C8DFF', '#9B5DE5', '#FF8A3D'];
+  var rnd = function (a, b) { return a + Math.random() * (b - a); };
+  var pick = function (arr) { return arr[Math.floor(Math.random() * arr.length)]; };
+
+  function star(ctx, x, y, r, rot) {
+    ctx.beginPath();
+    for (var i = 0; i < 10; i++) {
+      var a = rot + Math.PI / 5 * i - Math.PI / 2, rr = i % 2 ? r * 0.45 : r;
+      ctx.lineTo(x + rr * Math.cos(a), y + rr * Math.sin(a));
+    }
+    ctx.closePath();
+    ctx.fill();
+  }
+  function heart(ctx, x, y, s) {
+    ctx.beginPath();
+    ctx.moveTo(x, y + s * 0.3);
+    ctx.bezierCurveTo(x, y - s * 0.2, x - s, y - s * 0.2, x - s, y + s * 0.3);
+    ctx.bezierCurveTo(x - s, y + s * 0.8, x, y + s * 1.1, x, y + s * 1.4);
+    ctx.bezierCurveTo(x, y + s * 1.1, x + s, y + s * 0.8, x + s, y + s * 0.3);
+    ctx.bezierCurveTo(x + s, y - s * 0.2, x, y - s * 0.2, x, y + s * 0.3);
+    ctx.fill();
+  }
+  var fade = function (el, dur) { return Math.max(0, Math.min(1, (dur - el) / (dur * 0.25))); };
+
+  var GEN = {
+    'fx-confetti': {
+      init: function (W, H) {
+        var a = [];
+        for (var i = 0; i < 150; i++) a.push({ x: rnd(0, W), y: rnd(-H * 0.6, -10), vx: rnd(-1.5, 1.5), vy: rnd(2, 5), r: rnd(0, 6), vr: rnd(-0.2, 0.2), w: rnd(6, 11), h: rnd(10, 16), c: pick(COLORS) });
+        return a;
+      },
+      step: function (p) { p.x += p.vx; p.y += p.vy; p.vy += 0.03; p.r += p.vr; },
+      draw: function (ctx, p, el, dur) {
+        ctx.save(); ctx.globalAlpha = fade(el, dur); ctx.translate(p.x, p.y); ctx.rotate(p.r);
+        ctx.fillStyle = p.c; ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h); ctx.restore();
+      }
+    },
+    'fx-stars': {
+      init: function (W, H) {
+        var a = [];
+        for (var i = 0; i < 70; i++) a.push({ x: W / 2 + rnd(-W * 0.2, W * 0.2), y: H + 20, vx: rnd(-5, 5), vy: rnd(-16, -9), s: rnd(8, 18), r: rnd(0, 6), vr: rnd(-0.15, 0.15), c: pick(['#FBBF24', '#F59E0B', '#FDE047', '#FFC53D']) });
+        return a;
+      },
+      step: function (p) { p.x += p.vx; p.y += p.vy; p.vy += 0.25; p.r += p.vr; },
+      draw: function (ctx, p, el, dur) { ctx.globalAlpha = fade(el, dur); ctx.fillStyle = p.c; star(ctx, p.x, p.y, p.s, p.r); }
+    },
+    'fx-hearts': {
+      init: function (W, H) {
+        var a = [];
+        for (var i = 0; i < 45; i++) a.push({ x: rnd(0, W), y: H + rnd(10, H * 0.5), vy: rnd(-4, -2), ph: rnd(0, 6), s: rnd(8, 16), c: pick(['#F43F5E', '#FB7185', '#EC4899', '#F472B6']) });
+        return a;
+      },
+      step: function (p, el) { p.y += p.vy; p.x += Math.sin(el / 300 + p.ph) * 1.2; },
+      draw: function (ctx, p, el, dur) { ctx.globalAlpha = fade(el, dur); ctx.fillStyle = p.c; heart(ctx, p.x, p.y, p.s); }
+    },
+    'fx-bubbles': {
+      init: function (W, H) {
+        var a = [];
+        for (var i = 0; i < 55; i++) a.push({ x: rnd(0, W), y: H + rnd(10, H * 0.5), vy: rnd(-3.2, -1.5), ph: rnd(0, 6), r: rnd(8, 24) });
+        return a;
+      },
+      step: function (p, el) { p.y += p.vy; p.x += Math.sin(el / 400 + p.ph) * 0.9; },
+      draw: function (ctx, p, el, dur) {
+        ctx.globalAlpha = fade(el, dur);
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(186,230,253,.35)'; ctx.fill();
+        ctx.lineWidth = 2.5; ctx.strokeStyle = '#38BDF8'; ctx.stroke();
+        ctx.beginPath(); ctx.arc(p.x - p.r * 0.35, p.y - p.r * 0.35, p.r * 0.2, 0, Math.PI * 2); ctx.fillStyle = '#fff'; ctx.fill();
+      }
+    },
+    'fx-balloons': {
+      init: function (W, H) {
+        var a = [];
+        for (var i = 0; i < 16; i++) a.push({ x: rnd(30, W - 30), y: H + rnd(30, H * 0.6), vy: rnd(-3.6, -2.2), ph: rnd(0, 6), c: pick(['#F43F5E', '#3B82F6', '#FBBF24', '#22C55E', '#A855F7']) });
+        return a;
+      },
+      step: function (p, el) { p.y += p.vy; p.x += Math.sin(el / 500 + p.ph) * 0.8; },
+      draw: function (ctx, p, el, dur) {
+        ctx.globalAlpha = fade(el, dur);
+        ctx.strokeStyle = '#64748B'; ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.moveTo(p.x, p.y + 30); ctx.quadraticCurveTo(p.x - 8, p.y + 50, p.x, p.y + 70); ctx.stroke();
+        ctx.fillStyle = p.c; ctx.beginPath(); ctx.ellipse(p.x, p.y, 22, 28, 0, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = 'rgba(255,255,255,.55)'; ctx.beginPath(); ctx.ellipse(p.x - 8, p.y - 10, 5, 9, 0, 0, Math.PI * 2); ctx.fill();
+      }
+    },
+    'fx-fireworks': {
+      init: function (W, H) {
+        var a = [];
+        for (var b = 0; b < 6; b++) {
+          var cx = rnd(W * 0.15, W * 0.85), cy = rnd(H * 0.15, H * 0.5), c = pick(COLORS), t0 = b * 380;
+          for (var i = 0; i < 46; i++) {
+            var ang = Math.PI * 2 / 46 * i, sp = rnd(2.5, 5.5);
+            a.push({ x: cx, y: cy, vx: Math.cos(ang) * sp, vy: Math.sin(ang) * sp, t0: t0, c: c, life: rnd(900, 1400) });
+          }
+        }
+        return a;
+      },
+      step: function (p, el) {
+        if (el < p.t0) return;
+        p.x += p.vx; p.y += p.vy; p.vy += 0.05; p.vx *= 0.985; p.vy *= 0.985;
+      },
+      draw: function (ctx, p, el) {
+        if (el < p.t0) return;
+        var k = 1 - (el - p.t0) / p.life;
+        if (k <= 0) return;
+        ctx.globalAlpha = k; ctx.fillStyle = p.c;
+        ctx.beginPath(); ctx.arc(p.x, p.y, 3, 0, Math.PI * 2); ctx.fill();
+      },
+      dur: 3400
+    }
+  };
+
+  function reduced() {
+    try { return window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { return false; }
+  }
+
+  function play(id) {
+    var gen = GEN[id];
+    if (!gen || reduced()) return;
+    var W = window.innerWidth, H = window.innerHeight;
+    var dpr = Math.min(2, window.devicePixelRatio || 1);
+    var c = document.createElement('canvas');
+    c.className = 'fx-canvas';
+    c.width = W * dpr; c.height = H * dpr;
+    c.style.width = W + 'px'; c.style.height = H + 'px';
+    c.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(c);
+    var ctx = c.getContext('2d');
+    ctx.scale(dpr, dpr);
+    var parts = gen.init(W, H);
+    var dur = gen.dur || 3000;
+    var t0 = null;
+    function frame(t) {
+      if (t0 === null) t0 = t;
+      var el = t - t0;
+      ctx.clearRect(0, 0, W, H);
+      for (var i = 0; i < parts.length; i++) {
+        gen.step(parts[i], el);
+        ctx.save(); gen.draw(ctx, parts[i], el, dur); ctx.restore();
+      }
+      if (el < dur) requestAnimationFrame(frame); else c.remove();
+    }
+    requestAnimationFrame(frame);
+  }
+
+  CQ.Effects = { play: play, has: function (id) { return !!GEN[id]; } };
 })();
 </script>
 
@@ -1500,16 +2033,19 @@ button.tile:active { transform: translateY(0) scale(.99); }
   <!-- client/js_student -->
 <script>
 /* ==========================================================================
-   js_student — App del alumnado.
-   Pantallas: Login → My classes → Course → Topic (unit) → Activity → Results
-              + My Progress
-   Todo el texto visible está en inglés.
+   js_student — App del alumnado (todo el texto visible en inglés).
+
+   Pantallas:
+     Login → My classes → Course (Unit N - Title)
+       → Section (Vocabulary | Grammar | Challenges por nivel) → Activity → Results
+     + My Progress · Star Shop · Profile (ventana)
    ========================================================================== */
 (function () {
   'use strict';
   var CQ = window.CQ, h = CQ.h, U = CQ.Util, UI = CQ.UI;
   var BOOT = window.BOOT || {};
   var app = document.getElementById('app');
+  var MAX = 5;
 
   var MSG = {
     BAD_LOGIN: 'Oops! Check your code and your PIN.',
@@ -1518,14 +2054,26 @@ button.tile:active { transform: translateY(0) scale(.99); }
     NETWORK: 'No connection. Please try again.',
     SERVER: 'Something went wrong. Please try again.',
     SESSION_EXPIRED: 'Time to log in again.',
-    FORBIDDEN: 'This is not one of your classes.',
+    FORBIDDEN: 'You can’t do that.',
     NOT_FOUND: 'We can’t find this activity.',
     LOCKED_ACTIVITY: 'Finish the other activities first!',
-    NOT_SETUP: 'The platform is not ready yet. Please ask your teacher.'
+    NOT_SETUP: 'The platform is not ready yet. Please ask your teacher.',
+    NOT_ENOUGH_STARS: 'You need more stars for this. Keep playing!',
+    ALREADY_OWNED: 'You already have this!'
   };
   function msgFor(err) { return MSG[(err && err.code) || 'SERVER'] || MSG.SERVER; }
 
-  var state = { student: null, home: null, courses: {}, runner: null };
+  var SECTIONS = {
+    vocabulary: { label: 'Vocabulary', sub: 'Learn the words', icon: CQ.Icons.book },
+    grammar: { label: 'Grammar', sub: 'Build your sentences', icon: CQ.Icons.puzzle },
+    challenge: { label: 'Challenges', sub: 'Easy · Medium · Hard', icon: CQ.Icons.trophy }
+  };
+  var SECTION_ORDER = ['vocabulary', 'grammar', 'challenge'];
+  var LEVELS = { easy: 'Easy', medium: 'Medium', hard: 'Hard' };
+  var LEVEL_HINT = { easy: 'A good start', medium: 'Getting harder', hard: 'For experts!' };
+  var LEVEL_ORDER = ['easy', 'medium', 'hard'];
+
+  var state = { student: null, home: null, profile: null, catalog: [], courses: {}, runner: null, shopMain: null };
 
   var saved = CQ.Store.session.get('cq_session');
   if (saved && saved.token) { CQ.Api.token = saved.token; state.student = saved.student; }
@@ -1547,25 +2095,23 @@ button.tile:active { transform: translateY(0) scale(.99); }
       var mine = Outbox.list().filter(function (e) { return e.studentId === studentId; });
       if (!mine.length) return Promise.resolve(0);
       var savedCount = 0;
+      function drop(e) {
+        Outbox.save(Outbox.list().filter(function (x) { return x.payload.attemptId !== e.payload.attemptId; }));
+      }
       return mine.reduce(function (p, e) {
         return p.then(function () {
-          return CQ.Api.student('submitAttempt', e.payload).then(function () {
+          return CQ.Api.student('submitAttempt', e.payload).then(function (res) {
             savedCount++;
             drop(e);
+            if (res && res.profile) setProfile(res.profile);
           }).catch(function (err) {
             if (err && err.code !== 'NETWORK' && err.code !== 'SERVER' && err.code !== 'SESSION_EXPIRED') drop(e);
           });
         });
       }, Promise.resolve()).then(function () {
-        if (savedCount) {
-          state.courses = {};
-          UI.toast('We saved your answers from before!');
-        }
+        if (savedCount) { state.courses = {}; UI.toast('We saved your answers from before!'); }
         return savedCount;
       });
-      function drop(e) {
-        Outbox.save(Outbox.list().filter(function (x) { return x.payload.attemptId !== e.payload.attemptId; }));
-      }
     }
   };
 
@@ -1584,8 +2130,9 @@ button.tile:active { transform: translateY(0) scale(.99); }
     if (CQ.Api.token) CQ.Api.student('logout', {}).catch(function () {});
     CQ.Api.token = null;
     CQ.Store.session.remove('cq_session');
-    state = { student: null, home: null, courses: {}, runner: null };
+    state = { student: null, home: null, profile: null, catalog: [], courses: {}, runner: null, shopMain: null };
     clearTimeout(idleTimer);
+    document.querySelectorAll('.overlay').forEach(function (o) { o.remove(); });
     CQ.Nav.go({ name: 'login', message: message || '' }, true);
   }
 
@@ -1599,9 +2146,11 @@ button.tile:active { transform: translateY(0) scale(.99); }
       case 'login': return renderLogin(r);
       case 'home': return renderHome(r);
       case 'course': return renderCourse(r);
-      case 'unit': return renderUnit(r);
+      case 'section': return renderSection(r);
+      case 'unit': return renderCourse(r);
       case 'play': return renderPlay(r);
       case 'progress': return renderProgress(r);
+      case 'shop': return renderShop(r);
       default: return renderHome(r);
     }
   }
@@ -1613,8 +2162,26 @@ button.tile:active { transform: translateY(0) scale(.99); }
     var c = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map(function (v) { return Math.max(0, Math.min(255, v + amt)); });
     return '#' + c.map(function (v) { return ('0' + v.toString(16)).slice(-2); }).join('');
   }
+  function unitLabel(u) { return u.number ? 'Unit ' + u.number + ' - ' + u.title : u.title; }
+  function starIcon() { return h('span', { class: 'star-on star-inline', svg: CQ.Icons.star }); }
+  function avatarSvg(id) { return CQ.Art.svg(id) || CQ.Art.svg('av-star'); }
+  function itemName(id) {
+    var it = state.catalog.filter(function (i) { return i.id === id; })[0];
+    return it ? it.name : id;
+  }
+  function sum(list, fn) { return list.reduce(function (s, x) { return s + fn(x); }, 0); }
+  function doneCount(acts) { return acts.filter(function (a) { return a.progress && a.progress.completed; }).length; }
+  function starCount(acts) { return sum(acts, function (a) { return a.progress ? a.progress.bestStars : 0; }); }
+
+  function setProfile(p, catalog) {
+    if (p) state.profile = p;
+    if (catalog) state.catalog = catalog;
+    var old = document.querySelector('header.topbar');
+    if (old) old.replaceWith(topbar());
+  }
 
   function topbar() {
+    var p = state.profile;
     var soundBtn = h('button', {
       class: 'icon-btn' + (CQ.Sfx.enabled ? ' on' : ''), aria: { label: 'Sound', pressed: String(CQ.Sfx.enabled) },
       svg: CQ.Sfx.enabled ? CQ.Icons.sound : CQ.Icons.mute,
@@ -1625,16 +2192,30 @@ button.tile:active { transform: translateY(0) scale(.99); }
         soundBtn.setAttribute('aria-pressed', String(on));
       }
     });
+    var shopBtn = h('button', {
+      class: 'icon-btn shop-btn with-badge',
+      aria: { label: 'Star shop' + (p && p.shopBadge ? ': you can buy something new!' : '') },
+      title: 'Star shop',
+      onclick: function () { CQ.Nav.go({ name: 'shop' }); }
+    }, h('span', { svg: CQ.Icons.shop, style: { display: 'flex' } }), p && p.shopBadge ? UI.notif() : null);
+    var chip = state.student ? h('button', {
+      class: 'chip-user with-badge', aria: { label: 'My profile' + (p && p.profileBadge ? ': something new!' : '') },
+      onclick: openProfile
+    },
+      h('span', { class: 'avatar', svg: avatarSvg(p && p.avatar) }),
+      h('span', { class: 'chip-name' }, state.student.displayName),
+      p ? h('span', { class: 'chip-stars' }, starIcon(), String(p.balance)) : null,
+      p && p.profileBadge ? UI.notif() : null) : null;
+
     return h('header', { class: 'topbar' },
       h('button', { class: 'brand', aria: { label: 'Home' }, onclick: function () { CQ.Nav.go({ name: 'home' }); } },
         h('span', { class: 'brand-mark', svg: CQ.Art.svg('mascot') }),
         h('span', { class: 'brand-name' }, BOOT.appName || 'ClassQuest')),
       h('div', { class: 'spacer' }),
       soundBtn,
-      state.student ? h('div', { class: 'chip-user' },
-        h('span', { class: 'avatar', svg: CQ.Art.svg('mascot') }),
-        h('span', {}, state.student.displayName)) : null,
-      h('button', { class: 'icon-btn', aria: { label: 'Log out' }, svg: CQ.Icons.logout, onclick: function () { endSession(''); } }));
+      state.student ? shopBtn : null,
+      chip,
+      h('button', { class: 'icon-btn', aria: { label: 'Log out' }, title: 'Log out', svg: CQ.Icons.logout, onclick: function () { endSession(''); } }));
   }
 
   function page() {
@@ -1650,9 +2231,22 @@ button.tile:active { transform: translateY(0) scale(.99); }
       h('span', { svg: CQ.Icons.back, style: { display: 'flex' } }), label);
   }
 
+  /** Cabecera de color de cada página. */
+  function hero(o) {
+    var style = o.color ? { background: 'linear-gradient(135deg, ' + o.color + ', ' + shade(o.color, -50) + ')' } : null;
+    return h('section', { class: 'hero ' + (o.cls || ''), style: style },
+      o.art ? h('div', { class: 'hero-art', svg: CQ.Art.svg(o.art) }) : null,
+      o.back || null,
+      h('div', { class: 'grow' },
+        o.kicker ? h('div', { class: 'hero-kicker' }, o.kicker) : null,
+        h('h1', {}, o.title),
+        o.sub ? h('p', { class: 'sub' }, o.sub) : null),
+      o.action || null);
+  }
+
   function showError(main, err, retry) {
     if (err && err.code === 'SESSION_EXPIRED') { endSession(MSG.SESSION_EXPIRED); return; }
-    U.clear(main).appendChild(h('div', { class: 'empty' },
+    U.clear(main).appendChild(h('div', { class: 'empty card' },
       h('p', { style: { fontSize: '22px', marginBottom: '18px' } }, msgFor(err)),
       retry ? h('button', { class: 'btn', onclick: retry }, 'Try again') : null,
       ' ',
@@ -1664,20 +2258,15 @@ button.tile:active { transform: translateY(0) scale(.99); }
     if (c && !force) return Promise.resolve(c);
     return CQ.Api.student('getCourse', { courseId: courseId }).then(function (data) {
       state.courses[courseId] = data;
+      setProfile(data.profile, data.catalog);
       return data;
     });
-  }
-
-  function allActivities(course) {
-    var out = [];
-    course.units.forEach(function (u) { u.activities.forEach(function (a) { out.push(a); }); });
-    return out;
   }
 
   /* ───────────────────────── LOGIN ───────────────────────── */
   function renderLogin(r) {
     U.clear(app);
-    var msg = h('div', { class: 'form-msg' + (r.message ? '' : ''), role: 'alert' }, r.message || '');
+    var msg = h('div', { class: 'form-msg' + (r.message ? ' info' : ''), role: 'alert' }, r.message || '');
     var code = h('input', { class: 'input', id: 'code', name: 'code', autocomplete: 'off', autocapitalize: 'characters',
       spellcheck: 'false', maxlength: '16', required: true });
     var pin = h('input', { class: 'input', id: 'pin', name: 'pin', type: 'password', inputmode: 'numeric', pattern: '[0-9]*',
@@ -1686,7 +2275,7 @@ button.tile:active { transform: translateY(0) scale(.99); }
     code.addEventListener('input', function () { code.value = code.value.toUpperCase(); });
 
     var form = h('form', { class: 'login-card', novalidate: true },
-      h('div', { class: 'hero', svg: CQ.Art.svg('mascot') }),
+      h('div', { class: 'hero-img', svg: CQ.Art.svg('mascot') }),
       h('h1', {}, 'Welcome to ' + (BOOT.appName || 'ClassQuest') + '!'),
       h('p', { class: 'lead' }, 'Type your code and your PIN.'),
       h('div', { class: 'field' }, h('label', { for: 'code' }, 'Your code'), code),
@@ -1719,7 +2308,7 @@ button.tile:active { transform: translateY(0) scale(.99); }
     });
 
     app.appendChild(h('div', { class: 'login-wrap' }, form));
-    (code.value ? pin : code).focus();
+    code.focus();
   }
 
   /* ───────────────────────── MY CLASSES ───────────────────────── */
@@ -1729,21 +2318,23 @@ button.tile:active { transform: translateY(0) scale(.99); }
     CQ.Api.student('getHome', {}).then(function (data) {
       state.home = data;
       state.student = data.student;
+      setProfile(data.profile, data.catalog);
       Outbox.flush(data.student.studentId);
       if (r.fromLogin && data.courses.length === 1) {
         CQ.Nav.go({ name: 'course', courseId: data.courses[0].courseId });
         return;
       }
       U.clear(main);
-      main.appendChild(h('div', { class: 'page-head' },
-        h('div', { class: 'grow' },
-          h('h1', {}, 'Hi, ' + data.student.displayName + '! 👋'),
-          h('p', { class: 'sub' }, data.courses.length ? 'Choose your class.' : 'You don’t have any classes yet. Ask your teacher.'))));
+      main.appendChild(hero({
+        cls: 'hero-home', art: 'mascot',
+        title: 'Hi, ' + data.student.displayName + '! 👋',
+        sub: data.courses.length ? 'Choose your class.' : 'You don’t have any classes yet. Ask your teacher.'
+      }));
       var grid = h('div', { class: 'grid' });
       data.courses.forEach(function (c, i) {
         grid.appendChild(h('button', {
           class: 'tile tile-course',
-          style: { background: 'linear-gradient(135deg, ' + c.color + ', ' + shade(c.color, -40) + ')', animationDelay: (i * 60) + 'ms' },
+          style: { background: 'linear-gradient(135deg, ' + c.color + ', ' + shade(c.color, -50) + ')', animationDelay: (i * 60) + 'ms' },
           onclick: function () { CQ.Nav.go({ name: 'course', courseId: c.courseId }); }
         },
           h('div', { class: 'tile-art', svg: CQ.Art.svg(c.icon) }),
@@ -1752,13 +2343,13 @@ button.tile:active { transform: translateY(0) scale(.99); }
           h('div', { class: 'meta' },
             UI.bar(c.done, c.total),
             h('span', {}, c.done + '/' + c.total),
-            h('span', { class: 'stars' }, h('span', { class: 'star-on', svg: CQ.Icons.star }), ' ' + c.stars))));
+            h('span', { class: 'stars-count' }, starIcon(), c.stars + ' / ' + c.maxStars))));
       });
       main.appendChild(grid);
     }).catch(function (err) { showError(main, err, function () { renderHome(r); }); });
   }
 
-  /* ───────────────────────── COURSE ───────────────────────── */
+  /* ───────────────────────── COURSE: Unit N - Title + 3 secciones ───────────────────────── */
   function renderCourse(r) {
     var main = page();
     main.appendChild(UI.loading());
@@ -1766,76 +2357,111 @@ button.tile:active { transform: translateY(0) scale(.99); }
       U.clear(main);
       var c = data.course;
       var multi = !state.home || state.home.courses.length > 1;
-      main.appendChild(h('div', { class: 'page-head' },
-        multi ? backButton('My classes', { name: 'home' }) : null,
-        h('div', { class: 'grow' }, h('h1', {}, c.subjectName), h('p', { class: 'sub' }, 'Year ' + c.year)),
-        h('button', { class: 'btn btn-soft', onclick: function () { CQ.Nav.go({ name: 'progress', courseId: c.courseId }); } },
-          h('span', { svg: CQ.Icons.chart, style: { display: 'flex' } }), 'My Progress')));
+      main.appendChild(hero({
+        color: c.color, art: c.icon,
+        back: multi ? backButton('My classes', { name: 'home' }) : null,
+        title: c.subjectName, sub: 'Year ' + c.year,
+        action: h('button', { class: 'btn btn-white', onclick: function () { CQ.Nav.go({ name: 'progress', courseId: c.courseId }); } },
+          h('span', { svg: CQ.Icons.chart, style: { display: 'flex' } }), 'My Progress')
+      }));
 
-      main.appendChild(h('h2', { class: 'section-title' }, 'Topics'));
-      var grid = h('div', { class: 'grid' });
-      data.units.forEach(function (u, i) {
-        var done = u.activities.filter(function (a) { return a.progress && a.progress.completed; }).length;
-        var stars = u.activities.reduce(function (s, a) { return s + (a.progress ? a.progress.bestStars : 0); }, 0);
-        grid.appendChild(h('button', { class: 'tile tile-unit', style: { animationDelay: (i * 60) + 'ms' },
-          onclick: function () { CQ.Nav.go({ name: 'unit', courseId: c.courseId, unitId: u.unitId }); } },
-          h('div', { class: 'tile-art', svg: CQ.Art.svg(u.icon) }),
-          h('div', { class: 'info' },
-            h('h3', {}, u.title),
-            h('div', { style: { display: 'flex', alignItems: 'center', gap: '10px' } }, UI.bar(done, u.activities.length), h('span', { class: 'muted' }, done + '/' + u.activities.length)),
-            h('span', { class: 'muted' }, h('span', { class: 'stars' }, h('span', { class: 'star-on', svg: CQ.Icons.star })), ' ' + stars + ' stars'))));
+      data.units.forEach(function (u) {
+        var done = doneCount(u.activities);
+        main.appendChild(h('div', { class: 'unit-head' },
+          h('div', { class: 'unit-art', svg: CQ.Art.svg(u.icon) }),
+          h('h2', {}, unitLabel(u)),
+          h('div', { class: 'unit-meta' },
+            UI.bar(done, u.activities.length),
+            h('span', {}, done + '/' + u.activities.length),
+            h('span', { class: 'stars-count' }, starIcon(), starCount(u.activities) + ' / ' + u.activities.length * MAX))));
+        var grid = h('div', { class: 'grid grid-3' });
+        SECTION_ORDER.forEach(function (sec, i) {
+          var acts = u.activities.filter(function (a) { return a.section === sec; });
+          if (acts.length) grid.appendChild(sectionCard(c.courseId, u, sec, acts, i));
+        });
+        main.appendChild(grid);
       });
-      if (!data.units.length) grid.appendChild(h('p', { class: 'empty' }, 'New activities are coming soon!'));
-      main.appendChild(grid);
-
-      var challenges = [];
-      data.units.forEach(function (u) { u.activities.forEach(function (a) { if (a.kind === 'challenge') challenges.push({ a: a, u: u }); }); });
-      if (challenges.length) {
-        main.appendChild(h('h2', { class: 'section-title' }, h('span', { svg: CQ.Icons.trophy, style: { display: 'flex', width: '28px', color: '#E8A100' } }), 'Challenges'));
-        var cg = h('div', { class: 'grid' });
-        challenges.forEach(function (x) { cg.appendChild(activityTile(c.courseId, x.u.unitId, x.a)); });
-        main.appendChild(cg);
-      }
+      if (!data.units.length) main.appendChild(h('p', { class: 'empty card' }, 'New activities are coming soon!'));
     }).catch(function (err) { showError(main, err, function () { renderCourse(r); }); });
   }
 
-  /* ───────────────────────── UNIT ───────────────────────── */
-  function activityTile(courseId, unitId, a, i) {
-    var p = a.progress;
-    var label = a.locked ? 'Locked' : (p ? 'Play again' : 'Play');
+  function sectionCard(courseId, u, sec, acts, i) {
+    var S = SECTIONS[sec];
+    var done = doneCount(acts);
     return h('button', {
-      class: 'tile tile-act' + (a.locked ? ' locked' : ''),
-      style: { animationDelay: ((i || 0) * 50) + 'ms' },
-      aria: { label: a.title + '. ' + label + (p ? '. ' + p.bestStars + ' stars' : '') },
-      onclick: function () {
-        if (a.locked) { UI.toast(MSG.LOCKED_ACTIVITY); return; }
-        CQ.Nav.go({ name: 'play', courseId: courseId, unitId: unitId, activityId: a.activityId });
-      }
+      class: 'tile tile-section sec-' + sec, style: { animationDelay: (i * 70) + 'ms' },
+      aria: { label: S.label + '. ' + done + ' of ' + acts.length + ' done.' },
+      onclick: function () { CQ.Nav.go({ name: 'section', courseId: courseId, unitId: u.unitId, section: sec }); }
     },
-      h('div', { class: 'top' },
-        h('div', { class: 'tpl-icon kind-' + a.kind, svg: CQ.Icons.tpl[a.template] || CQ.Icons.tpl.multiple_choice }),
-        UI.kindBadge(a.kind)),
-      h('h3', {}, a.title),
-      h('div', { class: 'foot' },
-        UI.stars(p ? p.bestStars : 0),
-        h('span', { class: 'play' }, h('span', { svg: a.locked ? CQ.Icons.lock : CQ.Icons.play, style: { display: 'flex' } }), label)));
+      h('div', { class: 'sec-band' },
+        h('span', { class: 'sec-icon', svg: S.icon }),
+        h('div', {}, h('h3', {}, S.label), h('span', { class: 'sec-sub' }, S.sub))),
+      h('div', { class: 'sec-body' },
+        h('div', { class: 'sec-row' }, UI.bar(done, acts.length), h('span', { class: 'muted' }, done + '/' + acts.length)),
+        h('div', { class: 'sec-row' },
+          h('span', { class: 'stars-count' }, starIcon(), starCount(acts) + ' / ' + acts.length * MAX),
+          h('span', { class: 'play' }, 'Open', h('span', { svg: CQ.Icons.play, style: { display: 'flex' } })))));
   }
 
-  function renderUnit(r) {
+  /* ───────────────────────── SECTION ───────────────────────── */
+  function renderSection(r) {
     var main = page();
     main.appendChild(UI.loading());
     loadCourse(r.courseId).then(function (data) {
       var u = data.units.filter(function (x) { return x.unitId === r.unitId; })[0];
-      if (!u) { showError(main, { code: 'NOT_FOUND' }); return; }
+      var S = SECTIONS[r.section];
+      if (!u || !S) { showError(main, { code: 'NOT_FOUND' }); return; }
+      var acts = u.activities.filter(function (a) { return a.section === r.section; });
       U.clear(main);
-      var done = u.activities.filter(function (a) { return a.progress && a.progress.completed; }).length;
-      main.appendChild(h('div', { class: 'page-head' },
-        backButton(data.course.subjectName, { name: 'course', courseId: r.courseId }),
-        h('div', { class: 'grow' }, h('h1', {}, u.title), h('p', { class: 'sub' }, done + ' of ' + u.activities.length + ' activities done'))));
-      var grid = h('div', { class: 'grid' });
-      u.activities.forEach(function (a, i) { grid.appendChild(activityTile(r.courseId, u.unitId, a, i)); });
-      main.appendChild(grid);
-    }).catch(function (err) { showError(main, err, function () { renderUnit(r); }); });
+      main.appendChild(hero({
+        cls: 'sec-' + r.section, art: u.icon,
+        back: backButton(data.course.subjectName, { name: 'course', courseId: r.courseId }),
+        kicker: unitLabel(u), title: S.label,
+        sub: doneCount(acts) + ' of ' + acts.length + ' activities done'
+      }));
+      if (r.section === 'challenge') {
+        LEVEL_ORDER.forEach(function (lv) {
+          var list = acts.filter(function (a) { return a.level === lv; });
+          if (!list.length) return;
+          main.appendChild(h('div', { class: 'level-head' },
+            h('span', { class: 'level-chip lv-' + lv }, LEVELS[lv]),
+            h('span', { class: 'muted' }, LEVEL_HINT[lv])));
+          var g = h('div', { class: 'grid' });
+          list.forEach(function (a, i) { g.appendChild(activityTile(r, a, i)); });
+          main.appendChild(g);
+        });
+      } else {
+        var grid = h('div', { class: 'grid' });
+        acts.forEach(function (a, i) { grid.appendChild(activityTile(r, a, i)); });
+        main.appendChild(grid);
+      }
+    }).catch(function (err) { showError(main, err, function () { renderSection(r); }); });
+  }
+
+  function activityTile(r, a, i) {
+    var p = a.progress;
+    var label = a.locked ? 'Locked' : (p ? 'Play again' : 'Play');
+    return h('button', {
+      class: 'tile tile-act sec-' + a.section + (a.locked ? ' locked' : ''),
+      style: { animationDelay: ((i || 0) * 50) + 'ms' },
+      aria: { label: a.title + '. ' + label + (p ? '. ' + p.bestStars + ' of 5 stars' : '') },
+      onclick: function () {
+        if (a.locked) { UI.toast(MSG.LOCKED_ACTIVITY); return; }
+        CQ.Nav.go({ name: 'play', courseId: r.courseId, unitId: a.unitId, section: a.section, activityId: a.activityId });
+      }
+    },
+      h('div', { class: 'top' },
+        h('div', { class: 'tpl-icon', svg: CQ.Icons.tpl[a.template] || CQ.Icons.tpl.multiple_choice }),
+        a.section === 'challenge' ? h('span', { class: 'level-chip small lv-' + a.level }, LEVELS[a.level]) : UI.kindBadge(a.kind)),
+      h('h3', {}, a.title),
+      h('div', { class: 'foot' },
+        UI.stars(p ? p.bestStars : 0, MAX),
+        h('span', { class: 'play' }, h('span', { svg: a.locked ? CQ.Icons.lock : CQ.Icons.play, style: { display: 'flex' } }), label)));
+  }
+
+  /** A dónde vuelve el alumno al salir de una actividad: a la sección desde la que entró. */
+  function backOf(r) {
+    return r.section ? { name: 'section', courseId: r.courseId, unitId: r.unitId, section: r.section } : { name: 'course', courseId: r.courseId };
   }
 
   /* ───────────────────────── PLAY ───────────────────────── */
@@ -1848,7 +2474,7 @@ button.tile:active { transform: translateY(0) scale(.99); }
         root: app,
         activity: data.activity,
         mode: 'student',
-        onExit: function () { state.runner = null; CQ.Nav.go({ name: 'unit', courseId: r.courseId, unitId: r.unitId }); },
+        onExit: function () { state.runner = null; CQ.Nav.go(backOf(r)); },
         onFinish: function (result) {
           state.runner = null;
           submit(r, data, result, Math.round((Date.now() - startedAt) / 1000));
@@ -1872,6 +2498,7 @@ button.tile:active { transform: translateY(0) scale(.99); }
     };
     var sid = state.student && state.student.studentId;
     CQ.Api.student('submitAttempt', payload).then(function (res) {
+      if (res.profile) state.profile = res.profile;
       patchProgress(r.courseId, opened.activity.activityId, res);
       renderResults(r, opened.activity, result, res, true);
     }).catch(function (err) {
@@ -1901,12 +2528,10 @@ button.tile:active { transform: translateY(0) scale(.99); }
         a.progress = p;
       });
     });
-    // Desbloqueos: se recalculan del servidor la próxima vez que se abra el curso.
-    delete state.courses[courseId].fresh;
   }
 
   /* ───────────────────────── RESULTS ───────────────────────── */
-  var TITLES = ['Keep practising!', 'Good try!', 'Great job!', 'Amazing!'];
+  var TITLES = ['Keep practising!', 'Good try!', 'Nice work!', 'Great job!', 'Super!', 'Amazing!'];
 
   function renderResults(r, activity, local, res, saved) {
     var main = page();
@@ -1915,39 +2540,47 @@ button.tile:active { transform: translateY(0) scale(.99); }
     else {
       total = local.local.total;
       correct = local.local.correct;
-      var pct = total ? Math.round(correct / total * 100) : 0;
-      stars = Grading.starsFor(pct, [40, 70, 90]);
+      stars = Grading.starsFor(total ? Math.round(correct / total * 100) : 0);
     }
-    var box = h('section', { class: 'results', aria: { live: 'polite' } },
-      UI.stars(stars, 3, 'lg'),
-      h('h1', {}, TITLES[stars]),
+    var S = SECTIONS[r.section] || { label: 'the unit' };
+    var box = h('section', { class: 'results card', aria: { live: 'polite' } },
+      UI.stars(stars, MAX, 'lg'),
+      h('h1', {}, TITLES[stars] || TITLES[0]),
       h('p', { class: 'score' }, 'You got ' + correct + ' out of ' + total + ' right.'),
       res && res.isPersonalBest ? h('span', { class: 'pb' }, '🏆 New personal best!') : null,
       res && res.firstTime ? h('span', { class: 'muted' }, 'First time done!') : null,
       res && !res.firstTime ? h('span', { class: 'muted' }, 'Attempt ' + res.attemptNumber) : null,
       !saved ? h('p', { class: 'pb', style: { background: '#FDECEC', color: '#A4282C' } }, 'We could not save yet. We will try again later.') : null);
 
-    // Repaso al final (retos sin feedback inmediato)
+    if (saved && state.profile && state.profile.shopBadge) {
+      box.appendChild(h('button', { class: 'shop-hint', onclick: function () { CQ.Nav.go({ name: 'shop' }); } },
+        h('span', { svg: CQ.Icons.shop, style: { display: 'flex', width: '26px' } }),
+        'You can buy something new in the Star Shop!'));
+    }
+
     if (res && activity.config.feedback === 'end') box.appendChild(reviewList(activity, local.responses, res.review));
 
-    // Siguiente actividad del mismo tema
+    // Siguiente actividad de la misma sección
     var next = null;
     var course = state.courses[r.courseId];
     if (course) {
       var unit = course.units.filter(function (u) { return u.unitId === r.unitId; })[0];
       if (unit) {
-        var idx = unit.activities.map(function (a) { return a.activityId; }).indexOf(activity.activityId);
-        next = unit.activities.slice(idx + 1).filter(function (a) { return !a.locked; })[0] || null;
+        var list = unit.activities.filter(function (a) { return !r.section || a.section === r.section; });
+        var idx = list.map(function (a) { return a.activityId; }).indexOf(activity.activityId);
+        next = list.slice(idx + 1).filter(function (a) { return !a.locked; })[0] || null;
       }
     }
     box.appendChild(h('div', { class: 'row-actions', style: { marginTop: '14px' } },
       h('button', { class: 'btn btn-ghost btn-lg', onclick: function () { CQ.Nav.go(r, true); } }, 'Play again'),
-      next ? h('button', { class: 'btn btn-lg', onclick: function () { CQ.Nav.go({ name: 'play', courseId: r.courseId, unitId: r.unitId, activityId: next.activityId }, true); } },
+      next ? h('button', { class: 'btn btn-lg', onclick: function () { CQ.Nav.go({ name: 'play', courseId: r.courseId, unitId: r.unitId, section: r.section, activityId: next.activityId }, true); } },
         'Next activity', h('span', { svg: CQ.Icons.play, style: { display: 'flex' } })) : null));
-    box.appendChild(h('button', { class: 'back-btn', style: { marginTop: '6px' }, onclick: function () { CQ.Nav.go({ name: 'unit', courseId: r.courseId, unitId: r.unitId }); } },
-      h('span', { svg: CQ.Icons.back, style: { display: 'flex' } }), 'Back to the topic'));
+    box.appendChild(h('button', { class: 'back-btn', style: { marginTop: '6px' }, onclick: function () { CQ.Nav.go(backOf(r)); } },
+      h('span', { svg: CQ.Icons.back, style: { display: 'flex' } }), 'Back to ' + S.label));
     main.appendChild(box);
-    if (stars === 3) UI.announce('Amazing! Three stars!');
+    if (stars === MAX) UI.announce('Amazing! Five stars!');
+    var fx = state.profile && state.profile.effect;
+    if (saved && fx && fx !== 'fx-none') setTimeout(function () { CQ.Effects.play(fx); }, 350);
   }
 
   function reviewList(activity, responses, review) {
@@ -1956,13 +2589,13 @@ button.tile:active { transform: translateY(0) scale(.99); }
     var mine = {};
     responses.forEach(function (x) { mine[x.itemId] = x.response; });
     var list = h('div', { class: 'review' }, h('h2', { class: 'section-title', style: { margin: '10px 0 4px' } }, 'Let’s check'));
-    review.forEach(function (rv) {
+    review.forEach(function (rv, n) {
       var it = byItem[rv.itemId];
       if (!it) return;
       list.appendChild(h('div', { class: 'review-row' },
         h('span', { class: 'mark ' + (rv.correct ? 'ok' : 'no') }, rv.correct ? '✓' : '✗'),
         h('div', { style: { flex: 1 } },
-          h('div', { style: { fontWeight: 600 } }, it.prompt.replace(/_{2,}/, '…')),
+          h('div', { style: { fontWeight: 600 } }, (it.prompt || ('Sentence ' + (n + 1))).replace(/_{2,}/, '…')),
           h('div', { class: 'muted' }, 'You: ' + (mine[rv.itemId] || '—') + (rv.correct ? '' : '  ·  Answer: ' + rv.answer)))));
     });
     return list;
@@ -1974,61 +2607,200 @@ button.tile:active { transform: translateY(0) scale(.99); }
     main.appendChild(UI.loading());
     loadCourse(r.courseId, true).then(function (data) {
       U.clear(main);
-      var acts = allActivities(data);
-      var done = acts.filter(function (a) { return a.progress && a.progress.completed; });
-      var stars = acts.reduce(function (s, a) { return s + (a.progress ? a.progress.bestStars : 0); }, 0);
-      var perfect = acts.filter(function (a) { return a.progress && a.progress.bestStars === 3; }).length;
+      var acts = [];
+      data.units.forEach(function (u) { acts = acts.concat(u.activities); });
+      var done = doneCount(acts);
+      var stars = starCount(acts);
+      var perfect = acts.filter(function (a) { return a.progress && a.progress.bestStars === MAX; }).length;
       var unitDone = data.units.some(function (u) { return u.activities.every(function (a) { return a.progress && a.progress.completed; }); });
-      var champ = acts.some(function (a) { return a.kind === 'challenge' && a.progress && a.progress.bestStars >= 2; });
+      var champ = acts.some(function (a) { return a.section === 'challenge' && a.progress && a.progress.bestStars >= 4; });
 
-      main.appendChild(h('div', { class: 'page-head' },
-        backButton(data.course.subjectName, { name: 'course', courseId: r.courseId }),
-        h('div', { class: 'grow' }, h('h1', {}, 'My Progress'), h('p', { class: 'sub' }, data.course.subjectName + ' · Year ' + data.course.year))));
+      main.appendChild(hero({
+        cls: 'hero-progress', art: 'mascot',
+        back: backButton(data.course.subjectName, { name: 'course', courseId: r.courseId }),
+        kicker: data.course.subjectName + ' · Year ' + data.course.year, title: 'My Progress'
+      }));
 
       main.appendChild(h('div', { class: 'stat-row' },
-        stat(stars + ' / ' + acts.length * 3, 'Stars'),
-        stat(done.length + ' / ' + acts.length, 'Activities done'),
-        stat(String(perfect), 'Perfect scores')));
+        stat('st-stars', CQ.Icons.star, stars + ' / ' + acts.length * MAX, 'Stars'),
+        stat('st-done', CQ.Icons.check, done + ' / ' + acts.length, 'Activities done'),
+        stat('st-perfect', CQ.Icons.sparkle, String(perfect), 'Perfect scores (5 stars)')));
 
       var medals = [
-        ['First steps', 'Finish your first activity', done.length >= 1],
-        ['Star collector', 'Collect 10 stars', stars >= 10],
-        ['Perfect!', 'Get 3 stars in an activity', perfect >= 1],
-        ['Topic master', 'Finish every activity in a topic', unitDone],
-        ['Challenge champion', 'Get 2 stars in a challenge', champ]
+        ['First steps', 'Finish your first activity', done >= 1, 'trophy'],
+        ['Star collector', 'Collect 20 stars', stars >= 20, 'star'],
+        ['Perfect!', 'Get 5 stars in an activity', perfect >= 1, 'star'],
+        ['Unit master', 'Finish every activity in a unit', unitDone, 'trophy'],
+        ['Challenge champion', 'Get 4 stars in a challenge', champ, 'trophy']
       ];
       main.appendChild(h('h2', { class: 'section-title' }, 'My medals'));
       var mg = h('div', { class: 'grid-sm' });
       medals.forEach(function (m) {
-        mg.appendChild(h('div', { class: 'card medal' + (m[2] ? '' : ' off') },
-          h('div', { class: 'disc', svg: m[0] === 'Star collector' || m[0] === 'Perfect!' ? '<span class="star-on" style="display:flex;width:46px">' + CQ.Icons.star + '</span>' : '<span style="display:flex;width:46px;color:#E8A100">' + CQ.Icons.trophy + '</span>' }),
+        mg.appendChild(h('div', { class: 'medal' + (m[2] ? ' on' : ' off') },
+          h('div', { class: 'disc', svg: CQ.Icons[m[3]] }),
           h('b', {}, m[0]),
           h('span', {}, m[2] ? 'Unlocked!' : m[1])));
       });
       main.appendChild(mg);
 
       data.units.forEach(function (u) {
-        var ud = u.activities.filter(function (a) { return a.progress && a.progress.completed; }).length;
-        var card = h('div', { class: 'card', style: { marginTop: '18px' } },
-          h('div', { style: { display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '8px' } },
-            h('h3', { style: { fontSize: '22px' } }, u.title), UI.bar(ud, u.activities.length), h('span', { class: 'muted' }, ud + '/' + u.activities.length)));
-        u.activities.forEach(function (a) {
-          card.appendChild(h('div', { class: 'list-row' },
-            h('span', { class: 'name' }, a.title),
-            UI.kindBadge(a.kind),
-            UI.stars(a.progress ? a.progress.bestStars : 0)));
+        var ud = doneCount(u.activities);
+        var card = h('div', { class: 'card progress-card' },
+          h('div', { class: 'progress-card-head' },
+            h('h3', {}, unitLabel(u)), UI.bar(ud, u.activities.length), h('span', { class: 'muted' }, ud + '/' + u.activities.length)));
+        SECTION_ORDER.forEach(function (sec) {
+          var list = u.activities.filter(function (a) { return a.section === sec; });
+          if (!list.length) return;
+          card.appendChild(h('div', { class: 'progress-sec sec-' + sec }, h('span', { svg: SECTIONS[sec].icon, style: { display: 'flex', width: '22px' } }), SECTIONS[sec].label));
+          list.forEach(function (a) {
+            card.appendChild(h('div', { class: 'list-row' },
+              h('span', { class: 'name' }, a.title),
+              a.section === 'challenge' ? h('span', { class: 'level-chip small lv-' + a.level }, LEVELS[a.level]) : UI.kindBadge(a.kind),
+              UI.stars(a.progress ? a.progress.bestStars : 0, MAX)));
+          });
         });
         main.appendChild(card);
       });
     }).catch(function (err) { showError(main, err, function () { renderProgress(r); }); });
 
-    function stat(n, l) { return h('div', { class: 'stat' }, h('div', { class: 'n' }, n), h('div', { class: 'l' }, l)); }
+    function stat(cls, icon, n, l) {
+      return h('div', { class: 'stat ' + cls }, h('span', { class: 'stat-icon', svg: icon }), h('div', {}, h('div', { class: 'n' }, n), h('div', { class: 'l' }, l)));
+    }
+  }
+
+  /* ───────────────────────── PERFIL (ventana) ───────────────────────── */
+  function openProfile() {
+    var p = state.profile;
+    if (!p) return;
+    var fresh = (p.newItems || []).slice();
+    var m;
+    var owned = function (type) {
+      return state.catalog.filter(function (i) { return i.type === type && p.owned.indexOf(i.id) >= 0; });
+    };
+    var avatars = h('div', { class: 'owned-row' }, owned('avatar').map(function (i) {
+      return h('button', {
+        class: 'mini-av' + (p.avatar === i.id ? ' on' : ''), aria: { label: 'Use avatar ' + i.name, pressed: String(p.avatar === i.id) },
+        onclick: function () { equip(i, function () { m.close(); openProfile(); }); }
+      }, h('span', { class: 'mini-art', svg: avatarSvg(i.id) }), fresh.indexOf(i.id) >= 0 ? h('span', { class: 'new-tag' }, 'NEW') : null);
+    }));
+    var effects = h('div', { class: 'owned-row' }, owned('effect').map(function (i) {
+      return h('button', {
+        class: 'fx-chip' + (p.effect === i.id ? ' on' : ''), aria: { pressed: String(p.effect === i.id) },
+        onclick: function () { equip(i, function () { m.close(); openProfile(); }); }
+      }, h('span', { class: 'fx-chip-art', svg: CQ.Art.svg(i.id) }), i.name, fresh.indexOf(i.id) >= 0 ? h('span', { class: 'new-tag' }, 'NEW') : null);
+    }));
+    m = UI.modal({
+      className: 'profile-modal',
+      body: [
+        h('div', { class: 'profile-top' }, h('div', { class: 'profile-avatar', svg: avatarSvg(p.avatar) })),
+        h('h2', {}, state.student.displayName),
+        h('div', { class: 'profile-stats' },
+          h('div', { class: 'pstat' },
+            h('div', { class: 'pnum' }, starIcon(), p.starsEarned + ' / ' + p.starsMax),
+            h('div', { class: 'plabel' }, 'Stars earned'),
+            UI.bar(p.starsEarned, p.starsMax)),
+          h('div', { class: 'pstat pstat-gold' },
+            h('div', { class: 'pnum' }, starIcon(), String(p.balance)),
+            h('div', { class: 'plabel' }, 'Stars to spend'))),
+        h('h3', { class: 'profile-sub' }, 'My avatars'),
+        avatars,
+        h('h3', { class: 'profile-sub' }, 'My celebration'),
+        effects,
+        h('div', { class: 'row-actions', style: { marginTop: '20px' } },
+          h('button', { class: 'btn btn-ghost', onclick: function () { m.close(); } }, 'Close'),
+          h('button', { class: 'btn btn-buy', onclick: function () { m.close(); CQ.Nav.go({ name: 'shop' }); } },
+            h('span', { svg: CQ.Icons.shop, style: { display: 'flex' } }), 'Star Shop'))
+      ]
+    });
+    if (p.profileBadge) {
+      CQ.Api.student('seenProfile', {}).then(function (res) { setProfile(res.profile); }).catch(function () {});
+    }
+  }
+
+  function equip(item, after) {
+    CQ.Api.student('equip', { itemId: item.id }).then(function (res) {
+      setProfile(res.profile);
+      if (state.shopMain && document.body.contains(state.shopMain)) drawShop(state.shopMain);
+      if (item.type === 'effect' && item.id !== 'fx-none') CQ.Effects.play(item.id);
+      else UI.toast(item.type === 'avatar' ? 'New look! 😎' : 'No celebration effect.');
+      if (after) after();
+    }).catch(function (err) { UI.toast(msgFor(err)); });
+  }
+
+  /* ───────────────────────── TIENDA ───────────────────────── */
+  function renderShop() {
+    var main = page();
+    state.shopMain = main;
+    main.appendChild(UI.loading());
+    CQ.Api.student('getShop', {}).then(function (d) {
+      setProfile(d.profile, d.catalog);
+      drawShop(main);
+    }).catch(function (err) { showError(main, err, function () { renderShop(); }); });
+  }
+
+  function drawShop(main) {
+    var p = state.profile;
+    U.clear(main);
+    main.appendChild(hero({
+      cls: 'hero-shop', art: 'fx-stars',
+      back: h('button', { class: 'back-btn', onclick: function () { if (window.history.length > 1) window.history.back(); else CQ.Nav.go({ name: 'home' }); } },
+        h('span', { svg: CQ.Icons.back, style: { display: 'flex' } }), 'Back'),
+      title: 'Star Shop', sub: 'Use your stars to get new avatars and celebrations!',
+      action: h('div', { class: 'balance-pill' }, starIcon(), h('b', {}, String(p.balance)), h('span', {}, 'stars to spend'))
+    }));
+    main.appendChild(h('p', { class: 'shop-note' }, 'Buying things doesn’t change your progress. You keep all your stars in the activities!'));
+    [['avatar', 'Avatars'], ['effect', 'Celebrations']].forEach(function (g) {
+      main.appendChild(h('h2', { class: 'section-title' }, g[1]));
+      var grid = h('div', { class: 'shop-grid' });
+      state.catalog.filter(function (i) { return i.type === g[0]; }).forEach(function (i) { grid.appendChild(shopItem(i)); });
+      main.appendChild(grid);
+    });
+  }
+
+  function shopItem(i) {
+    var p = state.profile;
+    var owned = p.owned.indexOf(i.id) >= 0;
+    var using = (i.type === 'avatar' ? p.avatar : p.effect) === i.id;
+    var action;
+    if (using) {
+      action = h('span', { class: 'chip-using' }, h('span', { svg: CQ.Icons.check, style: { display: 'flex', width: '18px' } }), 'Using');
+    } else if (owned) {
+      action = h('button', { class: 'btn btn-soft btn-sm', onclick: function () { equip(i); } }, 'Use');
+    } else if (p.balance >= i.price) {
+      action = h('button', { class: 'btn btn-buy btn-sm', aria: { label: 'Buy ' + i.name + ' for ' + i.price + ' stars' }, onclick: function () { buy(i); } },
+        starIcon(), String(i.price));
+    } else {
+      action = h('div', { class: 'need' },
+        h('span', { class: 'price-locked' }, h('span', { svg: CQ.Icons.lock, style: { display: 'flex', width: '16px' } }), starIcon(), String(i.price)),
+        h('span', { class: 'muted small' }, 'Need ' + (i.price - p.balance) + ' more'));
+    }
+    return h('div', { class: 'shop-item' + (using ? ' using' : '') + (owned ? ' owned' : '') + (!owned && p.balance < i.price ? ' too-dear' : '') },
+      h('div', { class: 'shop-art' + (i.type === 'avatar' ? ' round' : ''), svg: CQ.Art.svg(i.id) }),
+      h('b', {}, i.name),
+      action,
+      i.type === 'effect' && i.id !== 'fx-none' ? h('button', { class: 'link-btn', onclick: function () { CQ.Effects.play(i.id); } }, 'Try it') : null);
+  }
+
+  function buy(i) {
+    UI.confirm('Buy ' + i.name + '?', 'It costs ' + i.price + ' stars. You have ' + state.profile.balance + '.', 'Buy', 'Not now').then(function (yes) {
+      if (!yes) return;
+      CQ.Api.student('buyItem', { itemId: i.id }).then(function (res) {
+        setProfile(res.profile);
+        if (state.shopMain && document.body.contains(state.shopMain)) drawShop(state.shopMain);
+        CQ.Sfx.play('win');
+        CQ.Effects.play('fx-confetti');
+        var isAv = i.type === 'avatar';
+        UI.choice(isAv ? 'Do you want to equip this avatar?' : 'Do you want to use this celebration?', null, 'Yes', 'No', {
+          kicker: isAv ? 'New avatar unlocked!' : 'New celebration unlocked!',
+          art: h('div', { class: 'unlock-art' + (isAv ? ' round' : ''), svg: CQ.Art.svg(i.id) })
+        }).then(function (equipNow) { if (equipNow) equip(i); });
+      }).catch(function (err) { UI.toast(msgFor(err)); });
+    });
   }
 
   /* ───────────────────────── arranque ───────────────────────── */
   CQ.Nav.start(function (r) { route(r); });
   CQ.Nav.go(CQ.Api.token ? { name: 'home' } : { name: 'login' }, true);
-  // En GitHub Pages, el tiempo de inactividad viene del servidor (pestaña Settings).
   if (BOOT.apiUrl) {
     CQ.Api.student('config', {}).then(function (c) {
       BOOT.idleMinutes = c.idleMinutes;
