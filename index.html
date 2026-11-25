@@ -41,6 +41,13 @@
 
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
+/* Móvil: nada puede ser más ancho que la pantalla (si no, al hacer zoom y volver
+   la página queda desplazada) y el navegador no debe agrandar el texto por su cuenta. */
+html { overflow-x: hidden; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body { width: 100%; max-width: 100vw; overflow-wrap: break-word; }
+#app, .main, .topbar, .card, .tile, .hero { max-width: 100%; min-width: 0; }
+.topbar > * { min-width: 0; }
+html.scroll-locked { overflow: hidden; }
 body {
   font-family: var(--font);
   color: var(--ink);
@@ -173,6 +180,35 @@ button.tile:active { transform: translateY(0) scale(.99); }
 .login-card .hero-img { width: 120px; height: 120px; margin: -4px auto 8px; }
 .login-card h1 { text-align: center; font-size: clamp(28px, 6vw, 36px); }
 .login-card .lead { text-align: center; color: var(--ink-2); margin: 8px 0 24px; }
+.login-card { position: relative; }
+.login-back { position: absolute; top: 14px; left: 14px; }
+.welcome-choices { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 420px) { .welcome-choices { grid-template-columns: 1fr; } }
+.welcome-btn { border: 0; border-radius: 22px; padding: 18px 12px; display: flex; flex-direction: column; align-items: center; gap: 4px; color: #fff;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, .18); transition: transform .15s var(--ease); min-width: 0; }
+.welcome-btn:hover { transform: translateY(-2px); }
+.welcome-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 rgba(0, 0, 0, .18); }
+.welcome-btn b { font-size: 20px; }
+.welcome-btn span:last-child { font-size: 14px; opacity: .9; }
+.welcome-emoji { font-size: 40px; line-height: 1; }
+.welcome-btn.student { background: linear-gradient(135deg, #7C5CFC, #5B3FD9); }
+.welcome-btn.teacher { background: linear-gradient(135deg, #2DD4BF, #0F766E); }
+/* Panel de profesor: elegir grupo y barra de selección múltiple */
+.g-pick { grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); }
+.g-tile { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: 20px; border: 3px solid var(--card-line); background: #fff; text-align: left; }
+.g-tile:hover { border-color: var(--brand); }
+.g-tile-id { font-size: 40px; font-weight: 800; color: var(--brand); line-height: 1; }
+.g-tile-name { font-weight: 700; font-size: 18px; }
+.g-current { border: 2px solid var(--card-line); background: #fff; border-radius: 999px; padding: 6px 14px; font-weight: 800; color: var(--brand); }
+.t-topbar { flex-wrap: wrap; }
+.t-topbar .tabs { overflow-x: auto; max-width: 100%; }
+.t-bulk { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; border-radius: 14px; padding: 8px 12px; margin-bottom: 12px; font-size: 15px; }
+.t-bulk.empty { background: #F7F7FB; }
+.t-bulk.on { background: #ECE8FF; border: 2px solid var(--brand); position: sticky; top: 64px; z-index: 5; }
+.t-bulk select, .t-table .t-select-sm { width: auto !important; }
+.sel-cell { width: 34px; }
+.sel-cell input { width: 20px; height: 20px; accent-color: var(--brand); }
+.login-card-p.teacher { border-color: #5EEAD4; }
 .field { display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px; }
 .field label { font-weight: 600; font-size: 18px; }
 .input {
@@ -306,8 +342,10 @@ button.tile:active { transform: translateY(0) scale(.99); }
 .list-row .name { flex: 1; font-weight: 600; }
 
 /* ── modal, toast, carga ───────────────────────────────────────────────── */
-.overlay { position: fixed; inset: 0; z-index: 100; background: rgba(35, 38, 74, .45); display: grid; place-items: center; padding: 20px; animation: fade .2s both; }
-.modal { background: var(--surface); border-radius: 26px; padding: 28px; width: min(100%, 440px); text-align: center; box-shadow: var(--shadow-lg); animation: rise .3s var(--ease) both; }
+.overlay { position: fixed; inset: 0; z-index: 100; background: rgba(35, 38, 74, .45); display: grid; place-items: center; padding: 20px; animation: fade .2s both;
+  overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+.modal { background: var(--surface); border-radius: 26px; padding: 28px; width: min(100%, 440px); text-align: center; box-shadow: var(--shadow-lg); animation: rise .3s var(--ease) both;
+  max-height: calc(100dvh - 40px); overflow-y: auto; overscroll-behavior: contain; }
 .modal h2 { font-size: 26px; margin-bottom: 10px; }
 .modal p { color: var(--ink-2); margin-bottom: 22px; }
 .modal .row-actions .btn { flex: 1; }
@@ -820,8 +858,9 @@ button.tile:active { box-shadow: 0 2px 0 #D3D9EE; transform: translateY(3px); }
 .hm-slot.shown { animation: pop .3s var(--ease); }
 .hm-slot.missed { color: #DC2626; }
 .hm-gap { width: 26px; }
-.hm-keys { display: grid; grid-template-columns: repeat(9, 1fr); gap: 8px; width: 100%; max-width: 720px; }
-.hm-key { min-height: 54px; border-radius: 14px; border: 2px solid var(--card-line); background: #fff; font-size: 22px; font-weight: 800; box-shadow: 0 4px 0 #D3D9EE; }
+.hm-keys { display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); gap: 8px; width: 100%; max-width: 720px; }
+@media (max-width: 480px) { .hm-keys { grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; } .hm-key { font-size: 20px; } }
+.hm-key { min-width: 0; padding: 0; min-height: 54px; border-radius: 14px; border: 2px solid var(--card-line); background: #fff; font-size: 22px; font-weight: 800; box-shadow: 0 4px 0 #D3D9EE; }
 .hm-key:active:not(:disabled) { transform: translateY(2px); box-shadow: 0 1px 0 #D3D9EE; }
 .hm-key.good { background: #DCFCE7; border-color: #16A34A; color: #166534; }
 .hm-key.bad { background: #FEE2E2; border-color: #FCA5A5; color: #B91C1C; opacity: .7; }
@@ -938,9 +977,72 @@ button.tile:active { box-shadow: 0 2px 0 #D3D9EE; transform: translateY(3px); }
 }
 </style>
 
+  <!-- client/styles_teacher -->
+<style>
+/* Estilos solo del panel del profesor (más denso que la interfaz infantil). */
+.t-body { font-size: 16px; }
+.tabs { display: flex; gap: 6px; background: var(--surface); padding: 6px; border-radius: 999px; box-shadow: var(--shadow); }
+.tab { border: 0; background: none; border-radius: 999px; padding: 10px 18px; font-weight: 600; font-size: 16px; color: var(--ink-2); }
+.tab[aria-selected="true"] { background: var(--brand); color: #fff; }
+.t-grid2 { display: grid; gap: 18px; grid-template-columns: minmax(0, 380px) minmax(0, 1fr); align-items: start; }
+@media (max-width: 900px) { .t-grid2 { grid-template-columns: 1fr; } }
+.t-card h2 { font-size: 20px; margin-bottom: 14px; }
+.t-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+.t-field label, .t-label { font-weight: 600; font-size: 15px; }
+.t-help { font-size: 14px; color: var(--ink-3); }
+.t-input, .t-select, .t-textarea { border: 2px solid var(--line); border-radius: 12px; padding: 10px 12px; font-size: 16px; background: #FAFBFF; width: 100%; }
+.t-textarea { min-height: 170px; font-family: ui-monospace, Consolas, monospace; resize: vertical; }
+.t-input:focus, .t-select:focus, .t-textarea:focus { outline: none; border-color: var(--brand); }
+.checks { display: flex; flex-wrap: wrap; gap: 8px; }
+.check { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 999px; background: #F1F2F8; font-size: 14px; font-weight: 600; cursor: pointer; }
+.check input { width: 18px; height: 18px; accent-color: var(--brand); }
+.t-btn { min-height: 44px; font-size: 16px; padding: 0 18px; }
+.t-table-wrap { overflow-x: auto; }
+table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
+.t-table th { text-align: left; font-size: 13px; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-3); padding: 8px 10px; border-bottom: 2px solid var(--line); white-space: nowrap; }
+.t-table td { padding: 10px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+.t-table tr.off td { opacity: .5; }
+.t-table .actions { display: flex; gap: 6px; flex-wrap: wrap; }
+.t-mini { border: 0; border-radius: 10px; padding: 7px 10px; font-size: 13px; font-weight: 600; background: #F1F2F8; }
+.t-mini.warn { background: #FDECEC; color: #A4282C; }
+.t-mini.ok { background: var(--good-bg); color: #0B6B45; }
+.pill { display: inline-block; padding: 2px 8px; border-radius: 999px; background: #ECE8FF; color: var(--brand); font-size: 12px; font-weight: 700; margin: 1px; }
+.code { font-family: ui-monospace, Consolas, monospace; font-weight: 700; letter-spacing: .04em; }
+.t-toolbar { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 14px; }
+.t-toolbar .grow { flex: 1; }
+.t-note { background: #FFF8E6; border-radius: 14px; padding: 12px 14px; font-size: 14px; color: #6B4E00; margin-bottom: 14px; }
+.board-list { display: flex; flex-direction: column; gap: 10px; }
+.board-row { display: flex; align-items: center; gap: 14px; background: var(--surface); border-radius: 16px; box-shadow: var(--shadow); padding: 12px 14px; }
+.board-row .tpl-icon { width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; color: #fff; flex: none; }
+.board-row .tpl-icon svg { width: 24px; height: 24px; }
+.board-row .name { flex: 1; font-weight: 600; }
+.board-results { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 18px; padding: 6vh 20px; }
+.board-results h1 { font-size: clamp(40px, 6vw, 72px); }
+.board-results .teams .team { font-size: 30px; }
+.board-results .teams .pts { min-width: 60px; height: 60px; font-size: 30px; }
+
+/* Tarjetas de acceso imprimibles */
+.print-area { display: none; }
+.login-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }
+.login-card-p { border: 2px dashed #B9B2E6; border-radius: 16px; padding: 14px; background: #fff; display: flex; gap: 12px; align-items: center; break-inside: avoid; page-break-inside: avoid; }
+.login-card-p .m { width: 56px; height: 56px; flex: none; }
+.login-card-p .n { font-size: 18px; font-weight: 700; }
+.login-card-p .l { font-size: 12px; color: #6A6F94; text-transform: uppercase; letter-spacing: .05em; }
+.login-card-p .v { font-family: ui-monospace, Consolas, monospace; font-size: 22px; font-weight: 700; letter-spacing: .08em; }
+@media print {
+  body { background: #fff; }
+  #app, #board-root, .toast, .overlay { display: none !important; }
+  .print-area { display: block !important; padding: 0; }
+  .login-cards { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .print-head { font-size: 13px; color: #555; margin-bottom: 8px; }
+}
+</style>
+
 </head>
 <body>
   <div id="app"></div>
+  <div id="board-root"></div>
+  <div id="print-area" class="print-area"></div>
   <div id="sr-live" class="sr-only" aria-live="polite"></div>
 
   <script src="config.js"></script>
@@ -1130,7 +1232,16 @@ button.tile:active { box-shadow: 0 2px 0 #D3D9EE; transform: translateY(3px); }
       if (window.BOOT && window.BOOT.apiUrl) return callHttp(action, payload);
       return call('api', [CQ.Api.token, action, payload || {}]);
     },
-    admin: function (action, payload) { return call('adminApi', [action, payload || {}]); }
+    /**
+     * Panel de profesor. mode 'admin' (propietario, cuenta de Google) → adminApi;
+     * mode 'teacher' (otros profesores, con código y contraseña) → api(token, 't.acción'),
+     * donde el servidor limita todo a los grupos de ese profesor.
+     */
+    mode: 'admin',
+    admin: function (action, payload) {
+      if (CQ.Api.mode === 'teacher') return CQ.Api.student('t.' + action, payload);
+      return call('adminApi', [action, payload || {}]);
+    }
   };
 
   /* ── voz (lectura en voz alta; solo al pulsar) ────────────────────── */
@@ -1390,12 +1501,32 @@ button.tile:active { box-shadow: 0 2px 0 #D3D9EE; transform: translateY(3px); }
   };
 
   /* ── componentes de interfaz ─────────────────────────────────────── */
+  var lockCount = 0, lockY = 0;   // bloqueo del scroll de fondo (ventanas modales)
   CQ.UI = {
     stars: function (n, max, cls) {
       max = max || 5;
       var wrap = h('span', { class: 'stars ' + (cls || ''), role: 'img', aria: { label: n + ' out of ' + max + ' stars' } });
       for (var i = 0; i < max; i++) wrap.appendChild(h('span', { class: i < n ? 'star-on' : 'star-off', svg: CQ.Icons.star }));
       return wrap;
+    },
+    /**
+     * Bloquea el desplazamiento de la página de fondo mientras hay una ventana abierta
+     * (en móvil, al deslizar dentro del perfil se movía también lo de atrás).
+     * Se cuenta cuántas ventanas hay abiertas para no desbloquear antes de tiempo.
+     */
+    lockScroll: function () {
+      if (lockCount++ > 0) return;
+      lockY = window.scrollY || 0;
+      var b = document.body.style;
+      b.position = 'fixed'; b.top = (-lockY) + 'px'; b.left = '0'; b.right = '0'; b.width = '100%';
+      document.documentElement.classList.add('scroll-locked');
+    },
+    unlockScroll: function () {
+      if (lockCount === 0 || --lockCount > 0) return;
+      var b = document.body.style;
+      b.position = ''; b.top = ''; b.left = ''; b.right = ''; b.width = '';
+      document.documentElement.classList.remove('scroll-locked');
+      window.scrollTo(0, lockY);
     },
     /** Burbuja roja de aviso. */
     notif: function () { return h('span', { class: 'notif', aria: { label: 'New!' } }, '!'); },
@@ -1406,10 +1537,12 @@ button.tile:active { box-shadow: 0 2px 0 #D3D9EE; transform: translateY(3px); }
     modal: function (opts) {
       var prev = document.activeElement;
       var closed = false;
+      CQ.UI.lockScroll();
       var close = function () {
         if (closed) return;
         closed = true;
         ov.remove();
+        CQ.UI.unlockScroll();
         document.removeEventListener('keydown', onKey);
         if (prev && prev.focus) prev.focus();
         if (opts.onClose) opts.onClose();
@@ -3601,6 +3734,1280 @@ button.tile:active { box-shadow: 0 2px 0 #D3D9EE; transform: translateY(3px); }
 })();
 </script>
 
+  <!-- Panel de profesor (Teacher login): se arranca desde js_student -->
+  <!-- client/js_teacher -->
+<script>
+/* ==========================================================================
+   js_teacher — Panel del profesor (en español) + Modo pizarra (en inglés,
+   porque lo ve la clase en el proyector).
+   ========================================================================== */
+(function () {
+  'use strict';
+  var CQ = window.CQ, h = CQ.h, U = CQ.Util, UI = CQ.UI;
+  var BOOT = window.BOOT || {};
+  var app = document.getElementById('app');
+  var boardRoot = document.getElementById('board-root');
+  var printArea = document.getElementById('print-area');
+
+  var ERR = {
+    BAD_GROUP: 'Grupo no válido. Elige uno de la lista (2A, 2B, 3A…). Si no aparece, ejecuta setup.',
+    BAD_COURSE: 'Algún curso seleccionado no existe.',
+    BAD_REQUEST: 'Datos no válidos.',
+    FORBIDDEN: 'Sin permiso para este grupo.',
+    NOT_SETUP: 'Falta la configuración inicial: ejecuta setup() en el editor.',
+    NOT_FOUND: 'No encontrado.',
+    SESSION_EXPIRED: 'Tu sesión ha caducado. Vuelve a entrar.',
+    NETWORK: 'Sin conexión con el servidor. Inténtalo de nuevo.',
+    SERVER: 'Error del servidor (revisa la pestaña Errors de la hoja).'
+  };
+  function errMsg(e) {
+    if (e && e.code === 'SESSION_EXPIRED' && isTeacherMode()) setTimeout(function () { logout(); }, 1200);
+    return ERR[(e && e.code) || 'SERVER'] || ERR.SERVER;
+  }
+
+  /**
+   * role 'admin'   → el propietario (todo: alumnos, profesores, grupos, PIN…).
+   * role 'teacher' → otro profesor: elige uno de SUS grupos y ve solo ese grupo
+   *                  (alumnos con super estrellas, deberes, pizarra y resultados).
+   */
+  var state = { role: 'admin', me: null, group: '', onLogout: null,
+    tab: 'students', overview: null, filterGroup: '', board: { courseId: '', data: null, teams: 2 }, results: { courseId: '' } };
+  function isTeacherMode() { return state.role === 'teacher'; }
+
+  function logout() {
+    if (!isTeacherMode()) return;
+    CQ.Api.admin('logout').catch(function () {});
+    closeBoard();
+    document.body.classList.remove('t-body');
+    if (state.onLogout) state.onLogout();
+  }
+
+  /* ───────────────────────── estructura ───────────────────────── */
+  function shell() {
+    U.clear(app);
+    var teacher = isTeacherMode();
+    // Profesor sin grupo elegido: primero elige el grupo.
+    if (teacher && !state.group) { renderGroupPicker(); return; }
+
+    var tabs = teacher
+      ? [['students', 'Alumnos'], ['homework', 'Deberes'], ['board', 'Pizarra'], ['results', 'Resultados']]
+      : [['students', 'Alumnos'], ['teachers', 'Profesores'], ['homework', 'Deberes'], ['board', 'Pizarra'], ['results', 'Resultados']];
+    var tabBar = h('div', { class: 'tabs', role: 'tablist' }, tabs.map(function (t) {
+      return h('button', { class: 'tab', role: 'tab', aria: { selected: String(state.tab === t[0]) },
+        onclick: function () { state.tab = t[0]; shell(); } }, t[1]);
+    }));
+    var myGroups = teacher ? ((state.overview && state.overview.me && state.overview.me.groups) || (state.me && state.me.groups) || []) : [];
+    app.appendChild(h('header', { class: 'topbar t-topbar' },
+      h('div', { class: 'brand' }, h('span', { class: 'brand-mark', svg: CQ.Art.svg('mascot') }),
+        h('span', { class: 'brand-name' }, (BOOT.appName || 'ClassQuest') + (teacher ? ' · Teacher' : ' · Admin'))),
+      teacher ? h('button', { class: 'g-current', title: 'Cambiar de grupo',
+        onclick: function () { if (myGroups.length > 1) { state.group = ''; state.board.data = null; shell(); } } },
+        'Grupo ' + state.group, myGroups.length > 1 ? h('span', { class: 'muted' }, ' ▾') : null) : null,
+      h('div', { class: 'spacer' }),
+      tabBar,
+      teacher
+        ? h('button', { class: 'icon-btn', aria: { label: 'Salir' }, title: 'Salir', svg: CQ.Icons.logout, onclick: logout })
+        : h('button', { class: 'icon-btn', aria: { label: 'Actualizar contenido de la hoja' }, title: 'Actualizar contenido (tras editar la hoja)', svg: CQ.Icons.refresh,
+          onclick: function () {
+            CQ.Api.admin('refreshContent').then(function (r) {
+              state.board.data = null;
+              UI.toast('Contenido actualizado: ' + r.activities + ' actividades, ' + r.items + ' preguntas.');
+            }).catch(function (e) { UI.toast(errMsg(e)); });
+          } })));
+    var main = h('main', { class: 'main', style: { maxWidth: '1280px' } });
+    app.appendChild(main);
+    if (state.tab === 'students') renderStudents(main);
+    else if (state.tab === 'teachers' && !teacher) renderTeachers(main);
+    else if (state.tab === 'board') renderBoardPicker(main);
+    else if (state.tab === 'homework') renderHomework(main);
+    else renderResults(main);
+  }
+
+  /** Profesor: "¿Con qué grupo vas a trabajar?" — tarjetas grandes con sus grupos. */
+  function renderGroupPicker() {
+    var main = h('main', { class: 'main' });
+    app.appendChild(h('header', { class: 'topbar t-topbar' },
+      h('div', { class: 'brand' }, h('span', { class: 'brand-mark', svg: CQ.Art.svg('mascot') }),
+        h('span', { class: 'brand-name' }, (BOOT.appName || 'ClassQuest') + ' · Teacher')),
+      h('div', { class: 'spacer' }),
+      h('button', { class: 'icon-btn', aria: { label: 'Salir' }, title: 'Salir', svg: CQ.Icons.logout, onclick: logout })));
+    app.appendChild(main);
+    main.appendChild(UI.loading());
+    loadOverview().then(function (ov) {
+      U.clear(main);
+      var gs = ov.groups || [];
+      if (gs.length === 1) { state.group = gs[0].groupId; shell(); return; }
+      main.appendChild(h('div', { class: 'page-head' }, h('div', { class: 'grow' },
+        h('h1', {}, 'Hola, ' + ((ov.me && ov.me.displayName) || '') + ' 👋'),
+        h('p', { class: 'sub' }, gs.length ? '¿Con qué grupo vas a trabajar?' : 'Todavía no tienes grupos asignados. Pídeselo al administrador.'))));
+      var grid = h('div', { class: 'grid g-pick' });
+      gs.forEach(function (g) {
+        var n = ov.students.filter(function (s) { return s.group === g.groupId; }).length;
+        grid.appendChild(h('button', { class: 'tile g-tile', onclick: function () { state.group = g.groupId; state.board.data = null; state.tab = 'students'; shell(); } },
+          h('span', { class: 'g-tile-id' }, g.groupId),
+          h('span', { class: 'g-tile-name' }, g.name),
+          h('span', { class: 'muted' }, n + (n === 1 ? ' alumno' : ' alumnos') + ' · ' + g.courseIds.map(courseName).join(', '))));
+      });
+      main.appendChild(grid);
+    }).catch(function (e) { U.clear(main).appendChild(h('p', { class: 'empty' }, errMsg(e))); });
+  }
+
+  /* ───────────────────────── DEBERES ─────────────────────────
+     Las actividades de la sección Homework ya están preparadas. Aquí se publican
+     para cada grupo; el alumno solo ve las publicadas para su grupo. */
+  function renderHomework(main) {
+    main.appendChild(UI.loading());
+    Promise.all([loadOverview(), CQ.Api.admin('getHomework')]).then(function (x) {
+      var hw = x[1];
+      U.clear(main);
+      var card = h('div', { class: 'card t-card' },
+        h('div', { class: 't-toolbar' }, h('h2', { class: 'grow', style: { margin: 0 } }, 'Deberes'),
+          h('button', { class: 'btn btn-ghost t-btn', onclick: function () { shell(); } }, 'Recargar')),
+        h('div', { class: 't-note' }, 'Los deberes están preparados pero ocultos. Pulsa "Publicar" en el grupo que quieras: sus alumnos los verán en la sección Homework y en su página de inicio. "Hecho" = alumnos que lo han terminado.'));
+      if (!hw.courses.length) card.appendChild(h('p', { class: 'empty' }, 'Todavía no hay deberes preparados. Ejecuta setup para añadir los de ejemplo.'));
+      hw.courses.forEach(function (c) {
+        // Profesor: solo el grupo con el que está trabajando.
+        var groups = isTeacherMode() ? c.groups.filter(function (g) { return g === state.group; }) : c.groups;
+        if (isTeacherMode() && !groups.length) return;
+        card.appendChild(h('h3', { class: 'hw-course' }, c.course.title));
+        if (!groups.length) card.appendChild(h('p', { class: 'muted' }, 'Ningún grupo tiene este curso (pestaña Groups).'));
+        c.units.forEach(function (u) {
+          card.appendChild(h('div', { class: 'hw-unit' }, u.number ? 'Unit ' + u.number + ' - ' + u.title : u.title));
+          u.activities.forEach(function (a) {
+            card.appendChild(h('div', { class: 'hw-row' },
+              h('div', { class: 'hw-title' }, h('b', {}, a.title), h('span', { class: 'muted' }, ' · ' + a.itemsCount + ' preguntas')),
+              h('div', { class: 'hw-groups' }, groups.map(function (g) { return hwChip(a, g, a.state[g]); }))));
+          });
+        });
+      });
+      main.appendChild(card);
+    }).catch(function (e) { U.clear(main).appendChild(h('p', { class: 'empty' }, errMsg(e))); });
+  }
+
+  function hwChip(a, g, st) {
+    st = st || { published: false, done: 0, total: 0 };
+    var btn = h('button', { class: 'btn t-btn ' + (st.published ? 'btn-ghost' : ''), onclick: function () {
+      var to = !st.published;
+      var go = to ? Promise.resolve(true)
+        : UI.confirm('¿Retirar "' + a.title + '" de ' + g + '?', 'Los alumnos dejarán de verlo. Lo que ya hayan hecho se conserva.', 'Retirar', 'Cancelar');
+      go.then(function (ok) {
+        if (!ok) return;
+        btn.disabled = true;
+        CQ.Api.admin('setHomework', { activityId: a.activityId, group: g, published: to }).then(function () {
+          UI.toast(to ? 'Publicado para ' + g + '.' : 'Retirado de ' + g + '.');
+          shell();
+        }).catch(function (e) { btn.disabled = false; UI.toast(errMsg(e)); });
+      });
+    } }, st.published ? 'Retirar' : 'Publicar');
+    return h('div', { class: 'hw-chip' + (st.published ? ' on' : '') },
+      h('b', {}, g),
+      st.published
+        ? h('span', { class: 'hw-state' }, '✔ Publicado ' + U.fmtDate(st.publishedAt) + ' · Hecho ' + st.done + '/' + st.total)
+        : h('span', { class: 'hw-state muted' }, 'Sin publicar'),
+      btn);
+  }
+
+  function loadOverview(force) {
+    if (state.overview && !force) return Promise.resolve(state.overview);
+    return CQ.Api.admin('getOverview').then(function (d) { state.overview = d; return d; });
+  }
+
+  function courseName(id) {
+    var c = (state.overview ? state.overview.courses : []).filter(function (x) { return x.courseId === id; })[0];
+    return c ? (c.subjectId === 'SCI' ? 'Sci' : 'Eng') + ' Y' + c.year : id;
+  }
+
+  /* ───────────────────────── ALUMNOS ───────────────────────── */
+  function renderStudents(main) {
+    main.appendChild(UI.loading());
+    loadOverview().then(function (ov) {
+      U.clear(main);
+      if (isTeacherMode()) { main.appendChild(teacherStudentTable(ov)); return; }
+      main.appendChild(h('div', { class: 't-grid2' }, createForm(ov), studentTable(ov)));
+    }).catch(function (e) { U.clear(main).appendChild(h('p', { class: 'empty' }, errMsg(e))); });
+  }
+
+  function courseChecks(courses, selected, name) {
+    return h('div', { class: 'checks' }, courses.map(function (c) {
+      return h('label', { class: 'check' },
+        h('input', { type: 'checkbox', name: name, value: c.courseId, checked: selected.indexOf(c.courseId) >= 0 }),
+        c.subjectName + ' · Y' + c.year);
+    }));
+  }
+  function checkedValues(root, name) {
+    return Array.prototype.map.call(root.querySelectorAll('input[name="' + name + '"]:checked'), function (i) { return i.value; });
+  }
+
+  var LINE_RE = /^\s*([A-Za-zÁÉÍÓÚÑÜáéíóúñü]{1,4})[\s,;.\-]*(\d{1,2})\s*$/;
+
+  function groupInfo(id) {
+    return ((state.overview && state.overview.groups) || []).filter(function (g) { return g.groupId === id; })[0] || null;
+  }
+
+  function createForm(ov) {
+    var groups = ov.groups || [];
+    var first = state.newGroup || (state.filterGroup && groupInfo(state.filterGroup) ? state.filterGroup : (groups[0] ? groups[0].groupId : ''));
+    var group = h('select', { class: 't-select', id: 'grp' }, groups.map(function (g) {
+      return h('option', { value: g.groupId, selected: g.groupId === first }, g.groupId + ' · ' + g.name);
+    }));
+    var firstInfo = groupInfo(first);
+    var checks = h('div', {}, courseChecks(ov.courses, firstInfo ? firstInfo.courseIds : [], 'newc'));
+    var lines = h('textarea', { class: 't-textarea', id: 'lines', placeholder: 'JM 1\nAL 2\nPR 3' });
+    var msg = h('div', { class: 't-help', aria: { live: 'polite' } });
+    var btn = h('button', { class: 'btn t-btn', type: 'submit' }, 'Crear y generar PIN');
+
+    group.addEventListener('change', function () {
+      state.newGroup = group.value;
+      var g = groupInfo(group.value);
+      Array.prototype.forEach.call(checks.querySelectorAll('input'), function (i) {
+        i.checked = !!g && g.courseIds.indexOf(i.value) >= 0;
+      });
+    });
+
+    var form = h('form', { class: 'card t-card' },
+      h('h2', {}, 'Crear alumnos'),
+      h('div', { class: 't-note' }, 'Solo iniciales y número de lista. El código de acceso será grupo + iniciales + número (ej. 3AJM07). Los PIN se muestran UNA vez: imprime las tarjetas.'),
+      h('div', { class: 't-field' }, h('label', { for: 'grp' }, 'Grupo'), group,
+        h('span', { class: 't-help' }, 'Las clases del grupo se marcan solas. Para añadir grupos, edita la pestaña Groups de la hoja.')),
+      h('div', { class: 't-field' }, h('span', { class: 't-label' }, 'Clases asignadas'), checks),
+      h('div', { class: 't-field' }, h('label', { for: 'lines' }, 'Alumnos (uno por línea: iniciales y número)'), lines),
+      msg, btn);
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var rows = [], bad = [];
+      lines.value.split(/\r?\n/).forEach(function (l, i) {
+        if (!l.trim()) return;
+        var m = l.match(LINE_RE);
+        var n = m ? parseInt(m[2], 10) : 0;
+        if (m && n >= 1 && n <= 99) rows.push({ initials: m[1], listNumber: n });
+        else bad.push(i + 1);
+      });
+      if (bad.length) { setMsg('Revisa las líneas: ' + bad.join(', ') + '. Formato: iniciales (1–4 letras) y número de lista del 1 al 99, por ejemplo "JM 7".', true); return; }
+      if (!rows.length) { setMsg('Escribe al menos un alumno.', true); return; }
+      var courseIds = checkedValues(checks, 'newc');
+      if (!courseIds.length) { setMsg('Selecciona al menos una clase.', true); return; }
+      btn.disabled = true;
+      setMsg('Creando…', false);
+      CQ.Api.admin('createStudents', { group: group.value, courseIds: courseIds, rows: rows }).then(function (res) {
+        var parts = [];
+        if (res.created.length) parts.push(res.created.length + (res.created.length === 1 ? ' alumno creado.' : ' alumnos creados.'));
+        res.errors.forEach(function (x) {
+          parts.push(x.code === 'DUPLICATE'
+            ? 'No creado: el código ' + x.loginCode + ' ya existe (línea ' + x.line + ').'
+            : 'No creado: línea ' + x.line + ' con datos no válidos (iniciales de 1 a 4 letras y número del 1 al 99).');
+        });
+        // El mensaje se guarda en el estado para que siga visible tras redibujar el panel.
+        state.createMsg = { text: parts.join(' '), bad: res.errors.length > 0 };
+        state.overview = null;
+        shell();
+        if (res.created.length) showCards(res.created, 'Alumnos nuevos');
+      }).catch(function (err) { btn.disabled = false; setMsg(errMsg(err), true); });
+    });
+
+    function setMsg(text, bad) {
+      msg.textContent = text;
+      msg.style.color = bad ? 'var(--bad)' : '';
+      msg.style.fontWeight = bad ? '600' : '';
+    }
+    if (state.createMsg) { setMsg(state.createMsg.text, state.createMsg.bad); state.createMsg = null; }
+    return form;
+  }
+
+  /** Pestañas de grupo: Todos · 2A · 2B · 3A… (+ grupos antiguos sin letra, para reubicarlos). */
+  function groupTabs(ov, current, onPick, counts) {
+    var defined = (ov.groups || []).map(function (g) { return g.groupId; });
+    var legacy = ov.students.map(function (s) { return s.group; })
+      .filter(function (g, i, a) { return g && a.indexOf(g) === i && defined.indexOf(g) < 0; }).sort();
+    var chip = function (id, label, extraCls) {
+      return h('button', { class: 'g-chip' + (current === id ? ' on' : '') + (extraCls ? ' ' + extraCls : ''),
+        aria: { pressed: String(current === id) }, onclick: function () { onPick(id); } },
+        label, counts ? h('span', { class: 'g-count' }, String(counts(id))) : null);
+    };
+    return h('div', { class: 'g-tabs', role: 'group', aria: { label: 'Grupo' } },
+      chip('', 'Todos'),
+      defined.map(function (g) { return chip(g, g); }),
+      legacy.map(function (g) { return chip(g, g + ' ⚠', 'legacy'); }));
+  }
+
+  function studentTable(ov) {
+    var count = function (g) { return ov.students.filter(function (s) { return !g || s.group === g; }).length; };
+    var tabs = groupTabs(ov, state.filterGroup, function (g) { state.filterGroup = g; if (groupInfo(g)) state.newGroup = g; shell(); }, count);
+
+    var list = ov.students.filter(function (s) { return !state.filterGroup || s.group === state.filterGroup; });
+    var printAll = h('button', { class: 'btn btn-ghost t-btn', onclick: function () {
+      UI.toast('Los PIN no se guardan: para reimprimir una tarjeta usa "Nuevo PIN".');
+    } }, 'Sobre los PIN');
+
+    var legacyCount = ov.students.filter(function (s) { return !s.inGroupList; }).length;
+
+    /* ── Selección múltiple para cambiar de grupo de golpe ── */
+    state.selected = state.selected || {};
+    var visibleIds = list.map(function (s) { return s.studentId; });
+    Object.keys(state.selected).forEach(function (id) { if (visibleIds.indexOf(id) < 0) delete state.selected[id]; });
+    var bulk = h('div', { class: 't-bulk' });
+    var allBox = h('input', { type: 'checkbox', aria: { label: 'Seleccionar todos' } });
+    allBox.addEventListener('change', function () {
+      visibleIds.forEach(function (id) { if (allBox.checked) state.selected[id] = true; else delete state.selected[id]; });
+      Array.prototype.forEach.call(tbody.querySelectorAll('input.sel'), function (c) { c.checked = allBox.checked; });
+      drawBulk();
+    });
+    function drawBulk() {
+      var ids = Object.keys(state.selected);
+      U.clear(bulk);
+      allBox.checked = ids.length > 0 && ids.length === visibleIds.length;
+      allBox.indeterminate = ids.length > 0 && ids.length < visibleIds.length;
+      if (!ids.length) {
+        bulk.className = 't-bulk empty';
+        bulk.appendChild(h('span', { class: 'muted' }, '☑ Marca varios alumnos (o todos con la casilla de arriba) para cambiarlos de grupo de una vez.'));
+        return;
+      }
+      bulk.className = 't-bulk on';
+      var dest = h('select', { class: 't-select t-select-sm', aria: { label: 'Grupo de destino' } },
+        (ov.groups || []).map(function (g) { return h('option', { value: g.groupId, selected: g.groupId === state.bulkGroup }, g.groupId); }));
+      dest.addEventListener('change', function () { state.bulkGroup = dest.value; });
+      var go = h('button', { class: 'btn t-btn', onclick: function () { moveStudents(ids, dest.value, go); } }, 'Mover');
+      bulk.appendChild(h('b', {}, ids.length + (ids.length === 1 ? ' seleccionado' : ' seleccionados')));
+      bulk.appendChild(h('span', {}, '→ Mover al grupo'));
+      bulk.appendChild(dest);
+      bulk.appendChild(go);
+      bulk.appendChild(h('button', { class: 'btn btn-ghost t-btn', onclick: function () {
+        state.selected = {};
+        Array.prototype.forEach.call(tbody.querySelectorAll('input.sel'), function (c) { c.checked = false; });
+        drawBulk();
+      } }, 'Quitar selección'));
+    }
+
+    var tbody = h('tbody', {}, list.map(function (s) {
+      var tr = studentRow(s, ov);
+      var box = h('input', { type: 'checkbox', class: 'sel', checked: !!state.selected[s.studentId], aria: { label: 'Seleccionar ' + s.displayName } });
+      box.addEventListener('change', function () {
+        if (box.checked) state.selected[s.studentId] = true; else delete state.selected[s.studentId];
+        drawBulk();
+      });
+      tr.insertBefore(h('td', { class: 'sel-cell' }, box), tr.firstChild);
+      return tr;
+    }));
+    var table = h('table', { class: 't-table' },
+      h('thead', {}, h('tr', {}, h('th', { class: 'sel-cell' }, allBox),
+        ['Alumno', 'Código', 'Grupo', 'Clases', 'Super 🌟', 'Último acceso', 'Estado', ''].map(function (t) {
+          return h('th', t === 'Super 🌟' ? { title: 'Saldo real de super estrellas. Si es negativo, el alumno ve 0.' } : {}, t);
+        }))),
+      tbody);
+    drawBulk();
+
+    return h('div', { class: 'card t-card' },
+      h('div', { class: 't-toolbar' }, h('h2', { class: 'grow', style: { margin: 0 } },
+        (state.filterGroup ? 'Grupo ' + state.filterGroup : 'Alumnos') + ' (' + list.length + ')'), printAll),
+      tabs,
+      legacyCount ? h('div', { class: 't-note' }, '⚠ ' + legacyCount + ' alumno' + (legacyCount > 1 ? 's' : '') +
+        ' sin grupo con letra. Márcalos y usa "Mover al grupo" (su código de acceso no cambia).') : null,
+      superClassBar(ov),
+      list.length ? bulk : null,
+      list.length ? h('div', { class: 't-table-wrap' }, table) : h('p', { class: 'empty' }, 'No hay alumnos en este grupo.'));
+  }
+
+  /**
+   * Cambia de grupo a uno o varios alumnos con UNA sola llamada y actualiza la tabla
+   * con los datos que ya tenemos (sin volver a cargar todo el panel).
+   */
+  function moveStudents(ids, group, btn) {
+    if (!ids.length || !group) return;
+    if (btn) btn.disabled = true;
+    CQ.Api.admin('setGroup', { studentIds: ids, group: group }).then(function (r) {
+      var ov = state.overview;
+      ids.forEach(function (id) {
+        var s = ov && ov.students.filter(function (x) { return x.studentId === id; })[0];
+        if (!s) return;
+        s.group = r.group;
+        s.inGroupList = true;
+        if (r.courses && r.courses[id]) s.courses = r.courses[id];
+      });
+      state.selected = {};
+      state.bulkGroup = r.group;
+      state.board.data = null;
+      UI.toast(r.count === 1 ? 'Movido al grupo ' + r.group + '.' : r.count + ' alumnos movidos al grupo ' + r.group + '.');
+      shell();
+    }).catch(function (e) { if (btn) btn.disabled = false; UI.toast(errMsg(e)); });
+  }
+
+  /** Profesor: lista de SU grupo (sin crear alumnos ni cambiar PIN/grupo), con super estrellas. */
+  function teacherStudentTable(ov) {
+    var list = ov.students.filter(function (s) { return s.group === state.group; })
+      .sort(function (a, b) { return a.listNumber - b.listNumber; });
+    var table = h('table', { class: 't-table' },
+      h('thead', {}, h('tr', {}, ['Nº', 'Alumno', 'Código', 'Super 🌟', 'Último acceso'].map(function (t) { return h('th', {}, t); }))),
+      h('tbody', {}, list.map(function (s) {
+        return h('tr', {},
+          h('td', { class: 'muted' }, String(s.listNumber)),
+          h('td', { style: { fontWeight: 700 } }, s.displayName, s.isTest ? h('span', { class: 'pill pill-test' }, 'prueba') : null),
+          h('td', { class: 'code' }, s.loginCode),
+          superCell(s),
+          h('td', { class: 'muted' }, U.fmtDate(s.lastLoginAt)));
+      })));
+    var btn = h('button', { class: 'btn btn-ghost t-btn', onclick: function () {
+      UI.confirm('¿Quitar 1 super estrella a todo ' + state.group + '?',
+        list.filter(function (s) { return !s.isTest; }).length + ' alumnos (sin cuentas de prueba). Quien se quede en negativo verá 0 en su perfil.', 'Quitar', 'Cancelar')
+        .then(function (ok) {
+          if (!ok) return;
+          btn.disabled = true;
+          CQ.Api.admin('adjustSuper', { group: state.group, amount: -1 }).then(function (r) {
+            UI.toast('Quitada 1 super estrella a ' + r.count + ' alumnos.');
+            state.overview = null; shell();
+          }).catch(function (e) { btn.disabled = false; UI.toast(errMsg(e)); });
+        });
+    } }, '−1 a todo ' + state.group);
+    return h('div', { class: 'card t-card' },
+      h('div', { class: 't-toolbar' }, h('h2', { class: 'grow', style: { margin: 0 } }, 'Grupo ' + state.group + ' (' + list.length + ')'),
+        h('button', { class: 'btn btn-ghost t-btn', onclick: function () { state.overview = null; shell(); } }, 'Recargar')),
+      h('div', { class: 't-toolbar t-super-bar' }, h('span', { class: 'grow muted' }, '🌟 Super estrellas: − / + en cada alumno, o a todo el grupo'), btn),
+      list.length ? h('div', { class: 't-table-wrap' }, table) : h('p', { class: 'empty' }, 'Todavía no hay alumnos en este grupo.'));
+  }
+
+  /* ── Super estrellas: quitar a todo un grupo o a un alumno ── */
+  function superClassBar(ov) {
+    var groups = (ov.groups || []).filter(function (g) { return ov.students.some(function (s) { return s.group === g.groupId; }); });
+    if (!groups.length) return null;
+    var fixed = groupInfo(state.filterGroup) ? state.filterGroup : '';
+    var sel = fixed ? null : h('select', { class: 't-select', style: { width: 'auto' }, aria: { label: 'Grupo' } },
+      groups.map(function (g) { return h('option', { value: g.groupId, selected: state.superGroup === g.groupId }, g.groupId); }));
+    if (sel) sel.addEventListener('change', function () { state.superGroup = sel.value; });
+    var btn = h('button', { class: 'btn btn-ghost t-btn', onclick: function () {
+      var gid = fixed || sel.value;
+      var n = ov.students.filter(function (s) { return s.status === 'active' && !s.isTest && s.group === gid; }).length;
+      UI.confirm('¿Quitar 1 super estrella a todo ' + gid + '?',
+        n + ' alumnos (sin cuentas de prueba). Quien se quede en negativo verá 0 en su perfil.', 'Quitar', 'Cancelar')
+        .then(function (ok) {
+          if (!ok) return;
+          btn.disabled = true;
+          CQ.Api.admin('adjustSuper', { group: gid, amount: -1, note: 'group' }).then(function (r) {
+            UI.toast('Quitada 1 super estrella a ' + r.count + ' alumnos de ' + gid + '.');
+            state.overview = null; shell();
+          }).catch(function (e) { btn.disabled = false; UI.toast(errMsg(e)); });
+        });
+    } }, fixed ? '−1 a todo ' + fixed : '−1 a todo el grupo');
+    return h('div', { class: 't-toolbar t-super-bar' },
+      h('span', { class: 'grow muted' }, '🌟 Quitar super estrellas (o − / + en cada alumno)'),
+      sel, btn);
+  }
+
+  /** Desplegable para cambiar de grupo a un alumno. */
+  function groupCell(s, ov) {
+    var groups = ov.groups || [];
+    var sel = h('select', { class: 't-select t-select-sm' + (s.inGroupList ? '' : ' warn'), aria: { label: 'Grupo de ' + s.displayName } },
+      s.inGroupList ? null : h('option', { value: '', selected: true }, s.group + ' → ?'),
+      groups.map(function (g) { return h('option', { value: g.groupId, selected: g.groupId === s.group }, g.groupId); }));
+    sel.addEventListener('change', function () {
+      if (!sel.value) return;
+      sel.disabled = true;
+      moveStudents([s.studentId], sel.value, null);
+    });
+    return h('td', {}, sel);
+  }
+
+  function superCell(s) {
+    var val = h('b', { class: 'super-net' + (s.superNet < 0 ? ' neg' : '') }, String(s.superNet));
+    function adjust(amount, b) {
+      b.disabled = true;
+      CQ.Api.admin('adjustSuper', { studentIds: [s.studentId], amount: amount, note: 'student' }).then(function (r) {
+        s.superNet = r.balances[s.studentId] || 0;
+        val.textContent = String(s.superNet);
+        val.className = 'super-net' + (s.superNet < 0 ? ' neg' : '');
+        UI.toast((amount < 0 ? 'Quitada' : 'Devuelta') + ' 1 super estrella a ' + s.displayName + '.');
+        b.disabled = false;
+      }).catch(function (e) { b.disabled = false; UI.toast(errMsg(e)); });
+    }
+    var minus = h('button', { class: 't-mini warn', title: 'Quitar 1 super estrella', aria: { label: 'Quitar 1 super estrella a ' + s.displayName },
+      onclick: function () { adjust(-1, minus); } }, '−');
+    var plus = h('button', { class: 't-mini', title: 'Devolver 1 super estrella', aria: { label: 'Devolver 1 super estrella a ' + s.displayName },
+      onclick: function () { adjust(1, plus); } }, '+');
+    return h('td', {}, h('div', { class: 'super-cell' }, minus, val, plus));
+  }
+
+  function studentRow(s, ov) {
+    var active = s.status === 'active';
+    var tr = h('tr', { class: active ? '' : 'off' },
+      h('td', { style: { fontWeight: 700 } }, s.displayName, s.isTest ? h('span', { class: 'pill pill-test' }, 'prueba') : null),
+      h('td', { class: 'code' }, s.loginCode),
+      groupCell(s, ov),
+      h('td', {}, s.courses.map(function (c) { return h('span', { class: 'pill' }, courseName(c)); })),
+      superCell(s),
+      h('td', { class: 'muted' }, U.fmtDate(s.lastLoginAt)),
+      h('td', {}, active ? 'Activo' : 'Desactivado'),
+      h('td', {}, h('div', { class: 'actions' },
+        h('button', { class: 't-mini', onclick: function () { resetPin(s); } }, 'Nuevo PIN'),
+        h('button', { class: 't-mini', onclick: function () { editCourses(tr, s, ov); } }, 'Clases'),
+        h('button', { class: 't-mini', title: 'Las cuentas de prueba no salen en la ruleta ni reciben Class rewards',
+          onclick: function () {
+            CQ.Api.admin('setTest', { studentId: s.studentId, isTest: !s.isTest })
+              .then(function () { state.overview = null; state.board.data = null; shell(); })
+              .catch(function (e) { UI.toast(errMsg(e)); });
+          } }, s.isTest ? 'Es real' : 'Es prueba'),
+        h('button', { class: 't-mini ' + (active ? 'warn' : 'ok'), onclick: function () { toggleStatus(s); } }, active ? 'Desactivar' : 'Activar'))));
+    return tr;
+  }
+
+  function resetPin(s) {
+    UI.confirm('¿Nuevo PIN para ' + s.displayName + '?', 'El PIN anterior dejará de funcionar.', 'Generar', 'Cancelar').then(function (ok) {
+      if (!ok) return;
+      CQ.Api.admin('resetPin', { studentId: s.studentId }).then(function (res) {
+        showCards([res], 'PIN nuevo');
+      }).catch(function (e) { UI.toast(errMsg(e)); });
+    });
+  }
+
+  function toggleStatus(s) {
+    var to = s.status === 'active' ? 'disabled' : 'active';
+    var go = to === 'disabled'
+      ? UI.confirm('¿Desactivar a ' + s.displayName + '?', 'No podrá entrar. Su progreso se conserva y puedes reactivarlo.', 'Desactivar', 'Cancelar')
+      : Promise.resolve(true);
+    go.then(function (ok) {
+      if (!ok) return;
+      CQ.Api.admin('setStatus', { studentId: s.studentId, status: to }).then(function () {
+        state.overview = null; shell();
+      }).catch(function (e) { UI.toast(errMsg(e)); });
+    });
+  }
+
+  function editCourses(tr, s, ov) {
+    var next = tr.nextSibling;
+    if (next && next.classList && next.classList.contains('edit-row')) { next.remove(); return; }
+    var checks = courseChecks(ov.courses, s.courses, 'ec-' + s.studentId);
+    var row = h('tr', { class: 'edit-row' }, h('td', { colspan: '9', style: { background: '#F7F5FF' } },
+      h('div', { style: { display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' } },
+        checks,
+        h('button', { class: 'btn t-btn', onclick: function () {
+          CQ.Api.admin('setEnrollments', { studentId: s.studentId, courseIds: checkedValues(checks, 'ec-' + s.studentId) })
+            .then(function () { state.overview = null; UI.toast('Clases actualizadas.'); shell(); })
+            .catch(function (e) { UI.toast(errMsg(e)); });
+        } }, 'Guardar'))));
+    tr.parentNode.insertBefore(row, tr.nextSibling);
+  }
+
+  /* Tarjetas de acceso (se muestran una vez; botón Imprimir) */
+  function showCards(list, title) {
+    var cards = h('div', { class: 'login-cards' }, list.map(function (s) {
+      var isT = !!s.password;   // tarjeta de profesor: código + contraseña
+      return h('div', { class: 'login-card-p' + (isT ? ' teacher' : '') },
+        h('div', { class: 'm', svg: CQ.Art.svg('mascot') }),
+        h('div', {},
+          h('div', { class: 'n' }, s.displayName + (isT ? ' · Teacher' : '')),
+          h('div', { class: 'l' }, 'Code'), h('div', { class: 'v' }, s.loginCode),
+          h('div', { class: 'l' }, isT ? 'Password' : 'PIN'), h('div', { class: 'v' }, isT ? s.password : s.pin),
+          isT ? h('div', { class: 'l' }, 'Teacher login · Groups: ' + (s.groups || []).join(', ')) : null));
+    }));
+    var ov = h('div', { class: 'overlay' },
+      h('div', { class: 'modal', style: { width: 'min(100%, 900px)', textAlign: 'left', maxHeight: '90vh', overflow: 'auto' } },
+        h('h2', {}, title + ' — tarjetas de acceso'),
+        h('p', {}, 'Imprímelas o anótalas ahora: por seguridad, los PIN no se guardan y no podrás volver a verlos.'),
+        cards,
+        h('div', { class: 'row-actions', style: { marginTop: '18px' } },
+          h('button', { class: 'btn btn-ghost t-btn', onclick: function () { ov.remove(); } }, 'Cerrar'),
+          h('button', { class: 'btn t-btn', onclick: function () {
+            U.clear(printArea);
+            printArea.appendChild(h('div', { class: 'print-head' }, (BOOT.appName || 'ClassQuest') + ' · ' + new Date().toLocaleDateString()));
+            printArea.appendChild(cards.cloneNode(true));
+            window.print();
+          } }, h('span', { svg: CQ.Icons.print, style: { display: 'flex' } }), 'Imprimir'))));
+    document.body.appendChild(ov);
+  }
+
+  /* ───────────────────────── PROFESORES (solo administrador) ─────────────────────────
+     Crear cuentas de profesor, asignarles grupos, nueva contraseña y desactivar. */
+  function renderTeachers(main) {
+    main.appendChild(UI.loading());
+    CQ.Api.admin('listTeachers').then(function (d) {
+      U.clear(main);
+      var groups = d.groups || [];
+      var groupChecks = function (selected, name) {
+        return h('div', { class: 'checks' }, groups.map(function (g) {
+          return h('label', { class: 'check' },
+            h('input', { type: 'checkbox', name: name, value: g.groupId, checked: selected.indexOf(g.groupId) >= 0 }), g.groupId);
+        }));
+      };
+
+      // Alta
+      var name = h('input', { class: 't-input', id: 'tname', maxlength: '40', placeholder: 'Ej.: Ms Rivera' });
+      var checks = groupChecks([], 'newtg');
+      var msg = h('div', { class: 't-help', aria: { live: 'polite' } });
+      var btn = h('button', { class: 'btn t-btn', type: 'submit' }, 'Crear profesor');
+      var form = h('form', { class: 'card t-card' },
+        h('h2', {}, 'Nuevo profesor'),
+        h('div', { class: 't-note' }, 'Se crea un código (p. ej. TK7QX) y una contraseña que se muestran UNA vez: imprímelos o anótalos. El profesor entra desde la página de alumnos → "Teacher login" y solo ve sus grupos (pizarra, deberes, resultados y super estrellas). No puede crear alumnos ni profesores.'),
+        h('div', { class: 't-field' }, h('label', { for: 'tname' }, 'Nombre (lo verá en su panel)'), name),
+        h('div', { class: 't-field' }, h('span', { class: 't-label' }, 'Grupos que da'), checks),
+        msg, btn);
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var gs = checkedValues(checks, 'newtg');
+        if (name.value.trim().length < 2) { msg.textContent = 'Escribe un nombre.'; msg.style.color = 'var(--bad)'; return; }
+        if (!gs.length) { msg.textContent = 'Marca al menos un grupo.'; msg.style.color = 'var(--bad)'; return; }
+        btn.disabled = true;
+        CQ.Api.admin('createTeacher', { displayName: name.value, groups: gs }).then(function (t) {
+          showCards([t], 'Profesor nuevo');
+          shell();
+        }).catch(function (err) { btn.disabled = false; msg.textContent = errMsg(err); msg.style.color = 'var(--bad)'; });
+      });
+
+      // Lista
+      var list = d.teachers;
+      var table = h('table', { class: 't-table' },
+        h('thead', {}, h('tr', {}, ['Profesor', 'Código', 'Grupos', 'Último acceso', 'Estado', ''].map(function (t) { return h('th', {}, t); }))),
+        h('tbody', {}, list.map(function (t) {
+          var active = t.status === 'active';
+          var tr = h('tr', { class: active ? '' : 'off' },
+            h('td', { style: { fontWeight: 700 } }, t.displayName),
+            h('td', { class: 'code' }, t.loginCode),
+            h('td', {}, t.groups.length ? t.groups.map(function (g) { return h('span', { class: 'pill' }, g); }) : h('span', { class: 'muted' }, '—')),
+            h('td', { class: 'muted' }, U.fmtDate(t.lastLoginAt)),
+            h('td', {}, active ? 'Activo' : 'Desactivado'),
+            h('td', {}, h('div', { class: 'actions' },
+              h('button', { class: 't-mini', onclick: function () { editTeacherGroups(tr, t); } }, 'Grupos'),
+              h('button', { class: 't-mini', onclick: function () {
+                UI.confirm('¿Nueva contraseña para ' + t.displayName + '?', 'La anterior dejará de funcionar.', 'Generar', 'Cancelar').then(function (ok) {
+                  if (!ok) return;
+                  CQ.Api.admin('resetTeacherPassword', { teacherId: t.teacherId }).then(function (r) { showCards([r], 'Contraseña nueva'); })
+                    .catch(function (e) { UI.toast(errMsg(e)); });
+                });
+              } }, 'Nueva contraseña'),
+              h('button', { class: 't-mini ' + (active ? 'warn' : 'ok'), onclick: function () {
+                var to = active ? 'disabled' : 'active';
+                (active ? UI.confirm('¿Desactivar a ' + t.displayName + '?', 'No podrá entrar hasta que lo actives otra vez.', 'Desactivar', 'Cancelar') : Promise.resolve(true))
+                  .then(function (ok) {
+                    if (!ok) return;
+                    CQ.Api.admin('updateTeacher', { teacherId: t.teacherId, status: to }).then(function () { shell(); })
+                      .catch(function (e) { UI.toast(errMsg(e)); });
+                  });
+              } }, active ? 'Desactivar' : 'Activar'))));
+          return tr;
+        })));
+
+      function editTeacherGroups(tr, t) {
+        var next = tr.nextSibling;
+        if (next && next.classList && next.classList.contains('edit-row')) { next.remove(); return; }
+        var ch = groupChecks(t.groups, 'eg-' + t.teacherId);
+        tr.parentNode.insertBefore(h('tr', { class: 'edit-row' }, h('td', { colspan: '6', style: { background: '#F7F5FF' } },
+          h('div', { style: { display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' } }, ch,
+            h('button', { class: 'btn t-btn', onclick: function () {
+              CQ.Api.admin('updateTeacher', { teacherId: t.teacherId, groups: checkedValues(ch, 'eg-' + t.teacherId) })
+                .then(function () { UI.toast('Grupos actualizados.'); shell(); })
+                .catch(function (e) { UI.toast(errMsg(e)); });
+            } }, 'Guardar')))), tr.nextSibling);
+      }
+
+      main.appendChild(h('div', { class: 't-grid2' }, form,
+        h('div', { class: 'card t-card' },
+          h('div', { class: 't-toolbar' }, h('h2', { class: 'grow', style: { margin: 0 } }, 'Profesores (' + list.length + ')')),
+          list.length ? h('div', { class: 't-table-wrap' }, table) : h('p', { class: 'empty' }, 'Todavía no hay profesores.'))));
+    }).catch(function (e) { U.clear(main).appendChild(h('p', { class: 'empty' }, errMsg(e))); });
+  }
+
+  /* ───────────────────────── RESULTADOS (básico) ───────────────────────── */
+  function renderResults(main) {
+    main.appendChild(UI.loading());
+    if (isTeacherMode()) state.results.group = state.group;   // el profesor solo ve su grupo
+    loadOverview().then(function (ov) {
+      return CQ.Api.admin('getRecentAttempts', { courseId: state.results.courseId, group: state.results.group || '', limit: 150 }).then(function (r) { return [ov, r]; });
+    }).then(function (x) {
+      var ov = x[0], r = x[1];
+      U.clear(main);
+      var gtabs = isTeacherMode() ? null : groupTabs(ov, state.results.group || '', function (g) { state.results.group = g; shell(); });
+      var gi = isTeacherMode() ? groupInfo(state.group) : null;
+      var courseList = gi ? ov.courses.filter(function (c) { return gi.courseIds.indexOf(c.courseId) >= 0; }) : ov.courses;
+      var sel = h('select', { class: 't-select', style: { width: 'auto' } },
+        h('option', { value: '' }, 'Todas las clases'),
+        courseList.map(function (c) { return h('option', { value: c.courseId, selected: state.results.courseId === c.courseId }, c.title); }));
+      sel.addEventListener('change', function () { state.results.courseId = sel.value; shell(); });
+      var table = h('table', { class: 't-table' },
+        h('thead', {}, h('tr', {}, ['Fecha', 'Alumno', 'Grupo', 'Actividad', 'Intento', 'Aciertos', 'Nota', 'Estrellas', 'Tiempo', 'Avisos'].map(function (t) { return h('th', {}, t); }))),
+        h('tbody', {}, r.attempts.map(function (a) {
+          return h('tr', {},
+            h('td', { class: 'muted' }, U.fmtDate(a.submittedAt)),
+            h('td', { style: { fontWeight: 700 } }, a.student),
+            h('td', {}, a.group || '—'),
+            h('td', {}, a.activityTitle),
+            h('td', {}, '#' + a.attemptNumber),
+            h('td', {}, a.correct + '/' + a.total),
+            h('td', {}, a.score + '%'),
+            h('td', {}, UI.stars(a.stars)),
+            h('td', { class: 'muted' }, U.fmtDuration(a.durationSec)),
+            h('td', { class: 'muted' }, (a.status === 'partial' ? 'incompleto ' : '') + a.flags.replace('too_fast', 'muy rápido').replace('late', 'enviado tarde')));
+        })));
+      main.appendChild(h('div', { class: 'card t-card' },
+        h('div', { class: 't-toolbar' },
+          h('h2', { class: 'grow', style: { margin: 0 } }, 'Últimos intentos (' + Math.min(r.total, 150) + ' de ' + r.total + ')'),
+          sel,
+          h('button', { class: 'btn btn-ghost t-btn', onclick: function () { shell(); } }, 'Recargar')),
+        gtabs,
+        h('div', { class: 't-note' }, 'Vista básica. Las estadísticas por alumno, por pregunta y por clase llegan en la fase 4. Todos los datos están también en la hoja (pestañas Attempts y Answers).'),
+        r.attempts.length ? h('div', { class: 't-table-wrap' }, table) : h('p', { class: 'empty' }, 'Todavía no hay intentos.')));
+    }).catch(function (e) { U.clear(main).appendChild(h('p', { class: 'empty' }, errMsg(e))); });
+  }
+
+  /* ───────────────────────── PIZARRA ───────────────────────── */
+  var KIND_ORDER = ['review', 'game', 'practice', 'challenge', 'extra', 'homework'];
+  var KIND_HEAD = { review: 'Review', game: 'Games', practice: 'Practice', challenge: 'Challenges', extra: 'Extra', homework: 'Homework' };
+  var LEVEL_LABEL = { easy: 'Easy', medium: 'Medium', hard: 'Hard' };
+
+  function unitOpen(id) { return !!(CQ.Store.local.get('cq_board_open') || {})[id]; }
+  function setUnitOpen(id, v) {
+    var s = CQ.Store.local.get('cq_board_open') || {};
+    s[id] = v;
+    CQ.Store.local.set('cq_board_open', s);
+  }
+
+  /** Opciones de la pizarra: cada grupo con su curso ("3A · English Class Y3") y, aparte, cursos completos. */
+  function boardTargets(ov) {
+    var out = [];
+    (ov.groups || []).forEach(function (g) {
+      if (isTeacherMode() && g.groupId !== state.group) return;   // profesor: solo el grupo elegido
+      g.courseIds.forEach(function (cid) {
+        var c = ov.courses.filter(function (x) { return x.courseId === cid; })[0];
+        if (c) out.push({ value: g.groupId + '|' + cid, group: g.groupId, courseId: cid, label: g.groupId + ' · ' + c.title });
+      });
+    });
+    if (!isTeacherMode()) {
+      ov.courses.forEach(function (c) { out.push({ value: '|' + c.courseId, group: '', courseId: c.courseId, label: c.title + ' (todos los grupos)', whole: true }); });
+    }
+    return out;
+  }
+
+  function renderBoardPicker(main) {
+    main.appendChild(UI.loading());
+    loadOverview().then(function (ov) {
+      // Profesor: si la pizarra apuntaba a otro grupo (cambió de grupo), se vuelve a elegir.
+      if (isTeacherMode() && state.board.group !== state.group) { state.board.courseId = ''; state.board.data = null; }
+      if (!state.board.courseId) {
+        var saved = CQ.Store.local.get('cq_board_target');
+        var t = boardTargets(ov).filter(function (x) { return x.value === saved; })[0] || boardTargets(ov)[0];
+        state.board.courseId = t ? t.courseId : '';
+        state.board.group = t ? t.group : '';
+      }
+      var d0 = state.board.data;
+      var need = !d0 || d0.course.courseId !== state.board.courseId || (d0.group || '') !== (state.board.group || '');
+      return (need ? CQ.Api.admin('getBoardCourse', { courseId: state.board.courseId, group: state.board.group || '' }) : Promise.resolve(d0))
+        .then(function (d) { state.board.data = d; return ov; });
+    }).then(function (ov) {
+      U.clear(main);
+      var targets = boardTargets(ov);
+      var current = (state.board.group || '') + '|' + state.board.courseId;
+      var opt = function (t) { return h('option', { value: t.value, selected: t.value === current }, t.label); };
+      var sel = h('select', { class: 't-select', style: { width: 'auto' }, aria: { label: 'Grupo y clase' } },
+        h('optgroup', { label: 'Por grupo' }, targets.filter(function (t) { return !t.whole; }).map(opt)),
+        isTeacherMode() ? null : h('optgroup', { label: 'Curso completo' }, targets.filter(function (t) { return t.whole; }).map(opt)));
+      sel.addEventListener('change', function () {
+        var t = targets.filter(function (x) { return x.value === sel.value; })[0];
+        state.board.courseId = t.courseId; state.board.group = t.group; state.board.data = null;
+        CQ.Store.local.set('cq_board_target', t.value);
+        shell();
+      });
+      var teams = h('select', { class: 't-select', style: { width: 'auto' }, aria: { label: 'Equipos' } },
+        [[0, 'Sin equipos (con ruleta)'], [2, '2 equipos'], [3, '3 equipos'], [4, '4 equipos']].map(function (o) {
+          return h('option', { value: o[0], selected: state.board.teams === o[0] }, o[1]);
+        }));
+      teams.addEventListener('change', function () { state.board.teams = parseInt(teams.value, 10); });
+
+      var d = state.board.data;
+      var list = h('div', { class: 'board-list' });
+      d.units.forEach(function (u) {
+        var open = unitOpen(u.unitId);
+        var body = h('div', { class: 'unit-body', hidden: !open });
+        if (u.videos && u.videos.length) {
+          body.appendChild(h('div', { class: 'kind-head' }, h('span', { class: 'badge badge-videos' }, 'Videos'),
+            h('span', { class: 'muted' }, u.videos.length + (u.videos.length > 1 ? ' vídeos' : ' vídeo'))));
+          u.videos.forEach(function (v) {
+            var quiz = u.activities.filter(function (a) { return a.template === 'video_quiz' && a.config && a.config.videoId === v.videoId; })[0];
+            body.appendChild(h('div', { class: 'board-row' },
+              h('div', { class: 'tpl-icon kind-videos', svg: CQ.Icons.video }),
+              h('div', { class: 'name' }, v.title, quiz ? h('span', { class: 'muted', style: { fontWeight: 400 } }, ' · 🎯 ' + quiz.items.length + ' preguntas dentro') : null),
+              h('button', { class: 'btn btn-ghost t-btn', onclick: function () { playVideoOnBoard(v); } },
+                h('span', { svg: CQ.Icons.play, style: { display: 'flex' } }), 'Ver'),
+              quiz ? h('button', { class: 'btn t-btn', onclick: function () { playOnBoard(quiz); } },
+                h('span', { svg: CQ.Icons.play, style: { display: 'flex' } }), 'Con actividades') : null));
+          });
+        }
+        KIND_ORDER.forEach(function (kind) {
+          var acts = u.activities.filter(function (a) { return a.kind === kind; });
+          if (!acts.length) return;
+          body.appendChild(h('div', { class: 'kind-head' }, UI.kindBadge(kind), h('span', { class: 'muted' }, acts.length + (acts.length > 1 ? ' actividades' : ' actividad'))));
+          acts.forEach(function (a) { body.appendChild(boardRow(a)); });
+        });
+        var chevron = h('span', { class: 'chev', svg: CQ.Icons.back });
+        var head = h('button', { class: 'unit-toggle' + (open ? ' open' : ''), aria: { expanded: String(open) },
+          onclick: function () {
+            var nowOpen = body.hidden;
+            body.hidden = !nowOpen;
+            head.classList.toggle('open', nowOpen);
+            head.setAttribute('aria-expanded', String(nowOpen));
+            setUnitOpen(u.unitId, nowOpen);
+          } },
+          h('span', { class: 'unit-toggle-art', svg: CQ.Art.svg(u.icon) }),
+          h('span', { class: 'unit-toggle-title' }, u.number ? 'Unit ' + u.number + ' - ' + u.title : u.title),
+          h('span', { class: 'muted' }, u.activities.length + ' actividades'),
+          chevron);
+        list.appendChild(h('div', { class: 'unit-block' }, head, body));
+      });
+      if (!d.units.length) list.appendChild(h('p', { class: 'empty' }, 'Este curso todavía no tiene actividades.'));
+
+      var rewardsBtn = h('button', { class: 'btn btn-buy t-btn', onclick: openRewards },
+        h('span', { svg: CQ.Icons.superstar, style: { display: 'flex', width: '24px' } }), 'Class rewards');
+
+      main.appendChild(h('div', { class: 'card t-card' },
+        h('div', { class: 't-toolbar' }, h('h2', { class: 'grow', style: { margin: 0 } }, 'Modo pizarra'), rewardsBtn, sel, teams),
+        list));
+    }).catch(function (e) { U.clear(main).appendChild(h('p', { class: 'empty' }, errMsg(e))); });
+  }
+
+  function boardRow(a) {
+    return h('div', { class: 'board-row' },
+      h('div', { class: 'tpl-icon kind-' + a.kind, svg: a.kind === 'extra' ? CQ.Icons.gamepad : (CQ.Icons.tpl[a.template] || '') }),
+      h('div', { class: 'name' }, a.title, ' ', h('span', { class: 'muted', style: { fontWeight: 400 } }, '· ' + a.items.length + (a.template.indexOf('listen') === 0 || a.kind === 'extra' ? ' palabras' : ' preguntas'))),
+      a.status !== 'published' ? h('span', { class: 'badge badge-draft' }, a.status) : null,
+      a.kind === 'challenge' && a.level ? h('span', { class: 'level-chip small lv-' + a.level }, LEVEL_LABEL[a.level] || a.level) : null,
+      UI.kindBadge(a.kind),
+      h('button', { class: 'btn t-btn', onclick: function () { playOnBoard(a); } },
+        h('span', { svg: CQ.Icons.play, style: { display: 'flex' } }), 'Jugar'));
+  }
+
+  function playOnBoard(activity) {
+    boardRoot.className = 'board-mode';
+    try { if (boardRoot.requestFullscreen && !document.fullscreenElement) boardRoot.requestFullscreen().catch(function () {}); } catch (e) {}
+    CQ.Engine.run({
+      root: boardRoot,
+      activity: activity,
+      mode: 'board',
+      teams: state.board.teams,
+      onExit: closeBoard,
+      onFinish: function (res) { boardResults(activity, res); }
+    });
+    if (!state.board.teams) Wheel.mount(boardRoot);
+  }
+
+  /** Vídeo en la pizarra, a pantalla completa. */
+  function playVideoOnBoard(v) {
+    boardRoot.className = 'board-mode';
+    try { if (boardRoot.requestFullscreen && !document.fullscreenElement) boardRoot.requestFullscreen().catch(function () {}); } catch (e) {}
+    U.clear(boardRoot);
+    var p = UI.videoPlayer(v, boardRoot);
+    var obs = new MutationObserver(function () { if (!boardRoot.querySelector('.video-overlay')) { obs.disconnect(); closeBoard(); } });
+    obs.observe(boardRoot, { childList: true });
+    return p;
+  }
+
+  function closeBoard() {
+    CQ.Music.stop();
+    U.clear(boardRoot);
+    boardRoot.className = '';
+    try { if (document.fullscreenElement) document.exitFullscreen(); } catch (e) {}
+  }
+
+  function boardResults(activity, res) {
+    U.clear(boardRoot);
+    var scores = res.teamScores || [];
+    var best = Math.max.apply(null, scores.concat([0]));
+    var winners = scores.map(function (s, i) { return s === best ? i : -1; }).filter(function (i) { return i >= 0; });
+    var title = !scores.length ? 'Well done, class!' :
+      (winners.length > 1 ? 'It’s a draw!' : 'Team ' + (winners[0] + 1) + ' wins!');
+    boardRoot.appendChild(h('div', { class: 'board-results' },
+      h('div', { style: { width: '160px' }, svg: CQ.Art.svg('mascot') }),
+      h('h1', {}, title),
+      h('p', { style: { fontSize: '28px' } }, res.local.correct + ' of ' + res.local.total + ' right first time'),
+      scores.length ? h('div', { class: 'teams' }, scores.map(function (s, i) {
+        return h('div', { class: 'team' + (winners.indexOf(i) >= 0 ? ' turn' : '') },
+          h('span', {}, 'Team ' + (i + 1)), h('span', { class: 'pts', style: { background: CQ.Engine.TEAM_COLORS[i] } }, String(s)));
+      })) : null,
+      h('div', { class: 'row-actions' },
+        h('button', { class: 'btn btn-ghost btn-lg', onclick: closeBoard }, 'Back'),
+        h('button', { class: 'btn btn-lg', onclick: function () { playOnBoard(activity); } }, 'Play again'))));
+    if (!scores.length) Wheel.mount(boardRoot);
+  }
+
+  /* ───────────────────────── RULETA (sin equipos) ─────────────────────────
+     Números de lista de los alumnos del curso (sin cuentas de prueba).
+     Memoria de 1 hora en este ordenador: los números que salen desaparecen
+     aunque se cambie de juego. Se reinicia al pasar 1 hora desde el primer
+     giro o cuando han salido todos. */
+  var Wheel = (function () {
+    var HOUR = 60 * 60 * 1000;
+    var COLORS = ['#7C5CFC', '#FF7A45', '#16A34A', '#2D8CFF', '#E8A100', '#EC4899', '#0EA5E9', '#DC2626'];
+    var rotation = 0;
+
+    function key() { return 'cq_wheel_' + state.board.courseId + (state.board.group ? '_' + state.board.group : ''); }
+    function entries() {
+      var list = (state.board.data && state.board.data.wheel) || [];
+      var groups = list.map(function (e) { return e.group; }).filter(function (g, i, a) { return a.indexOf(g) === i; });
+      return list.map(function (e) { return groups.length > 1 ? e.group + '-' + e.n : String(e.n); });
+    }
+    function load() {
+      var s = CQ.Store.local.get(key()) || { start: 0, drawn: [] };
+      if (s.start && Date.now() - s.start > HOUR) s = { start: 0, drawn: [] };
+      var all = entries();
+      s.drawn = (s.drawn || []).filter(function (l) { return all.indexOf(l) >= 0; });
+      if (all.length && s.drawn.length >= all.length) s = { start: 0, drawn: [] };
+      return s;
+    }
+    function save(s) { CQ.Store.local.set(key(), s); }
+    function remaining() {
+      var s = load();
+      return entries().filter(function (l) { return s.drawn.indexOf(l) < 0; });
+    }
+
+    function pt(deg, r) { var a = deg * Math.PI / 180; return (r * Math.sin(a)).toFixed(2) + ' ' + (-r * Math.cos(a)).toFixed(2); }
+    /** SVG de la ruleta. El grupo #wheel-rot es el que gira. */
+    function svg(labels, big) {
+      var n = labels.length, seg = 360 / n, out = '';
+      labels.forEach(function (l, i) {
+        var a0 = i * seg, a1 = (i + 1) * seg, col = COLORS[i % COLORS.length];
+        out += n === 1 ? '<circle r="96" fill="' + col + '"/>' :
+          '<path d="M0 0 L' + pt(a0, 96) + ' A96 96 0 ' + (seg > 180 ? 1 : 0) + ' 1 ' + pt(a1, 96) + ' Z" fill="' + col + '" stroke="#fff" stroke-width="1.5"/>';
+        var fs = n > 24 ? 9 : (n > 14 ? 12 : 16);
+        out += '<text transform="rotate(' + (a0 + seg / 2).toFixed(2) + ') translate(0 -70)" text-anchor="middle" dominant-baseline="middle" font-family="Lexend, sans-serif" font-weight="800" font-size="' + fs + '" fill="#fff">' + l + '</text>';
+      });
+      return '<svg viewBox="-110 -118 220 228" aria-hidden="true">' +
+        '<circle r="104" fill="#23264A"/>' +
+        '<g class="wheel-rot" transform="rotate(' + rotation.toFixed(2) + ')">' + out + '</g>' +
+        '<circle r="16" fill="#fff" stroke="#23264A" stroke-width="5"/>' +
+        '<path d="M-13 -116 L13 -116 L0 -92 Z" fill="#FFC53D" stroke="#23264A" stroke-width="3" stroke-linejoin="round"/>' +
+        (big ? '' : '') + '</svg>';
+    }
+
+    function mount(root) {
+      var old = root.querySelector('.wheel-mini');
+      if (old) old.remove();
+      var left = remaining();
+      if (!entries().length) return;
+      root.appendChild(h('button', { class: 'wheel-mini', aria: { label: 'Spin the wheel. ' + left.length + ' students left.' }, onclick: function () { open(root); } },
+        h('span', { class: 'wheel-mini-svg', svg: svg(left) }),
+        h('span', { class: 'wheel-mini-count' }, left.length + ' left')));
+    }
+
+    function resetInfo(s) {
+      if (!s.start) return 'The wheel has all the numbers.';
+      var t = new Date(s.start + HOUR);
+      return 'Resets at ' + ('0' + t.getHours()).slice(-2) + ':' + ('0' + t.getMinutes()).slice(-2);
+    }
+
+    function open(root) {
+      var labels = remaining();
+      if (!labels.length) return;
+      var s0 = load();
+      var wheelBox = h('div', { class: 'wheel-big', svg: svg(labels, true) });
+      var result = h('div', { class: 'wheel-result', aria: { live: 'assertive' } });
+      var info = h('p', { class: 'wheel-info' }, labels.length + ' students left · ' + resetInfo(s0));
+      var closeBtn = h('button', { class: 'btn btn-lg', disabled: true, onclick: close }, 'Close');
+      var resetBtn = h('button', { class: 'link-btn', onclick: function () { save({ start: 0, drawn: [] }); close(); } }, 'Reset wheel');
+      var stage = h('div', { class: 'wheel-stage' }, wheelBox, result, info, h('div', { class: 'row-actions' }, closeBtn), resetBtn);
+      var ov = h('div', { class: 'wheel-overlay' }, stage);
+      root.appendChild(ov);
+
+      function close() {
+        stage.classList.add('out');
+        ov.classList.add('out');
+        setTimeout(function () { ov.remove(); mount(root); }, 380);
+      }
+
+      setTimeout(function () { spin(labels, wheelBox.querySelector('.wheel-rot'), done); }, 750);
+
+      function done(label) {
+        var s = load();
+        if (!s.start) s.start = Date.now();
+        s.drawn.push(label);
+        var all = entries();
+        var finished = s.drawn.length >= all.length;
+        save(finished ? { start: 0, drawn: [] } : s);
+        CQ.Sound.ding();
+        CQ.Effects.play('fx-confetti');
+        U.clear(result);
+        result.appendChild(h('div', { class: 'wheel-num pop' }, label));
+        result.appendChild(h('div', { class: 'wheel-who' }, 'Number ' + label + ', it’s your turn!'));
+        info.textContent = finished ? 'Everyone has played! The wheel starts again with all the numbers.'
+          : (all.length - s.drawn.length) + ' students left · ' + resetInfo(s);
+        closeBtn.disabled = false;
+        closeBtn.focus();
+      }
+    }
+
+    function spin(labels, rotEl, cb) {
+      var n = labels.length, seg = 360 / n;
+      var k = Math.floor(Math.random() * n);
+      var target = k * seg + seg / 2 + (Math.random() - 0.5) * seg * 0.6;   // ángulo del segmento k
+      var from = rotation;
+      var end = ((360 - target) % 360 + 360) % 360;
+      var delta = 360 * 6 + ((end - (from % 360)) % 360 + 360) % 360;
+      var dur = 5200, t0 = null, lastSeg = null;
+      function ease(t) { return 1 - Math.pow(1 - t, 4); }
+      function frame(t) {
+        if (t0 === null) t0 = t;
+        var p = Math.min(1, (t - t0) / dur);
+        rotation = from + delta * ease(p);
+        rotEl.setAttribute('transform', 'rotate(' + rotation.toFixed(2) + ')');
+        var under = Math.floor((((360 - rotation % 360) % 360) + 360) % 360 / seg);
+        if (under !== lastSeg) { if (lastSeg !== null) CQ.Sound.tick(); lastSeg = under; }
+        if (p < 1) requestAnimationFrame(frame);
+        else { rotation = rotation % 360; cb(labels[k]); }
+      }
+      requestAnimationFrame(frame);
+    }
+
+    return { mount: mount };
+  })();
+
+  /* ───────────────────────── CLASS REWARDS ─────────────────────────
+     Valoración final de la clase en 3 apartados (1–5 estrellas cada uno):
+     Behaviour, Performance y Homework (Homework se puede desactivar si no hubo
+     deberes). La nota final es la MEDIA, que rellena 5 estrellas en silueta.
+     Solo con 5 en todo hay cinemática "SUPER CLASS!" y 1 super estrella para cada
+     alumno. Fondo de espacio con astronautas animados y música espacial
+     (sintetizada). Se proyecta: los textos están en inglés. */
+  var RW_PARTS = [
+    { id: 'behaviour', label: 'Behaviour', icon: '😊' },
+    { id: 'performance', label: 'Performance', icon: '🧠' },
+    { id: 'homework', label: 'Homework', icon: '📚' }
+  ];
+  var RW_WORD = ['', 'Keep trying!', 'Good effort', 'Good!', 'Great!', 'Perfect!'];
+
+  function rwFinalText(avg) {
+    if (avg >= 5) return 'SUPER CLASS!';
+    if (avg >= 4.5) return 'Fantastic class!';
+    if (avg >= 3.5) return 'Great class!';
+    if (avg >= 2.5) return 'Good class!';
+    if (avg >= 1.5) return 'Good effort!';
+    return 'We can do better next time!';
+  }
+
+  /** Fondo espacial: estrellas que parpadean, planetas, estrella fugaz y astronautas flotando. */
+  function spaceBackdrop() {
+    var stars = h('div', { class: 'space-stars', aria: { hidden: 'true' } });
+    for (var i = 0; i < 140; i++) {
+      var s = Math.random() < 0.85 ? 1 + Math.random() * 2 : 3 + Math.random() * 2;
+      stars.appendChild(h('i', { style: {
+        left: (Math.random() * 100) + '%', top: (Math.random() * 100) + '%',
+        width: s + 'px', height: s + 'px',
+        animationDelay: (Math.random() * 4).toFixed(2) + 's', animationDuration: (2 + Math.random() * 3).toFixed(2) + 's'
+      } }));
+    }
+    return [
+      stars,
+      h('div', { class: 'space-nebula', aria: { hidden: 'true' } }),
+      h('div', { class: 'planet planet-a', aria: { hidden: 'true' } }),
+      h('div', { class: 'planet planet-b', aria: { hidden: 'true' } }, h('span', { class: 'planet-ring' })),
+      h('div', { class: 'shooting-star', aria: { hidden: 'true' } }),
+      h('div', { class: 'astro astro-1', aria: { hidden: 'true' }, svg: CQ.Art.svg('astro-balloon') }),
+      h('div', { class: 'astro astro-2', aria: { hidden: 'true' }, svg: CQ.Art.svg('astro-float') }),
+      h('div', { class: 'astro astro-3', aria: { hidden: 'true' }, svg: CQ.Art.svg('astro-float') })
+    ];
+  }
+
+  function openRewards() {
+    var course = state.board.data && state.board.data.course;
+    if (!course) return;
+    boardRoot.className = 'board-mode';
+    try { if (boardRoot.requestFullscreen && !document.fullscreenElement) boardRoot.requestFullscreen().catch(function () {}); } catch (e) {}
+    U.clear(boardRoot);
+    CQ.Music.start();
+
+    var homeworkOn = CQ.Store.local.get('cq_rw_homework') !== false;
+    var scores = {};
+    var panel = h('div', { class: 'rw-panel' });
+    var screen = h('div', { class: 'rewards-screen space' }, spaceBackdrop());
+
+    var musicBtn = h('button', {
+      class: 'icon-btn rw-music', aria: { label: 'Music on or off' }, title: 'Music',
+      svg: CQ.Music.isMuted() ? CQ.Icons.mute : CQ.Icons.sound,
+      onclick: function () { var m = CQ.Music.toggleMute(); musicBtn.innerHTML = m ? CQ.Icons.mute : CQ.Icons.sound; }
+    });
+    screen.appendChild(h('button', { class: 'icon-btn rw-close', aria: { label: 'Close' }, svg: CQ.Icons.close, onclick: closeBoard }));
+    screen.appendChild(musicBtn);
+    screen.appendChild(panel);
+    boardRoot.appendChild(screen);
+
+    drawRating();
+
+    /* ── Paso 1: valorar los apartados ── */
+    function activeParts() { return RW_PARTS.filter(function (p) { return p.id !== 'homework' || homeworkOn; }); }
+
+    function drawRating() {
+      U.clear(panel);
+      var toggle = h('button', { class: 'rw-toggle' + (homeworkOn ? ' on' : ''), aria: { pressed: String(homeworkOn) },
+        onclick: function () {
+          homeworkOn = !homeworkOn;
+          CQ.Store.local.set('cq_rw_homework', homeworkOn);
+          if (!homeworkOn) delete scores.homework;
+          drawRating();
+        } },
+        h('span', { class: 'rw-toggle-dot' }), 'Homework today: ' + (homeworkOn ? 'YES' : 'NO'));
+      var resultBtn = h('button', { class: 'btn btn-buy btn-lg rw-give', onclick: showResult }, '✨ See our result!');
+      var rows = h('div', { class: 'rw-rows' });
+      activeParts().forEach(function (part) { rows.appendChild(partRow(part, refresh)); });
+      function refresh() {
+        var done = activeParts().every(function (p) { return scores[p.id]; });
+        resultBtn.disabled = !done;
+      }
+      panel.appendChild(h('div', { class: 'rw-kicker' }, (state.board.group ? state.board.group + ' · ' : '') + course.title));
+      panel.appendChild(h('h1', {}, 'Class rewards'));
+      panel.appendChild(h('p', { class: 'rw-sub' }, 'How was our class today?'));
+      panel.appendChild(toggle);
+      panel.appendChild(rows);
+      panel.appendChild(resultBtn);
+      refresh();
+    }
+
+    function partRow(part, onChange) {
+      var sizes = [42, 52, 62, 74, 88];
+      var word = h('span', { class: 'rw-word' }, scores[part.id] ? RW_WORD[scores[part.id]] : ' ');
+      var stars = sizes.map(function (s, i) {
+        var b = h('button', { class: 'rw-star', style: { width: s + 'px', height: s + 'px' }, aria: { label: part.label + ': ' + (i + 1) + (i ? ' stars' : ' star') },
+          onclick: function () { pick(i + 1); } }, h('span', { svg: CQ.Icons.star, style: { display: 'flex' } }));
+        b.addEventListener('pointerenter', function () { paint(i + 1, true); });
+        b.addEventListener('pointerleave', function () { paint(scores[part.id] || 0, false); });
+        return b;
+      });
+      var row = h('div', { class: 'rw-row' },
+        h('div', { class: 'rw-part' }, h('span', { class: 'rw-part-icon' }, part.icon), part.label),
+        h('div', { class: 'rw-stars small' }, stars),
+        word);
+      function paint(n, preview) {
+        var cur = scores[part.id] || 0;
+        stars.forEach(function (b, i) {
+          b.classList.toggle('on', i < n);
+          b.classList.toggle('preview', preview && i < n && i >= cur);
+        });
+      }
+      function pick(n) {
+        scores[part.id] = n;
+        paint(n, false);
+        word.textContent = RW_WORD[n];
+        row.classList.remove('spin');
+        if (n === 5) {
+          void row.offsetWidth;
+          row.classList.add('spin');              // las 5 estrellas giran
+          [0, 1, 2, 3, 4].forEach(function (i) { setTimeout(function () { CQ.Sound.rise(i); }, i * 90); });
+        } else {
+          stars[n - 1].classList.remove('bounce'); void stars[n - 1].offsetWidth; stars[n - 1].classList.add('bounce');
+          CQ.Sound.ding();
+        }
+        onChange();
+      }
+      paint(scores[part.id] || 0, false);
+      return row;
+    }
+
+    /* ── Paso 2: guardar y mostrar la media rellenando las estrellas ── */
+    function showResult() {
+      var payload = { behaviour: scores.behaviour, performance: scores.performance, homework: homeworkOn ? scores.homework : null };
+      var btn = panel.querySelector('.rw-give');
+      btn.disabled = true;
+      btn.textContent = 'Saving…';
+      CQ.Api.admin('awardClass', { courseId: course.courseId, group: state.board.group || '', scores: payload }).then(function (r) {
+        drawFinal(r);
+      }).catch(function (e) {
+        btn.disabled = false;
+        btn.textContent = 'Try again';
+        UI.toast(errMsg(e));
+      });
+    }
+
+    function drawFinal(r) {
+      U.clear(panel);
+      var avg = r.rating;
+      var sizes = [86, 104, 124, 146, 170];
+      var big = sizes.map(function (s) {
+        var fill = h('span', { class: 'fs-fill', svg: CQ.Icons.star, style: { clipPath: 'inset(0 100% 0 0)' } });
+        return { el: h('span', { class: 'fill-star', style: { width: s + 'px', height: s + 'px' } }, h('span', { class: 'fs-base', svg: CQ.Icons.star }), fill), fill: fill };
+      });
+      var num = h('div', { class: 'rw-avg' }, '0.0');
+      var title = h('p', { class: 'rw-label' }, ' ');
+      var msg = h('p', { class: 'rw-sub' }, ' ');
+      var breakdown = h('p', { class: 'rw-breakdown' }, RW_PARTS.map(function (p) {
+        var v = r.scores[p.id];
+        return p.icon + ' ' + p.label + ' ' + (v ? v + '★' : '—');
+      }).join('   ·   '));
+      var closeBtn = h('button', { class: 'btn btn-lg', style: { visibility: 'hidden' }, onclick: closeBoard }, 'Close');
+      panel.appendChild(h('div', { class: 'rw-kicker' }, (state.board.group ? state.board.group + ' · ' : '') + course.title));
+      panel.appendChild(h('h1', {}, 'Our class today'));
+      panel.appendChild(h('div', { class: 'rw-stars big' }, big.map(function (b) { return b.el; })));
+      panel.appendChild(num);
+      panel.appendChild(title);
+      panel.appendChild(msg);
+      panel.appendChild(breakdown);
+      panel.appendChild(h('div', { class: 'row-actions' }, closeBtn));
+
+      var perStar = 700, total = avg * perStar, t0 = null, lastFull = -1;
+      function frame(t) {
+        if (t0 === null) t0 = t;
+        var p = Math.min(avg, (t - t0) / perStar);
+        big.forEach(function (b, i) {
+          var f = Math.max(0, Math.min(1, p - i));
+          b.fill.style.clipPath = 'inset(0 ' + ((1 - f) * 100).toFixed(1) + '% 0 0)';
+        });
+        var full = Math.floor(p + 1e-6) - 1;
+        if (full > lastFull) { for (var k = lastFull + 1; k <= full; k++) { CQ.Sound.rise(k); big[k].el.classList.add('pop'); } lastFull = full; }
+        num.textContent = p.toFixed(1);
+        if ((t - t0) < total) { requestAnimationFrame(frame); return; }
+        num.textContent = avg.toFixed(1);
+        title.textContent = rwFinalText(avg);
+        title.className = 'rw-label pop';
+        if (r.superStars > 0) {
+          superCinematic(function () {
+            msg.textContent = 'Everyone gets a SUPER STAR! 🌟 Spend it in the Star Shop.';
+            CQ.Effects.play('fx-goldrain');
+            closeBtn.style.visibility = '';
+          });
+        } else {
+          CQ.Sound.ding();
+          if (avg >= 3.5) CQ.Effects.play('fx-stars');
+          msg.textContent = 'Get 5 stars in everything to win a super star! 💪';
+          closeBtn.style.visibility = '';
+        }
+        if (r.replaced) breakdown.textContent += '   (updated)';
+      }
+      requestAnimationFrame(frame);
+    }
+
+    /** Cinemática "SUPER CLASS!" (solo con 5 en todo). */
+    function superCinematic(done) {
+      var reduced = false;
+      try { reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+      CQ.Sound.fanfare();
+      if (reduced) { done(); return; }
+      var cine = h('div', { class: 'rw-cine', aria: { hidden: 'true' }, onclick: function () { end(); } },
+        h('div', { class: 'rw-rays' }),
+        h('div', { class: 'rw-bigstar', svg: CQ.Icons.star }),
+        h('div', { class: 'rw-cine-text' }, 'SUPER CLASS!'),
+        h('div', { class: 'rw-cine-sub' }, 'Five stars in everything!'));
+      screen.appendChild(cine);
+      setTimeout(function () { CQ.Effects.play('fx-stars'); }, 500);
+      var timer = setTimeout(end, 3800);
+      function end() {
+        clearTimeout(timer);
+        if (!cine.parentNode) return;
+        cine.classList.add('out');
+        setTimeout(function () { cine.remove(); done(); }, 450);
+      }
+    }
+  }
+
+  /**
+   * Arranque del panel.
+   *  · Página del administrador (?view=teacher): role 'admin', arranca sola.
+   *  · Página de alumnos → "Teacher login": js_student llama a
+   *    CQ.TeacherApp.start({ role: 'teacher', me, onLogout }).
+   */
+  function start(opts) {
+    opts = opts || {};
+    state = { role: opts.role || 'admin', me: opts.me || null, group: '', onLogout: opts.onLogout || null,
+      tab: 'students', overview: null, filterGroup: '', board: { courseId: '', data: null, teams: 2 }, results: { courseId: '' } };
+    CQ.Api.mode = state.role === 'teacher' ? 'teacher' : 'admin';
+    document.body.classList.add('t-body');
+    document.documentElement.lang = 'es';
+    window.scrollTo(0, 0);
+    shell();
+  }
+  CQ.TeacherApp = { start: start };
+  if (BOOT.view === 'teacher') start({ role: 'admin' });
+})();
+</script>
+
   <!-- client/js_student -->
 <script>
 /* ==========================================================================
@@ -3695,7 +5102,7 @@ button.tile:active { box-shadow: 0 2px 0 #D3D9EE; transform: translateY(3px); }
   var idleTimer = null;
   function resetIdle() {
     clearTimeout(idleTimer);
-    if (!CQ.Api.token) return;
+    if (!CQ.Api.token || teacherMode) return;   // el profesor caduca en el servidor (y su panel le saca)
     idleTimer = setTimeout(function () {
       endSession('You were away for a while. Please log in again.');
     }, (BOOT.idleMinutes || 20) * 60000);
@@ -3714,11 +5121,14 @@ button.tile:active { box-shadow: 0 2px 0 #D3D9EE; transform: translateY(3px); }
 
   /* ───────────────────────── router ───────────────────────── */
   function route(r) {
+    if (teacherMode) return;   // el panel de profesor controla la pantalla
     if (state.runner) { state.runner.destroy(); state.runner = null; }
     window.scrollTo(0, 0);
-    if (!CQ.Api.token && r.name !== 'login') r = { name: 'login' };
+    if (!CQ.Api.token && ['welcome', 'login', 'tlogin'].indexOf(r.name) < 0) r = { name: 'welcome' };
     resetIdle();
     switch (r.name) {
+      case 'welcome': return renderWelcome(r);
+      case 'tlogin': return renderTeacherLogin(r);
       case 'login': return renderLogin(r);
       case 'home': return renderHome(r);
       case 'course': return renderCourse(r);
@@ -3841,6 +5251,82 @@ button.tile:active { box-shadow: 0 2px 0 #D3D9EE; transform: translateY(3px); }
     });
   }
 
+  /* ───────────────────────── WELCOME: Student login / Teacher login ───────────────────────── */
+  function renderWelcome() {
+    U.clear(app);
+    app.appendChild(h('div', { class: 'login-wrap' },
+      h('div', { class: 'login-card welcome-card' },
+        h('div', { class: 'hero-img', svg: CQ.Art.svg('mascot') }),
+        h('h1', {}, 'Welcome to ' + (BOOT.appName || 'ClassQuest') + '!'),
+        h('p', { class: 'lead' }, 'Who are you?'),
+        h('div', { class: 'welcome-choices' },
+          h('button', { class: 'welcome-btn student', onclick: function () { CQ.Nav.go({ name: 'login' }); } },
+            h('span', { class: 'welcome-emoji' }, '🎒'), h('b', {}, 'Student login'), h('span', {}, 'I am a student')),
+          h('button', { class: 'welcome-btn teacher', onclick: function () { CQ.Nav.go({ name: 'tlogin' }); } },
+            h('span', { class: 'welcome-emoji' }, '🍎'), h('b', {}, 'Teacher login'), h('span', {}, 'I am a teacher'))))));
+  }
+
+  /* ───────────────────────── TEACHER LOGIN ───────────────────────── */
+  var teacherMode = false;
+
+  function startTeacher(sess) {
+    teacherMode = true;
+    CQ.Api.token = sess.token;
+    CQ.Api.mode = 'teacher';
+    clearTimeout(idleTimer);
+    CQ.TeacherApp.start({ role: 'teacher', me: sess.teacher, onLogout: endTeacher });
+  }
+
+  function endTeacher() {
+    teacherMode = false;
+    CQ.Api.token = null;
+    CQ.Api.mode = 'admin';
+    CQ.Store.session.remove('cq_tsession');
+    document.body.classList.remove('t-body');
+    document.documentElement.lang = 'en';
+    CQ.Nav.go({ name: 'welcome' }, true);
+    route({ name: 'welcome' });
+  }
+
+  function renderTeacherLogin(r) {
+    U.clear(app);
+    var msg = h('div', { class: 'form-msg', role: 'alert' }, '');
+    var code = h('input', { class: 'input', id: 'tcode', autocomplete: 'username', autocapitalize: 'characters', spellcheck: 'false', maxlength: '12', required: true });
+    var pw = h('input', { class: 'input', id: 'tpw', type: 'password', autocomplete: 'current-password', autocapitalize: 'characters', maxlength: '20', required: true });
+    var btn = h('button', { class: 'btn btn-lg btn-block', type: 'submit' }, 'Entrar');
+    code.addEventListener('input', function () { code.value = code.value.toUpperCase(); });
+    var form = h('form', { class: 'login-card', novalidate: true },
+      h('button', { class: 'back-btn login-back', type: 'button', onclick: function () { CQ.Nav.go({ name: 'welcome' }); } },
+        h('span', { svg: CQ.Icons.back, style: { display: 'flex' } }), 'Back'),
+      h('div', { class: 'hero-img', svg: CQ.Art.svg('mascot') }),
+      h('h1', {}, 'Teacher login'),
+      h('p', { class: 'lead' }, 'Código y contraseña de profesor (te los da el administrador).'),
+      h('div', { class: 'field' }, h('label', { for: 'tcode' }, 'Código'), code),
+      h('div', { class: 'field' }, h('label', { for: 'tpw' }, 'Contraseña'), pw),
+      msg, btn);
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!code.value.trim() || !pw.value.trim()) { msg.className = 'form-msg bad'; msg.textContent = 'Escribe tu código y tu contraseña.'; return; }
+      btn.disabled = true;
+      btn.textContent = 'Comprobando…';
+      CQ.Api.student('teacherLogin', { code: code.value, password: pw.value }).then(function (data) {
+        var sess = { token: data.token, teacher: data.teacher };
+        CQ.Store.session.set('cq_tsession', sess);
+        startTeacher(sess);
+      }).catch(function (err) {
+        btn.disabled = false;
+        btn.textContent = 'Entrar';
+        msg.className = 'form-msg bad';
+        msg.textContent = { BAD_LOGIN: 'Código o contraseña incorrectos.', LOCKED: 'Demasiados intentos. Espera unos minutos.',
+          ACCOUNT_DISABLED: 'Esta cuenta está desactivada. Habla con el administrador.', NETWORK: 'Sin conexión. Inténtalo de nuevo.' }[err && err.code] || 'No se ha podido entrar.';
+        pw.value = '';
+        pw.focus();
+      });
+    });
+    app.appendChild(h('div', { class: 'login-wrap' }, form));
+    code.focus();
+  }
+
   /* ───────────────────────── LOGIN ───────────────────────── */
   function renderLogin(r) {
     U.clear(app);
@@ -3853,8 +5339,10 @@ button.tile:active { box-shadow: 0 2px 0 #D3D9EE; transform: translateY(3px); }
     code.addEventListener('input', function () { code.value = code.value.toUpperCase(); });
 
     var form = h('form', { class: 'login-card', novalidate: true },
+      h('button', { class: 'back-btn login-back', type: 'button', onclick: function () { CQ.Nav.go({ name: 'welcome' }); } },
+        h('span', { svg: CQ.Icons.back, style: { display: 'flex' } }), 'Back'),
       h('div', { class: 'hero-img', svg: CQ.Art.svg('mascot') }),
-      h('h1', {}, 'Welcome to ' + (BOOT.appName || 'ClassQuest') + '!'),
+      h('h1', {}, 'Student login'),
       h('p', { class: 'lead' }, 'Type your code and your PIN.'),
       h('div', { class: 'field' }, h('label', { for: 'code' }, 'Your code'), code),
       h('div', { class: 'field' }, h('label', { for: 'pin' }, 'Your PIN'), pin),
@@ -4503,7 +5991,9 @@ button.tile:active { box-shadow: 0 2px 0 #D3D9EE; transform: translateY(3px); }
 
   /* ───────────────────────── arranque ───────────────────────── */
   CQ.Nav.start(function (r) { route(r); });
-  CQ.Nav.go(CQ.Api.token ? { name: 'home' } : { name: 'login' }, true);
+  var tsaved = CQ.Store.session.get('cq_tsession');
+  if (tsaved && tsaved.token && CQ.TeacherApp) startTeacher(tsaved);   // profesor que recarga la página
+  else CQ.Nav.go(CQ.Api.token ? { name: 'home' } : { name: 'welcome' }, true);
   if (BOOT.apiUrl) {
     CQ.Api.student('config', {}).then(function (c) {
       BOOT.idleMinutes = c.idleMinutes;
