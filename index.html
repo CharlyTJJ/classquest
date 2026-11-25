@@ -688,6 +688,8 @@ button.tile:active { box-shadow: 0 2px 0 #D3D9EE; transform: translateY(3px); }
 .opt.tf-false { border-color: #FCA5A5; }
 .vq-end { text-align: center; background: #FDF2F8; border: 2px dashed #F9A8D4; border-radius: 18px; padding: 14px; font-weight: 700; color: #9D174D; display: flex; flex-direction: column; align-items: center; gap: 10px; }
 .board-mode .vq { max-width: none; }
+/* El atributo hidden debe ganar a display:grid/flex (si no, la capa vacía tapa el vídeo y no deja darle a Play). */
+.vq-overlay[hidden], .vq-end[hidden] { display: none !important; }
 
 /* ── Panel: pestañas de grupo y deberes ── */
 .g-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 12px; }
