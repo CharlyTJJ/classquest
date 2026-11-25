@@ -663,6 +663,32 @@ button.tile:active { box-shadow: 0 2px 0 #D3D9EE; transform: translateY(3px); }
 .video-wrap { position: relative; aspect-ratio: 16 / 9; max-height: calc(100vh - 110px); background: #000; }
 .video-frame { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 
+/* ── Vídeo con actividades dentro (video_quiz) ── */
+.video-quiz-chip { position: absolute; left: 10px; top: 10px; background: #fff; color: #BE185D; font-weight: 800; font-size: 13px; padding: 4px 10px; border-radius: 999px; box-shadow: 0 2px 6px rgba(0, 0, 0, .2); }
+.video-foot { padding: 0 16px 14px; }
+.vq { width: 100%; max-width: 1100px; display: flex; flex-direction: column; gap: 10px; }
+.vq:fullscreen { max-width: none; background: #1E1029; padding: 12px; justify-content: center; }
+.vq:fullscreen .vq-status { color: #fff; }
+.vq-bar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.vq-status { font-weight: 800; color: var(--ink-2); flex: 1; }
+.vq-toggle { display: inline-flex; align-items: center; gap: 10px; border: 2px solid #F9A8D4; background: #fff; color: #9D174D; border-radius: 999px; padding: 6px 16px 6px 6px; font-weight: 800; font-size: 16px; }
+.vq-dot { width: 44px; height: 24px; border-radius: 999px; background: #CBD5E1; position: relative; transition: background .2s; }
+.vq-dot::after { content: ''; position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 50%; background: #fff; transition: transform .2s var(--ease); }
+.vq-toggle.on .vq-dot { background: #EC4899; }
+.vq-toggle.on .vq-dot::after { transform: translateX(20px); }
+.vq-wrap { position: relative; width: 100%; aspect-ratio: 16 / 9; max-height: calc(100vh - 210px); background: #000; border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); }
+.vq:fullscreen .vq-wrap { max-height: calc(100vh - 80px); border-radius: 0; }
+.vq-player, .vq-player iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.vq-overlay { position: absolute; inset: 0; background: rgba(30, 16, 41, .72); display: grid; place-items: center; padding: 16px; z-index: 2; }
+.vq-card { background: #fff; border-radius: 24px; padding: 18px 22px; width: min(640px, 100%); max-height: 100%; overflow: auto; display: flex; flex-direction: column; gap: 12px; align-items: center; border: 4px solid #F9A8D4; }
+.vq-type { background: #FCE7F3; color: #9D174D; font-weight: 800; border-radius: 999px; padding: 4px 14px; font-size: 15px; }
+.vq-card .prompt { font-size: clamp(20px, 3vw, 30px); }
+.vq-options { width: 100%; }
+.opt.tf-true { border-color: #86EFAC; }
+.opt.tf-false { border-color: #FCA5A5; }
+.vq-end { text-align: center; background: #FDF2F8; border: 2px dashed #F9A8D4; border-radius: 18px; padding: 14px; font-weight: 700; color: #9D174D; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.board-mode .vq { max-width: none; }
+
 /* ── Panel: pestañas de grupo y deberes ── */
 .g-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 12px; }
 .g-chip { border: 2px solid var(--card-line); background: #fff; border-radius: 999px; padding: 6px 14px; font-weight: 800; font-size: 15px; display: inline-flex; align-items: center; gap: 6px; }
@@ -942,6 +968,7 @@ button.tile:active { box-shadow: 0 2px 0 #D3D9EE; transform: translateY(3px); }
       case 'hangman':
       case 'memory':
       case 'whats_missing':
+      case 'video_quiz':
         return r === norm(item.answer);
       default:
         return false;
@@ -3375,6 +3402,203 @@ button.tile:active { box-shadow: 0 2px 0 #D3D9EE; transform: translateY(3px); }
 })();
 </script>
 
+  <!-- client/tpl_video_quiz -->
+<script>
+/* Plantilla: video_quiz — Actividades DENTRO de un vídeo de YouTube.
+   - El vídeo se reproduce con la API de YouTube (dominio sin cookies).
+   - En el segundo de cada pregunta (item.at) el vídeo se para y aparece la pregunta
+     encima: verdadero/falso, rellenar el hueco o escoger una palabra (item.qtype).
+   - Al acertar, el vídeo sigue solo. Si falla, puede volver a intentarlo.
+   - Botón "Activities ON/OFF": siempre empieza en ON. Con OFF el vídeo se ve sin pausas
+     (y no se guarda nota).
+   - No se puede adelantar el vídeo para saltarse una pregunta pendiente.
+   - Pantalla completa propia (la de YouTube taparía las preguntas). */
+(function () {
+  'use strict';
+  var CQ = window.CQ;
+
+  /** Carga la API de YouTube una sola vez. */
+  var ytReady = null;
+  function loadYT() {
+    if (ytReady) return ytReady;
+    ytReady = new Promise(function (resolve, reject) {
+      if (window.YT && window.YT.Player) { resolve(window.YT); return; }
+      var prev = window.onYouTubeIframeAPIReady;
+      window.onYouTubeIframeAPIReady = function () { if (prev) try { prev(); } catch (e) {} resolve(window.YT); };
+      var s = document.createElement('script');
+      s.src = 'https://www.youtube.com/iframe_api';
+      s.onerror = function () { ytReady = null; reject(new Error('yt')); };
+      document.head.appendChild(s);
+    });
+    return ytReady;
+  }
+
+  var TYPE_LABEL = { tf: 'True or false?', gap: 'Fill the gap', choice: 'Choose the right word' };
+
+  CQ.Engine.register('video_quiz', {
+    mount: function (ctx) {
+      var h = ctx.h;
+      var yid = String((ctx.config && ctx.config.youtubeId) || '');
+      var qs = ctx.items.slice().sort(function (a, b) { return (a.at || 0) - (b.at || 0); });
+      var done = {};            // itemId → true cuando se ha acertado (o respondido, en modo "end")
+      var on = true;            // actividades activadas (siempre empieza en ON)
+      var player = null, poll = null, current = null, ended = false, destroyed = false, resumeTimer = null;
+
+      var holder = h('div', { class: 'vq-player' });
+      var overlay = h('div', { class: 'vq-overlay', hidden: true });
+      var wrap = h('div', { class: 'vq-wrap' }, holder, overlay);
+      var status = h('span', { class: 'vq-status' });
+      var toggle = h('button', { class: 'vq-toggle on', aria: { pressed: 'true' }, onclick: toggleOn },
+        h('span', { class: 'vq-dot' }), h('span', { class: 'vq-toggle-text' }, 'Activities: ON'));
+      var fsBtn = h('button', { class: 'btn btn-ghost btn-sm', onclick: fullscreen }, '⛶ Full screen');
+      var endBox = h('div', { class: 'vq-end', hidden: true });
+      ctx.el.appendChild(h('div', { class: 'vq' },
+        h('div', { class: 'vq-bar' }, toggle, status, fsBtn), wrap, endBox));
+      updateStatus();
+
+      if (!/^[A-Za-z0-9_-]{11}$/.test(yid)) {
+        holder.appendChild(h('p', { class: 'empty' }, 'This video is not available.'));
+        return {};
+      }
+
+      loadYT().then(function (YT) {
+        if (destroyed) return;
+        var target = h('div');
+        holder.appendChild(target);
+        player = new YT.Player(target, {
+          host: 'https://www.youtube-nocookie.com',
+          videoId: yid,
+          width: '100%', height: '100%',
+          playerVars: { rel: 0, modestbranding: 1, playsinline: 1, fs: 0, iv_load_policy: 3, disablekb: 1 },
+          events: {
+            onStateChange: function (e) {
+              if (e.data === YT.PlayerState.ENDED) onEnded();
+              if (e.data === YT.PlayerState.PLAYING) { ended = false; endBox.hidden = true; if (current && on) player.pauseVideo(); }
+            }
+          }
+        });
+        poll = setInterval(tick, 250);
+      }).catch(function () {
+        holder.appendChild(h('p', { class: 'empty' }, 'The video could not load. Check your internet connection.'));
+      });
+
+      function pending() { return qs.filter(function (q) { return !done[q.itemId]; }); }
+
+      function updateStatus() {
+        var n = qs.length - pending().length;
+        status.textContent = on ? '🎯 Questions: ' + n + ' / ' + qs.length : 'Just watching (no stars)';
+        ctx.setProgress(n, qs.length);
+      }
+
+      /** Cada 250 ms: ¿toca una pregunta? ¿ha adelantado el vídeo sin contestar? */
+      function tick() {
+        if (!player || !player.getCurrentTime || !on || current) return;
+        var t = player.getCurrentTime() || 0;
+        var next = pending()[0];
+        if (!next) return;
+        if (t >= (next.at || 0)) {
+          if (t > (next.at || 0) + 2.5) { try { player.seekTo(next.at, true); } catch (e) {} }
+          ask(next);
+        }
+      }
+
+      function ask(q) {
+        current = q;
+        try { player.pauseVideo(); } catch (e) {}
+        CQ.Util.clear(overlay);
+        overlay.hidden = false;
+        var pr = CQ.Engine.promptWithBlank(q.prompt);
+        var fb = h('div', { class: 'feedback', aria: { live: 'polite' } });
+        var opts = q.qtype === 'tf' ? ['True', 'False'] : ctx.shuffle(q.options || []);
+        var btns = [];
+        var grid = h('div', { class: 'options vq-options', role: 'group', aria: { label: 'Answers' } });
+        opts.forEach(function (o) {
+          var b = h('button', { class: 'opt' + (q.qtype === 'tf' ? ' tf-' + o.toLowerCase() : ''), onclick: function () { choose(b, o); } },
+            q.qtype === 'tf' ? (o === 'True' ? '👍 True' : '👎 False') : o);
+          btns.push(b);
+          grid.appendChild(b);
+        });
+        overlay.appendChild(h('div', { class: 'vq-card pop' },
+          h('div', { class: 'vq-type' }, '⏸ ' + (TYPE_LABEL[q.qtype] || 'Question')),
+          pr.el, grid, fb));
+        if (CQ.Sfx.enabled && q.say) { try { CQ.Speech.speak(q.prompt.replace(/_{2,}/g, '…')); } catch (e) {} }
+        if (btns[0]) btns[0].focus({ preventScroll: true });
+
+        function choose(btn, opt) {
+          var res = ctx.attempt(q.itemId, opt, { silent: true });
+          if (res.correct === false) {
+            btn.classList.add('is-wrong');
+            btn.classList.remove('shake'); void btn.offsetWidth; btn.classList.add('shake');
+            btn.disabled = true;
+            ctx.say(fb, ctx.retry(), 'bad');
+            return;
+          }
+          btns.forEach(function (x) { x.disabled = true; });
+          btn.classList.add(res.correct === true ? 'is-correct' : 'is-picked', 'pop');
+          if (pr.blank) { pr.blank.textContent = opt; pr.blank.classList.add('filled'); }
+          if (res.correct === true) ctx.say(fb, ctx.praise(), 'good');
+          done[q.itemId] = true;
+          updateStatus();
+          resumeTimer = setTimeout(resume, 1200);
+        }
+      }
+
+      function resume() {
+        current = null;
+        overlay.hidden = true;
+        CQ.Util.clear(overlay);
+        if (ended) { onEnded(); return; }
+        try { player.playVideo(); } catch (e) {}
+      }
+
+      function toggleOn() {
+        on = !on;
+        toggle.classList.toggle('on', on);
+        toggle.setAttribute('aria-pressed', String(on));
+        toggle.querySelector('.vq-toggle-text').textContent = 'Activities: ' + (on ? 'ON' : 'OFF');
+        if (!on && current) { clearTimeout(resumeTimer); current = null; overlay.hidden = true; try { player.playVideo(); } catch (e) {} }
+        updateStatus();
+      }
+
+      function onEnded() {
+        ended = true;
+        if (current) return;
+        var left = pending();
+        if (on && !left.length) { ctx.complete(); return; }
+        if (on && left.length) { ask(left[0]); return; }   // preguntas que quedaron atrás
+        // Visto sin actividades: no hay nota. Se puede volver a ver con ellas.
+        CQ.Util.clear(endBox);
+        endBox.hidden = false;
+        endBox.appendChild(h('p', {}, 'Great watching! Turn the activities ON to win stars.'));
+        endBox.appendChild(h('button', { class: 'btn', onclick: function () {
+          if (!on) toggleOn();
+          endBox.hidden = true;
+          try { player.seekTo(0, true); player.playVideo(); } catch (e) {}
+        } }, '🎯 Watch again with activities'));
+      }
+
+      function fullscreen() {
+        var el = wrap.closest('.vq') || wrap;
+        try {
+          if (document.fullscreenElement) document.exitFullscreen();
+          else if (el.requestFullscreen) el.requestFullscreen();
+        } catch (e) {}
+      }
+
+      return {
+        destroy: function () {
+          destroyed = true;
+          clearInterval(poll);
+          clearTimeout(resumeTimer);
+          try { if (player && player.destroy) player.destroy(); } catch (e) {}
+          try { if (document.fullscreenElement) document.exitFullscreen(); } catch (e) {}
+        }
+      };
+    }
+  });
+})();
+</script>
+
   <!-- client/js_student -->
 <script>
 /* ==========================================================================
@@ -3838,12 +4062,21 @@ button.tile:active { box-shadow: 0 2px 0 #D3D9EE; transform: translateY(3px); }
     }));
     var grid = h('div', { class: 'grid video-grid' });
     u.videos.forEach(function (v, i) {
+      // ¿Tiene actividades dentro? Entonces se abre como actividad (con nota y estrellas).
+      var quiz = u.activities.filter(function (a) { return a.template === 'video_quiz' && a.videoId === v.videoId; })[0];
+      var p = quiz && quiz.progress;
       grid.appendChild(h('button', { class: 'tile video-tile', style: { animationDelay: (i * 60) + 'ms' },
-        aria: { label: 'Watch: ' + v.title }, onclick: function () { UI.videoPlayer(v); } },
+        aria: { label: 'Watch: ' + v.title + (quiz ? '. With activities.' : '') },
+        onclick: function () {
+          if (quiz) CQ.Nav.go({ name: 'play', courseId: r.courseId, unitId: u.unitId, section: 'videos', activityId: quiz.activityId });
+          else UI.videoPlayer(v);
+        } },
         h('div', { class: 'video-thumb' },
           h('img', { src: 'https://i.ytimg.com/vi/' + v.youtubeId + '/hqdefault.jpg', alt: '', loading: 'lazy' }),
-          h('span', { class: 'video-play', svg: CQ.Icons.play })),
-        h('h3', {}, v.title)));
+          h('span', { class: 'video-play', svg: CQ.Icons.play }),
+          quiz ? h('span', { class: 'video-quiz-chip' }, '🎯 With activities') : null),
+        h('h3', {}, v.title),
+        quiz ? h('div', { class: 'video-foot' }, UI.stars(p ? p.bestStars : 0, MAX)) : null));
     });
     main.appendChild(grid);
   }
