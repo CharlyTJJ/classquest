@@ -610,6 +610,11 @@ button.tile:active { box-shadow: 0 2px 0 #D3D9EE; transform: translateY(3px); }
 .unit-body[hidden] { display: none; }
 .kind-head { display: flex; align-items: center; gap: 10px; margin-top: 8px; font-weight: 600; }
 .pill-test { background: #FEF3C7; color: #92400E; margin-left: 8px; }
+.super-cell { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.super-cell .t-mini { min-width: 30px; padding-left: 0; padding-right: 0; font-size: 16px; line-height: 1; }
+.super-net { min-width: 24px; text-align: center; color: #7E22CE; }
+.super-net.neg { color: #DC2626; }
+.t-super-bar { background: #FAF5FF; border: 1px solid #E9D5FF; border-radius: 14px; padding: 8px 12px; margin: 4px 0 12px; }
 
 /* ruleta */
 .wheel-mini {
@@ -699,20 +704,7 @@ button.tile:active { box-shadow: 0 2px 0 #D3D9EE; transform: translateY(3px); }
 .badge-extra { background: #F3E8FF; color: #6B21A8; }
 .kind-extra { background: linear-gradient(135deg, #D946EF, #6B21A8); }
 
-/* tarjeta de jugador (perfil visible) */
-.hero-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; position: relative; z-index: 1; }
-.player-card {
-  position: relative; z-index: 1; display: flex; align-items: center; gap: 12px; text-align: left;
-  background: rgba(255, 255, 255, .95); color: var(--ink); border: 0; border-radius: 22px; padding: 8px 18px 8px 8px;
-  box-shadow: 0 5px 0 rgba(0, 0, 0, .15); transition: transform .15s var(--ease);
-}
-.player-card:hover { transform: translateY(-2px) scale(1.02); }
-.player-av { width: 74px; height: 74px; border-radius: 50%; overflow: hidden; flex: none; box-shadow: 0 0 0 4px #FFD23F, 0 0 0 7px #fff; display: block; }
-.player-av svg { width: 100%; height: 100%; display: block; }
-.player-info { display: flex; flex-direction: column; gap: 4px; }
-.player-info b { font-size: 20px; }
-.player-stars { display: flex; gap: 6px; }
-.player-hint { font-size: 12px; font-weight: 700; color: var(--brand); text-transform: uppercase; letter-spacing: .05em; }
+/* avatar de la barra superior, más visible */
 .chip-user .avatar { width: 44px; height: 44px; box-shadow: 0 0 0 3px #FFD23F; }
 .chip-user .avatar svg { width: 44px; height: 44px; }
 .chip-user { padding: 4px 14px 4px 4px; }
@@ -3339,7 +3331,6 @@ button.tile:active { box-shadow: 0 2px 0 #D3D9EE; transform: translateY(3px); }
     if (catalog) state.catalog = catalog;
     var old = document.querySelector('header.topbar');
     if (old) old.replaceWith(topbar());
-    document.querySelectorAll('.player-card').forEach(function (el) { var n = playerCard(); if (n) el.replaceWith(n); });
   }
 
   function topbar() {
@@ -3379,21 +3370,6 @@ button.tile:active { box-shadow: 0 2px 0 #D3D9EE; transform: translateY(3px); }
       state.student ? shopBtn : null,
       chip,
       h('button', { class: 'icon-btn', aria: { label: 'Log out' }, title: 'Log out', svg: CQ.Icons.logout, onclick: function () { endSession(''); } }));
-  }
-
-  /** Tarjeta de jugador (avatar grande + nombre + estrellas) en la cabecera de portada y curso. */
-  function playerCard() {
-    var p = state.profile;
-    if (!p || !state.student) return null;
-    return h('button', { class: 'player-card with-badge', aria: { label: 'My profile' }, onclick: openProfile },
-      h('span', { class: 'player-av', svg: avatarSvg(p.avatar) }),
-      h('span', { class: 'player-info' },
-        h('b', {}, state.student.displayName),
-        h('span', { class: 'player-stars' },
-          h('span', { class: 'chip-stars' }, starIcon(), String(p.balance)),
-          p.superEarned ? h('span', { class: 'chip-super' }, superIcon(), String(p.superBalance)) : null),
-        h('span', { class: 'player-hint' }, 'My profile')),
-      p.profileBadge ? UI.notif() : null);
   }
 
   function page() {
@@ -3505,7 +3481,7 @@ button.tile:active { box-shadow: 0 2px 0 #D3D9EE; transform: translateY(3px); }
       }
       U.clear(main);
       main.appendChild(hero({
-        cls: 'hero-home', art: 'mascot', action: playerCard(),
+        cls: 'hero-home', art: 'mascot',
         title: 'Hi, ' + data.student.displayName + '! 👋',
         sub: data.courses.length ? 'Choose your class.' : 'You don’t have any classes yet. Ask your teacher.'
       }));
@@ -3565,8 +3541,8 @@ button.tile:active { box-shadow: 0 2px 0 #D3D9EE; transform: translateY(3px); }
         color: c.color, art: c.icon,
         back: multi ? backButton('My classes', { name: 'home' }) : null,
         title: c.subjectName, sub: 'Year ' + c.year,
-        action: h('div', { class: 'hero-actions' }, playerCard(), h('button', { class: 'btn btn-white', onclick: function () { CQ.Nav.go({ name: 'progress', courseId: c.courseId }); } },
-          h('span', { svg: CQ.Icons.chart, style: { display: 'flex' } }), 'My Progress'))
+        action: h('button', { class: 'btn btn-white', onclick: function () { CQ.Nav.go({ name: 'progress', courseId: c.courseId }); } },
+          h('span', { svg: CQ.Icons.chart, style: { display: 'flex' } }), 'My Progress')
       }));
 
       data.units.forEach(function (u) {
