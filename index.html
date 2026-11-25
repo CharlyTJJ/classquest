@@ -975,6 +975,195 @@ button.tile:active { box-shadow: 0 2px 0 #D3D9EE; transform: translateY(3px); }
   .unit-meta .bar { width: 70px; }
   .profile-stats { grid-template-columns: 1fr; }
 }
+
+/* ═════════════════════ SCIENCE: apartados temáticos (color propio por apartado) ═════════════════════ */
+.sec-custom { --c1: var(--sec); --c2: var(--sec-dark); --tint: var(--sec-tint, #F1F5F9); --ink-sec: var(--sec-dark); }
+.sec-custom .sec-icon { background: #fff; padding: 4px; box-shadow: 0 2px 0 rgba(0, 0, 0, .12); }
+.sec-custom .sec-icon svg { width: 46px; height: 46px; }
+.hero.sec-custom { background: linear-gradient(135deg, var(--sec), var(--sec-dark)); }
+.hero.sec-custom .hero-art { opacity: .32; }
+.tile-act.sec-custom .tpl-icon { background: linear-gradient(135deg, var(--sec), var(--sec-dark)); }
+.progress-sec.sec-custom { color: var(--sec-dark); }
+.stage-head { margin-top: 26px; }
+.stage-chip { display: inline-flex; align-items: center; padding: 6px 18px; border-radius: 999px; font-weight: 800; color: #fff; font-size: 18px; box-shadow: 0 3px 0 rgba(0, 0, 0, .15); }
+.st-learn { background: #0EA5E9; } .st-practise { background: #8B5CF6; } .st-check { background: #F59E0B; } .st-games { background: #EC4899; }
+.lab-banner { display: flex; align-items: center; gap: 14px; width: 100%; margin: 6px 0 4px; padding: 14px 18px; border-radius: 20px; text-align: left;
+  color: #E0F2FE; border: 2px solid #1E3A5F; background: linear-gradient(120deg, #0B1B33, #12355B); box-shadow: 0 4px 0 #071426; font-size: 18px; }
+.lab-banner b { color: #7DD3FC; }
+.lab-banner .play { color: #7DD3FC; font-weight: 700; display: flex; align-items: center; gap: 6px; }
+.lab-banner-icon { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 14px; background: rgba(56, 189, 248, .18); color: #7DD3FC; }
+.lab-banner-icon svg { width: 28px; height: 28px; }
+
+/* 3D Lab (tarjeta, cabecera y lista) */
+.sec-lab { --c1: #12355B; --c2: #0B1B33; --tint: #E0F2FE; --ink-sec: #0369A1; }
+.sec-lab .sec-band { background: radial-gradient(circle at 20% 20%, #1E4E7E, #0B1B33 70%); }
+.sec-lab .sec-icon { background: rgba(56, 189, 248, .18); color: #7DD3FC; }
+.hero.sec-lab { background: radial-gradient(circle at 15% 20%, #1E4E7E, #0B1B33 70%); }
+.badge-lab, .badge-simulation { background: #E0F2FE; color: #0B4A6F; }
+.sim-tile { display: flex; flex-direction: column; gap: 12px; align-items: stretch; text-align: left; }
+.sim-thumb { width: 100%; aspect-ratio: 16 / 10; border-radius: 18px; overflow: hidden; background: #0B1B33; }
+.sim-thumb svg { width: 100%; height: 100%; display: block; }
+.sim-tile .play { color: #0369A1; font-weight: 700; display: flex; align-items: center; gap: 6px; }
+.tpl-icon.kind-lab { background: linear-gradient(135deg, #1E4E7E, #0B1B33); color: #7DD3FC; }
+
+/* ═════════════════════ Plantillas de Science ═════════════════════ */
+.why-box { max-width: 720px; width: 100%; padding: 14px 18px; border-radius: 18px; background: #F0F9FF; border: 2px solid #BAE6FD; color: #0C4A6E; font-size: 19px; line-height: 1.45; animation: pop .35s var(--ease); }
+.why-box b { color: #0369A1; }
+.prompt-sm { font-size: clamp(20px, 2.6vw, 26px); }
+/* True / False */
+.tf { display: flex; flex-direction: column; align-items: center; gap: 20px; width: 100%; }
+.tf-statement { max-width: 820px; background: #fff; border: 3px solid var(--card-line); border-radius: 24px; padding: 22px 26px; box-shadow: 0 4px 0 #D3D9EE; }
+.tf-options { max-width: 620px; }
+.tf-btn { display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 26px; min-height: 84px; }
+.tf-mark { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-size: 24px; }
+.tf-true .tf-mark { background: #16A34A; } .tf-false .tf-mark { background: #DC2626; }
+.opt.tf-btn.is-correct { background: var(--good-bg); border-color: var(--good); color: #0B6B45; opacity: 1; box-shadow: 0 4px 0 #9ADBBF; }
+.opt.tf-btn.is-wrong { background: var(--bad-bg); border-color: var(--bad); color: #A4282C; opacity: 1; }
+/* Ordenar pasos */
+.steps-line { list-style: none; display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 640px; padding: 0; margin: 0; }
+.step-slot { display: flex; align-items: center; gap: 12px; min-height: 58px; padding: 6px 10px; border: 3px dashed #CBD2EA; border-radius: 18px; background: #fff; position: relative; }
+.step-slot.on { border-style: solid; border-color: var(--brand); }
+.step-slot + .step-slot::before { content: '↓'; position: absolute; top: -17px; left: 26px; font-weight: 800; color: #A5AEC9; }
+.step-n { width: 34px; height: 34px; border-radius: 50%; background: var(--brand); color: #fff; display: grid; place-items: center; font-weight: 800; flex: none; }
+.steps-line.good .step-slot { border-color: var(--good); background: var(--good-bg); }
+.steps-line.good .step-n { background: var(--good); }
+.steps-bank { max-width: 760px; }
+.step-card { font-size: 19px; }
+/* Etiquetar un dibujo */
+.label-wrap { display: flex; gap: 26px; align-items: center; justify-content: center; flex-wrap: wrap; width: 100%; }
+.label-pic { position: relative; width: min(520px, 92vw, 62vh); aspect-ratio: 1; background: #fff; border: 3px solid var(--card-line); border-radius: 28px; box-shadow: var(--shadow); flex: none; }
+.label-art, .label-art svg { width: 100%; height: 100%; display: block; }
+.pin { position: absolute; transform: translate(-50%, -50%); padding: 0; border: 0; background: none; z-index: 2; }
+.pin-dot { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--brand); color: #fff; font-weight: 800; font-size: 18px; border: 3px solid #fff; box-shadow: 0 3px 8px rgba(0, 0, 0, .28); transition: transform .2s var(--ease); }
+.pin.selected .pin-dot, .pin.hot .pin-dot { transform: scale(1.25); background: #F59E0B; }
+.pin.ok .pin-dot { background: var(--good); }
+.pin.placed .pin-dot { background: #64748B; }
+.pin-tag { position: absolute; top: 50%; transform: translateY(-50%); white-space: nowrap; background: #fff; border: 2px solid var(--good); color: #0B6B45; font-weight: 700; font-size: 15px; padding: 4px 10px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0, 0, 0, .12); animation: pop .3s var(--ease); }
+.pin.placed .pin-tag { border-color: #94A3B8; color: #334155; }
+.tag-right { left: 44px; } .tag-left { right: 44px; }
+.label-side { display: flex; flex-direction: column; gap: 14px; align-items: center; max-width: 340px; }
+.label-tray { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.label-chip.used, .fill-bank .token.used { opacity: .3; }
+.token.selected { border-color: #F59E0B; background: #FEF3C7; transform: translateY(-3px); }
+/* Completar el texto */
+.fill-list { list-style: none; display: flex; flex-direction: column; gap: 14px; width: 100%; max-width: 860px; padding: 0; margin: 0; }
+.fill-line { display: flex; align-items: center; gap: 14px; background: #fff; border: 2px solid var(--card-line); border-radius: 20px; padding: 12px 18px; box-shadow: 0 3px 0 #DCE0F2; }
+.fill-line p { font-size: clamp(19px, 2.3vw, 23px); font-weight: 600; line-height: 1.6; }
+.fill-media .art { width: 64px; height: 64px; padding: 4px; border-radius: 14px; }
+.gap { display: inline-block; min-width: 6.5em; padding: 2px 10px; margin: 0 4px; border: 0; border-bottom: 4px dashed var(--brand); background: #F5F3FF; color: var(--brand); font: inherit; font-weight: 800; border-radius: 8px 8px 0 0; }
+.gap.selected, .gap.hot { background: #FEF3C7; border-color: #F59E0B; }
+.gap.ok { border-bottom-style: solid; border-color: var(--good); color: #0B6B45; background: var(--good-bg); }
+.gap.placed { border-bottom-style: solid; border-color: #64748B; color: #334155; background: #F1F5F9; }
+.fill-bank { position: sticky; top: 8px; z-index: 3; background: rgba(255, 255, 255, .92); backdrop-filter: blur(6px); padding: 10px; border-radius: 18px; border: 2px solid var(--card-line); }
+/* Unir concepto ↔ definición (sin imagen) */
+.match-card.match-text { font-size: 18px; line-height: 1.3; min-height: 92px; }
+
+@media (max-width: 640px) {
+  .label-side { max-width: 100%; }
+  .pin-dot { width: 32px; height: 32px; font-size: 15px; }
+  .pin-tag { font-size: 12px; padding: 2px 6px; }
+  .tag-right { left: 34px; } .tag-left { right: 34px; }
+  .fill-line { padding: 10px 12px; }
+  .fill-media { display: none; }
+}
+
+/* ═════════════════════ SIMULATION (3D Lab) ═════════════════════ */
+.sim { position: fixed; inset: 0; z-index: 60; display: flex; flex-direction: column; color: #E2E8F0;
+  background: radial-gradient(circle at 30% 30%, #12355B 0%, #0B1B33 55%, #060E1D 100%); font-size: 18px; }
+.sim-host .sim { position: absolute; }
+.sim::before { content: ''; position: absolute; inset: 0; pointer-events: none; opacity: .5;
+  background-image: linear-gradient(rgba(56, 189, 248, .07) 1px, transparent 1px), linear-gradient(90deg, rgba(56, 189, 248, .07) 1px, transparent 1px);
+  background-size: 44px 44px; mask-image: radial-gradient(circle at 40% 50%, #000 20%, transparent 75%); -webkit-mask-image: radial-gradient(circle at 40% 50%, #000 20%, transparent 75%); }
+.sim-top { position: relative; display: flex; align-items: center; gap: 14px; padding: 10px 16px; border-bottom: 1px solid rgba(125, 211, 252, .15); background: rgba(6, 14, 29, .45); backdrop-filter: blur(8px); }
+.sim .icon-btn { background: rgba(255, 255, 255, .08); color: #E0F2FE; border-color: rgba(125, 211, 252, .25); }
+.sim .icon-btn.on { background: #0EA5E9; color: #fff; border-color: #0EA5E9; }
+.sim-title { display: flex; flex-direction: column; line-height: 1.15; flex: 1; min-width: 0; }
+.sim-title b { font-size: 20px; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sim-kicker { font-size: 12px; text-transform: uppercase; letter-spacing: .12em; color: #7DD3FC; font-weight: 700; }
+.sim-levels { display: flex; gap: 6px; padding: 4px; border-radius: 999px; background: rgba(255, 255, 255, .06); border: 1px solid rgba(125, 211, 252, .2); }
+.sim-level { border: 0; border-radius: 999px; padding: 8px 16px; font-weight: 700; color: #BAE6FD; background: transparent; font-size: 16px; }
+.sim-level[aria-selected="true"] { background: linear-gradient(135deg, #38BDF8, #0284C7); color: #fff; box-shadow: 0 2px 10px rgba(14, 165, 233, .5); }
+.sim-main { position: relative; flex: 1; display: flex; min-height: 0; }
+.sim-stage { position: relative; flex: 1; min-width: 0; }
+.sim-canvas { position: absolute; inset: 0; touch-action: none; }
+.sim-canvas canvas { width: 100%; height: 100%; display: block; outline: none; }
+.sim-loading { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; color: #BAE6FD; text-align: center; padding: 20px; }
+.sim-tools { position: absolute; left: 14px; bottom: 14px; display: flex; gap: 10px; }
+.sim-tool { width: 54px; height: 54px; }
+.sim-tool[hidden], .sim-nav[hidden] { display: none; }
+.sim-tool svg { width: 26px; height: 26px; }
+.sim-hotspots { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.sim-hs { position: absolute; left: 0; top: 0; pointer-events: auto; display: flex; align-items: center; gap: 8px; margin: -19px 0 0 -19px; padding: 0 12px 0 0;
+  border: 2px solid rgba(255, 255, 255, .85); border-radius: 999px; background: rgba(8, 20, 40, .72); color: #fff; font-weight: 700; font-size: 15px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, .35); transition: opacity .25s; backdrop-filter: blur(4px); }
+.sim-hs.off { opacity: 0; pointer-events: none; }
+.sim-hs.left { flex-direction: row-reverse; padding: 0 0 0 12px; margin: -19px 0 0 0; translate: calc(-100% + 19px) 0; }
+.sim-hs-n { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: #0EA5E9; font-weight: 800; animation: hsPulse 2s infinite; }
+.sim-hs.on { background: #fff; color: #0B1B33; }
+.sim-hs.on .sim-hs-n { background: #F59E0B; animation: none; }
+@keyframes hsPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(56, 189, 248, .6); } 50% { box-shadow: 0 0 0 10px rgba(56, 189, 248, 0); } }
+.sim-panel { position: relative; width: min(400px, 38vw); flex: none; display: flex; flex-direction: column; gap: 12px; padding: 16px 18px; overflow: auto;
+  background: rgba(248, 250, 252, .97); color: var(--ink); border-left: 1px solid rgba(125, 211, 252, .3); }
+.sim-panel-head { display: flex; align-items: center; gap: 10px; justify-content: space-between; }
+.sim-panel .icon-btn { background: #F1F5F9; color: #0369A1; border-color: #E2E8F0; }
+.sim-dots { display: flex; gap: 8px; }
+.sim-dot { width: 36px; height: 36px; border-radius: 50%; border: 2px solid #CBD5E1; background: #fff; font-weight: 800; color: #64748B; }
+.sim-dot.past { background: #E0F2FE; border-color: #7DD3FC; color: #0369A1; }
+.sim-dot.on { background: #0EA5E9; border-color: #0EA5E9; color: #fff; }
+.sim-panel-body { display: flex; flex-direction: column; gap: 12px; animation: rise .35s var(--ease); }
+.sim-panel-body h2 { font-size: 26px; color: #0B1B33; }
+.sim-panel-body p { font-size: 18px; line-height: 1.5; }
+.sim-panel-body p b { color: #0369A1; }
+.sim-step-kicker { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; color: #0EA5E9; }
+.sim-box { border-radius: 16px; padding: 12px 14px; border: 2px solid; font-size: 17px; }
+.sim-box > b { display: block; margin-bottom: 4px; }
+.sim-box p { font-size: 17px; }
+.box-tip { background: #F0F9FF; border-color: #BAE6FD; } .box-tip > b { color: #0369A1; }
+.box-did { background: #FFFBEB; border-color: #FDE68A; } .box-did > b { color: #B45309; }
+.box-remember { background: #F0FDF4; border-color: #BBF7D0; } .box-remember > b { color: #15803D; }
+.box-job { background: #FDF2F8; border-color: #FBCFE8; } .box-job > b { color: #BE185D; }
+.sim-vocab > b { font-size: 15px; color: #475569; }
+.sim-vocab-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+.sim-word { display: flex; flex-direction: column; align-items: flex-start; text-align: left; gap: 2px; padding: 8px 12px; border-radius: 14px; border: 2px solid #E2E8F0; background: #fff; max-width: 100%; }
+.sim-word b { color: #0369A1; font-size: 17px; } .sim-word span { font-size: 14px; color: #475569; }
+.sim-part { border-radius: 18px; padding: 12px 14px; background: #fff; border: 3px solid var(--part); box-shadow: 0 6px 18px rgba(2, 6, 23, .12); animation: pop .3s var(--ease); }
+.sim-part-head { display: flex; align-items: center; gap: 8px; } .sim-part-head b { flex: 1; font-size: 21px; color: var(--part); }
+.sim-part p { font-size: 18px; line-height: 1.45; margin-top: 4px; } .sim-part p b { color: var(--part); }
+.sim-part .icon-btn { width: 40px; height: 40px; }
+.sim-panel-foot { display: flex; gap: 10px; justify-content: space-between; margin-top: auto; padding-top: 8px; }
+.sim-nav { flex: 1; justify-content: center; }
+.sim-nav.btn-wait { opacity: .55; }
+.sim-restart { align-self: center; font-size: 15px; padding: 6px 14px; min-height: 0; }
+.sim-task { display: flex; flex-direction: column; gap: 10px; align-items: stretch; }
+.sim-counter { font-size: 18px; font-weight: 700; color: #334155; } .sim-counter b { font-size: 26px; color: #0EA5E9; }
+.sim-stack { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 18px; border: 3px dashed #38BDF8; background: #F0F9FF; text-align: left; cursor: grab; touch-action: none; user-select: none; }
+.sim-stack:disabled { cursor: default; border-style: solid; border-color: #86EFAC; background: #F0FDF4; }
+.sim-stack.armed { border-style: solid; border-color: #F59E0B; background: #FFFBEB; box-shadow: 0 0 0 4px rgba(245, 158, 11, .25); }
+.sim-stack.dragging { opacity: .6; }
+.sim-stack > span:last-child { display: flex; flex-direction: column; } .sim-stack small { color: #475569; font-size: 15px; }
+.sim-stack-art { width: 70px; height: 70px; flex: none; border-radius: 14px; overflow: hidden; } .sim-stack-art svg { width: 100%; height: 100%; display: block; }
+/* Pizarra: todo más grande y visible desde lejos */
+.sim-board-mode { font-size: 22px; }
+.sim-board-mode .sim-title b { font-size: 26px; }
+.sim-board-mode .sim-level { font-size: 20px; padding: 10px 22px; }
+.sim-board-mode .sim-panel { width: min(520px, 36vw); padding: 22px 24px; }
+.sim-board-mode .sim-panel-body h2 { font-size: 34px; }
+.sim-board-mode .sim-panel-body p, .sim-board-mode .sim-part p { font-size: 23px; }
+.sim-board-mode .sim-box, .sim-board-mode .sim-box p { font-size: 20px; }
+.sim-board-mode .sim-dot { width: 46px; height: 46px; font-size: 20px; }
+.sim-board-mode .sim-tool { width: 70px; height: 70px; } .sim-board-mode .sim-tool svg { width: 34px; height: 34px; }
+.sim-board-mode .sim-hs { font-size: 19px; } .sim-board-mode .sim-hs-n { width: 42px; height: 42px; }
+.sim-board-mode .sim-nav { font-size: 22px; min-height: 60px; }
+/* Móvil / tableta en vertical: panel debajo */
+@media (max-width: 820px), (orientation: portrait) and (max-width: 1024px) {
+  .sim-main { flex-direction: column; }
+  .sim-stage { flex: 1 1 52%; min-height: 260px; }
+  .sim-panel { width: 100%; flex: 1 1 48%; border-left: 0; border-top: 1px solid rgba(125, 211, 252, .3); }
+  .sim-title b { font-size: 17px; }
+  .sim-level { padding: 6px 10px; font-size: 14px; }
+  .sim-tool { width: 46px; height: 46px; }
+}
+@media (max-width: 480px) { .sim-kicker { display: none; } .sim-levels { gap: 2px; } }
 </style>
 
   <!-- client/styles_teacher -->
@@ -1036,6 +1225,21 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
   .login-cards { grid-template-columns: repeat(3, 1fr); gap: 8px; }
   .print-head { font-size: 13px; color: #555; margin-bottom: 8px; }
 }
+
+/* Science bilingüe: grupos que juntan clases (Science 5º = 5A + 5B) */
+.g-chip.g-sci { border-color: #99F6E4; color: #0F766E; }
+.g-chip.g-sci.on { background: #0F766E; border-color: #0F766E; color: #fff; }
+.subject-checks { display: flex; flex-direction: column; gap: 10px; }
+.subject-row { display: flex; gap: 10px; align-items: flex-start; flex-wrap: wrap; }
+.subject-tag { flex: none; min-width: 132px; padding: 6px 12px; border-radius: 999px; font-weight: 800; font-size: 14px; text-align: center; }
+.subject-tag.eng { background: #EDE9FE; color: #5B21B6; }
+.subject-tag.sci { background: #CCFBF1; color: #0F766E; }
+.check.check-sci { border-color: #99F6E4; }
+.pill.pill-sci { background: #CCFBF1; color: #0F766E; }
+.g-tile-id.sci { color: #0F766E; }
+.kind-head.sec-head { border-left: 6px solid var(--sec); padding-left: 10px; }
+.sec-dot { width: 34px; height: 34px; display: inline-flex; }
+.sec-dot svg { width: 100%; height: 100%; }
 </style>
 
 </head>
@@ -1046,7 +1250,7 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
   <div id="sr-live" class="sr-only" aria-live="polite"></div>
 
   <script src="config.js"></script>
-  <script>window.BOOT = Object.assign({ view: "student", appName: "ClassQuest", idleMinutes: 20 }, window.CQ_CONFIG || {});</script>
+  <script>window.BOOT = Object.assign({ view: "student", appName: "ClassQuest", idleMinutes: 20, assetBase: "assets/" }, window.CQ_CONFIG || {});</script>
   <!-- Lógica de corrección compartida con el servidor (Shared.gs) -->
   <script>var Grading = (function GradingFactory_() {
   function norm(s) {
@@ -1073,10 +1277,22 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
       case 'memory':
       case 'whats_missing':
       case 'video_quiz':
+      case 'label_image':
+      case 'fill_text':
+      case 'true_false':
         return r === norm(item.answer);
+      case 'order_steps':
+        // Pasos separados por " > " (p. ej. "cell > tissue > organ > system")
+        return r === norm(orderAnswer(item));
       default:
         return false;
     }
+  }
+
+  /** Respuesta de "order_steps": la columna answer o, si está vacía, las opciones en su orden correcto. */
+  function orderAnswer(item) {
+    if (item.answer) return item.answer;
+    return (item.options || []).join(' > ');
   }
 
   /** "These are my photos." → ["These", "are", "my", "photos"] */
@@ -1092,7 +1308,7 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
     return s;
   }
 
-  return { norm: norm, grade: grade, sentenceTokens: sentenceTokens, starsFor: starsFor };
+  return { norm: norm, grade: grade, sentenceTokens: sentenceTokens, starsFor: starsFor, orderAnswer: orderAnswer };
 })();</script>
   <!-- client/js_core -->
 <script>
@@ -1117,7 +1333,12 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
       if (k === 'class') el.className = v;
       else if (k === 'text') el.textContent = v;
       else if (k === 'svg') el.innerHTML = v;
-      else if (k === 'style' && typeof v === 'object') Object.assign(el.style, v);
+      else if (k === 'style' && typeof v === 'object') {
+        Object.keys(v).forEach(function (p) {
+          if (p.indexOf('--') === 0) el.style.setProperty(p, v[p]);   // variables CSS (colores de Science)
+          else el.style[p] = v[p];
+        });
+      }
       else if (k === 'aria') Object.keys(v).forEach(function (a) { el.setAttribute('aria-' + a, v[a]); });
       else if (k === 'data') Object.keys(v).forEach(function (d) { el.dataset[d] = v[d]; });
       else if (k.indexOf('on') === 0 && typeof v === 'function') el.addEventListener(k.slice(2), v);
@@ -1489,7 +1710,16 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
     puzzle: I('<path d="M9 4h3.5v2.2a1.8 1.8 0 1 0 3.6 0V4H20v5h-2.2a1.8 1.8 0 1 0 0 3.6H20V20h-5v-2.2a1.8 1.8 0 1 0-3.6 0V20H4v-6.5h2.2a1.8 1.8 0 1 0 0-3.6H4V4z"/>'),
     gamepad: I('<path d="M7 7h10a5 5 0 0 1 4.9 6l-.9 4.5a2.5 2.5 0 0 1-4.3 1.1L14.5 16h-5l-2.2 2.6A2.5 2.5 0 0 1 3 17.5L2.1 13A5 5 0 0 1 7 7z"/><path d="M7 10v4M5 12h4"/><circle cx="15.5" cy="11" r=".9" fill="currentColor"/><circle cx="17.5" cy="13" r=".9" fill="currentColor"/>'),
     sparkle: I('<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/>'),
+    cube: I('<path d="M12 2.8l8 4.6v9.2l-8 4.6-8-4.6V7.4z"/><path d="M4 7.4l8 4.6 8-4.6M12 12v9.2"/>'),
+    pause: I('<rect x="6.5" y="5" width="3.6" height="14" rx="1" fill="currentColor"/><rect x="13.9" y="5" width="3.6" height="14" rx="1" fill="currentColor"/>'),
+    reset: I('<path d="M4 12a8 8 0 1 0 2.3-5.7M4 4v5h5"/>'),
+    fullscreen: I('<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>'),
     tpl: {
+      label_image: I('<rect x="3" y="3" width="12" height="12" rx="2"/><circle cx="9" cy="9" r="1.6" fill="currentColor"/><path d="M10.5 9H17"/><rect x="15" y="15" width="6.5" height="5" rx="1.5"/>'),
+      fill_text: I('<path d="M3 7h6M15 7h6M3 12h4M3 17h10"/><rect x="10" y="4.5" width="4" height="5" rx="1" stroke-dasharray="2 1.6"/><rect x="8" y="9.5" width="8" height="5" rx="1.5"/>'),
+      true_false: I('<path d="M3.5 12.5l3 3 5.5-6.5"/><path d="M14.5 9l6 6M20.5 9l-6 6"/>'),
+      order_steps: I('<rect x="3" y="3.5" width="9" height="4.5" rx="1.5"/><rect x="7.5" y="10" width="9" height="4.5" rx="1.5"/><rect x="12" y="16.5" width="9" height="4.5" rx="1.5"/>'),
+      simulation: I('<path d="M12 2.8l8 4.6v9.2l-8 4.6-8-4.6V7.4z"/><path d="M4 7.4l8 4.6 8-4.6M12 12v9.2"/>'),
       multiple_choice: I('<rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><path d="M14.5 17l2 2 3.5-4"/>'),
       match_pairs: I('<rect x="2.5" y="4" width="7" height="6" rx="2"/><rect x="14.5" y="14" width="7" height="6" rx="2"/><path d="M9.5 7c5 0 0 10 5 10"/>'),
       drag_sort: I('<rect x="3" y="13" width="8" height="7" rx="2"/><rect x="13" y="13" width="8" height="7" rx="2"/><path d="M12 3v6M9 6.5L12 9.5l3-3"/>'),
@@ -1605,7 +1835,7 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
       return { close: close };
     },
     kindBadge: function (kind) {
-      var label = { review: 'Review', game: 'Game', practice: 'Practice', challenge: 'Challenge', extra: 'Extra', homework: 'Homework' }[kind] || kind;
+      var label = { review: 'Review', game: 'Game', practice: 'Practice', challenge: 'Challenge', extra: 'Extra', homework: 'Homework', simulation: '3D Lab' }[kind] || kind;
       return h('span', { class: 'badge badge-' + kind }, label);
     },
     loading: function () {
@@ -2168,7 +2398,293 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
     return ART[k] || '';
   }
 
-  CQ.Art = { render: render, svg: svg, keys: Object.keys(ART) };
+  /** Añade ilustraciones desde otro archivo (js_art_science…): { nombre: '<svg…>' }. */
+  function add(map) {
+    Object.keys(map).forEach(function (k) { ART[k] = map[k]; });
+    CQ.Art.keys = Object.keys(ART);
+  }
+
+  CQ.Art = { render: render, svg: svg, keys: Object.keys(ART), add: add, wrap: wrap };
+})();
+</script>
+
+  <!-- client/js_art_science -->
+<script>
+/* ==========================================================================
+   js_art_science — Ilustraciones de Science (viewBox 0 0 120 120, dibujos propios).
+   Los esquemas para etiquetar (eye-diagram, ear-diagram, brain-diagram, skeleton,
+   arm-diagram) tienen sus partes en coordenadas fijas: los puntos de las actividades
+   "Label the picture" usan esas coordenadas en % (x/120, y/120).
+   ========================================================================== */
+(function () {
+  'use strict';
+  var CQ = window.CQ;
+  var W = CQ.Art.wrap;
+  var SH = '<ellipse cx="60" cy="110" rx="42" ry="5" fill="#23264A" opacity=".08"/>';
+  var INK = '#23264A';
+  var SKIN = '#F4C7A1';
+
+  function hex(cx, cy, r) {
+    var p = [];
+    for (var i = 0; i < 6; i++) { var a = Math.PI / 3 * i + Math.PI / 6; p.push((cx + r * Math.cos(a)).toFixed(1) + ',' + (cy + r * Math.sin(a)).toFixed(1)); }
+    return p.join(' ');
+  }
+  /** Fibra muscular con estrías (rectángulo redondeado) */
+  function fiber(x, y, w, hgt, id) {
+    return '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + hgt + '" rx="' + hgt / 2 + '" fill="url(#' + id + ')" stroke="#9F2A2E" stroke-width="1.2"/>';
+  }
+  var STRIPES = function (id, w) {
+    return '<pattern id="' + id + '" width="' + (w || 6) + '" height="10" patternUnits="userSpaceOnUse"><rect width="' + (w || 6) + '" height="10" fill="#EC8E81"/>' +
+      '<rect x="' + (w || 6) * 0.3 + '" width="' + (w || 6) * 0.45 + '" height="10" fill="#C1443F"/></pattern>';
+  };
+  function face(cx, cy, r, mood) {
+    return '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="' + SKIN + '"/>' +
+      '<circle cx="' + (cx - r * 0.35) + '" cy="' + (cy - r * 0.05) + '" r="' + r * 0.11 + '" fill="' + INK + '"/>' +
+      '<circle cx="' + (cx + r * 0.35) + '" cy="' + (cy - r * 0.05) + '" r="' + r * 0.11 + '" fill="' + INK + '"/>' +
+      (mood === 'sad' ? '<path d="M' + (cx - r * 0.35) + ' ' + (cy + r * 0.5) + 'q' + r * 0.35 + ' -' + r * 0.25 + ' ' + r * 0.7 + ' 0" fill="none" stroke="' + INK + '" stroke-width="2.2" stroke-linecap="round"/>'
+        : '<path d="M' + (cx - r * 0.35) + ' ' + (cy + r * 0.3) + 'q' + r * 0.35 + ' ' + r * 0.35 + ' ' + r * 0.7 + ' 0" fill="none" stroke="' + INK + '" stroke-width="2.2" stroke-linecap="round"/>');
+  }
+
+  CQ.Art.add({
+    /* ── Células y niveles de organización ── */
+    'cell-muscle': W('<defs>' + STRIPES('am1', 6) + '</defs>' + SH +
+      '<g transform="rotate(-22 60 60)">' + fiber(10, 34, 100, 17, 'am1') + fiber(16, 54, 96, 17, 'am1') + fiber(8, 74, 98, 17, 'am1') +
+      '<ellipse cx="38" cy="42" rx="7" ry="4" fill="#6B46C1"/><ellipse cx="80" cy="63" rx="7" ry="4" fill="#6B46C1"/><ellipse cx="54" cy="82" rx="7" ry="4" fill="#6B46C1"/></g>'),
+
+    'cell-epithelial': W(SH + '<rect x="12" y="16" width="96" height="88" rx="18" fill="#FCE7E4"/>' +
+      [[30, 34], [52, 34], [74, 34], [96, 34], [41, 53], [63, 53], [85, 53], [30, 72], [52, 72], [74, 72], [96, 72], [41, 91], [63, 91], [85, 91]].map(function (c, i) {
+        return '<polygon points="' + hex(c[0], c[1], 12.2) + '" fill="' + (i % 3 ? '#F7B6AE' : '#F4A79E') + '" stroke="#C2554C" stroke-width="1.6"/>' +
+          '<circle cx="' + c[0] + '" cy="' + c[1] + '" r="3.4" fill="#8B3A62"/>';
+      }).join('')),
+
+    'cell-nerve': W(SH +
+      '<g fill="none" stroke="#7C6FD6" stroke-width="3.4" stroke-linecap="round">' +
+      '<path d="M44 56L22 40M30 45L18 48M44 50L38 22M40 34L30 24M52 48L60 24M58 32L68 22M40 64L18 76M26 72L20 86M48 68L40 92M44 82L32 96"/>' +
+      '<path d="M58 60C72 62 84 66 102 74M96 71l10-6M100 74l10 4M98 77l4 10" stroke-width="3"/></g>' +
+      '<circle cx="48" cy="58" r="13" fill="#8B7CF0" stroke="#5B4CC4" stroke-width="2"/><circle cx="48" cy="58" r="5.5" fill="#3B2F8F"/>'),
+
+    paramecium: W(SH + '<g transform="rotate(-25 60 60)">' +
+      '<ellipse cx="60" cy="60" rx="44" ry="20" fill="#A7F3D0" stroke="#059669" stroke-width="2.4"/>' +
+      Array.apply(null, Array(26)).map(function (_, i) { var a = Math.PI * 2 / 26 * i; var x = 60 + 46 * Math.cos(a), y = 60 + 22 * Math.sin(a);
+        return '<path d="M' + x.toFixed(1) + ' ' + y.toFixed(1) + 'l' + (5 * Math.cos(a)).toFixed(1) + ' ' + (5 * Math.sin(a)).toFixed(1) + '" stroke="#059669" stroke-width="1.6"/>'; }).join('') +
+      '<path d="M54 60q8 8 18 2" fill="none" stroke="#047857" stroke-width="2.4"/><ellipse cx="44" cy="56" rx="8" ry="6" fill="#6EE7B7" stroke="#047857" stroke-width="1.6"/>' +
+      '<circle cx="80" cy="56" r="5" fill="#34D399"/><circle cx="30" cy="62" r="3.5" fill="#34D399"/></g>'),
+
+    'tissue-muscle': W('<defs>' + STRIPES('am2', 6) + '</defs>' + SH +
+      '<path d="M18 40L86 22L104 40L36 58z" fill="#E9877B" opacity=".5"/>' +
+      '<g transform="rotate(-15 60 60)">' + [30, 44, 58, 72].map(function (y) { return fiber(10, y, 92, 15, 'am2'); }).join('') +
+      [37.5, 51.5, 65.5, 79.5].map(function (y) { return '<circle cx="101" cy="' + y + '" r="7" fill="#F7B5A8" stroke="#9F2A2E" stroke-width="1.2"/><circle cx="101" cy="' + y + '" r="2.4" fill="#C1443F"/>'; }).join('') +
+      '<rect x="8" y="27" width="102" height="64" rx="16" fill="none" stroke="#F3E8DA" stroke-width="3" stroke-dasharray="5 4"/></g>'),
+
+    stomach: W(SH + '<path d="M52 8v20" stroke="#E98A8F" stroke-width="12" stroke-linecap="round"/>' +
+      '<path d="M50 24c-14 8-22 26-14 44 8 20 30 30 50 24 10-3 12-12 6-16-6-4-14 2-22-6-8-8 4-24-4-40z" fill="#F4A3A8" stroke="#C24E5A" stroke-width="2.6"/>' +
+      '<path d="M86 92c8 2 14 8 18 14" stroke="#E98A8F" stroke-width="10" stroke-linecap="round" fill="none"/>' +
+      '<path d="M44 46c6 10 4 20 14 28M52 40c4 8 10 14 20 16" fill="none" stroke="#D46A74" stroke-width="2" stroke-linecap="round" opacity=".7"/>'),
+
+    digestive: W(SH + '<path d="M38 8c-10 18-14 44-12 72 2 22 18 30 34 30s32-8 34-30c2-28-2-54-12-72z" fill="#EEF2FF"/>' +
+      '<path d="M60 6v28" stroke="#E98A8F" stroke-width="7" stroke-linecap="round"/>' +
+      '<path d="M30 40c8-8 22-10 30-4 4 4 2 12-6 14-8 2-18 2-24-2z" fill="#9A5B3F"/>' +
+      '<path d="M62 32c12-2 22 6 20 16-2 8-10 10-16 8" fill="#F4A3A8" stroke="#C24E5A" stroke-width="2"/>' +
+      '<path d="M34 64h50v28H34z" fill="none" stroke="#A16207" stroke-width="7" stroke-linejoin="round"/>' +
+      '<path d="M42 70c6-4 10 4 16 0s10 4 16 0M42 78c6-4 10 4 16 0s10 4 16 0M42 86c6-4 10 4 16 0s10 4 16 0" fill="none" stroke="#F59E8B" stroke-width="5" stroke-linecap="round"/>' +
+      '<path d="M54 92v12" stroke="#A16207" stroke-width="6" stroke-linecap="round"/>'),
+
+    body: W(SH + '<circle cx="60" cy="22" r="14" fill="' + SKIN + '"/><path d="M46 20c0-12 8-16 14-16s16 4 14 16c-4-5-9-7-14-7s-10 2-14 7z" fill="#7C4A2D"/>' +
+      '<circle cx="55" cy="23" r="1.8" fill="' + INK + '"/><circle cx="65" cy="23" r="1.8" fill="' + INK + '"/><path d="M56 29q4 3 8 0" fill="none" stroke="' + INK + '" stroke-width="1.8" stroke-linecap="round"/>' +
+      '<path d="M44 40h32l4 34H40z" fill="#8B5CF6"/><path d="M44 42l-12 28M76 42l12 28" stroke="' + SKIN + '" stroke-width="7" stroke-linecap="round"/>' +
+      '<path d="M50 74l-2 32M70 74l2 32" stroke="#1E3A8A" stroke-width="9" stroke-linecap="round"/><path d="M42 106h10M68 106h10" stroke="' + INK + '" stroke-width="5" stroke-linecap="round"/>'),
+
+    /* ── La función de interacción ── */
+    cold: W(SH + '<rect x="30" y="14" width="16" height="70" rx="8" fill="#fff" stroke="#94A3B8" stroke-width="3"/><circle cx="38" cy="90" r="13" fill="#3B82F6" stroke="#94A3B8" stroke-width="3"/>' +
+      '<rect x="34.5" y="60" width="7" height="30" rx="3.5" fill="#3B82F6"/>' +
+      '<g stroke="#38BDF8" stroke-width="4" stroke-linecap="round"><path d="M84 30v44M65 41l38 22M65 63l38-22"/></g>' +
+      '<g stroke="#38BDF8" stroke-width="3" stroke-linecap="round"><path d="M84 36l-5-4M84 36l5-4M84 68l-5 4M84 68l5 4"/></g>'),
+
+    sweat: W(SH + '<circle cx="96" cy="22" r="12" fill="#FBBF24"/>' + [0, 45, 90, 135, 180, 225, 270, 315].map(function (d) { var a = d * Math.PI / 180;
+        return '<path d="M' + (96 + 16 * Math.cos(a)).toFixed(1) + ' ' + (22 + 16 * Math.sin(a)).toFixed(1) + 'L' + (96 + 21 * Math.cos(a)).toFixed(1) + ' ' + (22 + 21 * Math.sin(a)).toFixed(1) + '" stroke="#FBBF24" stroke-width="3" stroke-linecap="round"/>'; }).join('') +
+      face(54, 64, 30) + '<path d="M28 54c0-22 12-30 26-30s28 8 26 30c-6-8-16-12-26-12s-20 4-26 12z" fill="#7C4A2D"/>' +
+      '<path d="M80 58c3 5 4 8 0 10s-5-4 0-10zM30 70c3 5 4 8 0 10s-5-4 0-10zM74 80c3 5 4 8 0 10s-5-4 0-10z" fill="#38BDF8"/>'),
+
+    /* ── Los sentidos ── */
+    eye: W(SH + '<path d="M10 60c18-28 82-28 100 0-18 28-82 28-100 0z" fill="#fff" stroke="' + INK + '" stroke-width="3"/>' +
+      '<circle cx="60" cy="60" r="19" fill="#3B82F6"/><circle cx="60" cy="60" r="9" fill="#0F172A"/><circle cx="54" cy="54" r="4" fill="#fff"/>' +
+      '<path d="M22 44l-6-8M38 34l-3-9M60 30v-9M82 34l3-9M98 44l6-8" stroke="' + INK + '" stroke-width="3" stroke-linecap="round"/>'),
+
+    ear: W(SH + '<path d="M70 16c-24 0-38 18-38 38 0 14 8 20 12 28 4 10 0 22 14 24 12 2 16-10 20-20 6-12 18-18 18-38 0-18-10-32-26-32z" fill="' + SKIN + '" stroke="#C48A5E" stroke-width="3"/>' +
+      '<path d="M54 52c0-12 8-20 18-20s16 8 16 18c0 12-10 14-12 24" fill="none" stroke="#C48A5E" stroke-width="4" stroke-linecap="round"/>' +
+      '<path d="M66 54c0-6 8-8 10-2" fill="none" stroke="#C48A5E" stroke-width="3.5" stroke-linecap="round"/>' +
+      '<path d="M104 40q8 14 0 28M98 46q4 8 0 16" fill="none" stroke="#8B5CF6" stroke-width="3" stroke-linecap="round"/>'),
+
+    nose: W(SH + face(60, 60, 44) + '<path d="M60 40c-2 14-12 24-12 32 0 6 6 8 12 8s12-2 12-8c0-8-10-18-12-32z" fill="#E8A97F"/>' +
+      '<ellipse cx="54" cy="76" rx="4" ry="2.5" fill="#9A5B3F"/><ellipse cx="66" cy="76" rx="4" ry="2.5" fill="#9A5B3F"/>' +
+      '<path d="M86 30q8 4 6 12M94 24q10 6 8 18" fill="none" stroke="#A78BFA" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="4 4"/>'),
+
+    tongue: W(SH + '<path d="M16 50c0-14 20-22 44-22s44 8 44 22c0 30-20 50-44 50S16 80 16 50z" fill="#B91C1C"/>' +
+      '<path d="M22 48c10-6 26-8 38-8s28 2 38 8" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-dasharray="7 3"/>' +
+      '<path d="M32 60c0-6 12-8 28-8s28 2 28 8c0 22-12 38-28 38S32 82 32 60z" fill="#F472B6"/>' +
+      '<path d="M60 56v30" stroke="#DB2777" stroke-width="2.4" stroke-linecap="round"/>' +
+      [[46, 66], [74, 66], [50, 80], [70, 80], [60, 92]].map(function (p) { return '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="2" fill="#FBCFE8"/>'; }).join('')),
+
+    skin: W(SH + '<path d="M14 40h92v22H14z" fill="#F4C7A1"/><path d="M14 62h92v22H14z" fill="#F2A7A0"/><path d="M14 84h92v18H14z" fill="#FDE68A"/>' +
+      '<path d="M14 40h92" stroke="#C48A5E" stroke-width="3"/>' +
+      [30, 54, 80].map(function (x) { return '<path d="M' + x + ' 78L' + (x + 4) + ' 40l6-22" fill="none" stroke="#5B3A29" stroke-width="2.4"/><ellipse cx="' + x + '" cy="80" rx="4" ry="5" fill="#9A5B3F"/>'; }).join('') +
+      '<circle cx="96" cy="72" r="5" fill="#8B5CF6"/><path d="M96 72L90 52" stroke="#8B5CF6" stroke-width="2"/><circle cx="68" cy="70" r="4" fill="#38BDF8"/>' +
+      '<path d="M98 20c4-6 12-4 10 2M100 28c6-2 10 2 6 6" fill="none" stroke="#F59E0B" stroke-width="2.4" stroke-linecap="round"/>'),
+
+    /* Esquema del ojo (puntos: pupil 21/50 · lens 31/38 · retina 80/24 · optic nerve 92/50) */
+    'eye-diagram': W('<rect width="120" height="120" fill="#fff"/>' +
+      '<path d="M96 56h22v8H96z" fill="#F2C14E" stroke="#B7791F" stroke-width="1.5"/>' +
+      '<circle cx="62" cy="60" r="36" fill="#FFF7F2" stroke="#C2554C" stroke-width="3"/>' +
+      '<path d="M88 36a36 36 0 0 1 0 48" fill="none" stroke="#E2463B" stroke-width="6" stroke-linecap="round"/>' +
+      '<path d="M30 44a40 40 0 0 0 0 32" fill="#DBEAFE" stroke="#60A5FA" stroke-width="2.4"/>' +
+      '<rect x="27" y="40" width="5" height="14" rx="2" fill="#2563EB"/><rect x="27" y="66" width="5" height="14" rx="2" fill="#2563EB"/>' +
+      '<ellipse cx="39" cy="60" rx="6" ry="13" fill="#E0F2FE" stroke="#0EA5E9" stroke-width="2.4"/>' +
+      '<path d="M26 60H118" stroke="#F59E0B" stroke-width="1.2" stroke-dasharray="3 3" opacity=".6"/>'),
+
+    /* Esquema del oído (outer ear 11/36 · ear canal 30/57 · eardrum 46/42 · small bones 56/30 · cochlea 74/58 · auditory nerve 90/32) */
+    'ear-diagram': W('<rect width="120" height="120" fill="#fff"/>' +
+      '<path d="M22 20c-12 0-16 16-14 30 2 16 8 22 10 34 2 10 10 14 14 6 2-6 2-12 6-16l4-12c-4-6-6-14-6-22 0-12-4-20-14-20z" fill="' + SKIN + '" stroke="#C48A5E" stroke-width="2.4"/>' +
+      '<path d="M30 58h22" stroke="#E8A97F" stroke-width="11" stroke-linecap="round"/><path d="M30 58h22" stroke="#C48A5E" stroke-width="1.2" stroke-dasharray="2 3"/>' +
+      '<ellipse cx="54" cy="58" rx="2.6" ry="9" fill="#FDE68A" stroke="#D97706" stroke-width="1.6"/>' +
+      '<path d="M57 54c2-4 6-6 8-4M65 50c2 4 2 8 6 8M71 58c2-2 4-2 6 0" fill="none" stroke="#9CA3AF" stroke-width="4" stroke-linecap="round"/>' +
+      '<path d="M84 60c0 6-6 10-11 8-6-2-6-10-1-12 4-2 7 1 6 4-1 2-4 2-4 0" fill="none" stroke="#EC4899" stroke-width="4" stroke-linecap="round"/>' +
+      '<path d="M86 58c8-8 12-20 22-26M90 60c10-4 16-10 24-10" fill="none" stroke="#F2C14E" stroke-width="3.4" stroke-linecap="round"/>' +
+      '<path d="M2 50q4 8 0 16M8 46q6 12 0 24" fill="none" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round" opacity=".7"/>'),
+
+    /* ── Sistema nervioso ── */
+    brain: W(SH + '<path d="M24 62c-6-20 8-40 30-42 14-2 22 2 30 8 12 4 18 14 16 26-2 10-10 16-20 16H38c-8 0-12-2-14-8z" fill="#F9A8D4" stroke="#BE185D" stroke-width="2.6"/>' +
+      '<path d="M36 40c6-4 12 2 8 8M52 30c8 0 10 8 4 12M70 32c8 2 8 10 2 12M82 44c6 2 6 10 0 12M44 58c4-6 12-4 12 2M62 50c6-2 12 4 6 10" fill="none" stroke="#BE185D" stroke-width="2.2" stroke-linecap="round"/>' +
+      '<path d="M72 78c10 0 16-2 18-8 2 6-4 14-14 14z" fill="#EC4899"/><path d="M64 78h8v22h-8z" fill="#F2C14E" stroke="#B7791F" stroke-width="1.6"/>'),
+
+    /* Esquema del encéfalo y médula (cerebrum 40/26 · cerebellum 72/50 · brain stem 56/58 · spinal cord 56/86) */
+    'brain-diagram': W('<rect width="120" height="120" fill="#fff"/>' +
+      '<path d="M30 70c-12-30 4-58 32-60 24-2 40 14 40 34 0 10-4 16-6 22 4 4 4 10-2 12l-6 6c-4 4-10 4-16 4v34H46V96c-8-4-14-12-16-26z" fill="#FDF2E9" stroke="#E5C3A6" stroke-width="2"/>' +
+      '<path d="M26 50c0-22 16-36 36-36 18 0 32 12 32 28 0 8-4 12-10 14H40c-8 0-14-2-14-6z" fill="#F9A8D4" stroke="#BE185D" stroke-width="2.2"/>' +
+      '<path d="M38 34c6-4 12 2 8 8M54 24c8 0 10 8 4 12M72 26c8 2 8 10 2 12M84 40c4 4 2 10-4 10M40 50c4-6 12-4 12 2M62 44c6-2 12 4 6 10" fill="none" stroke="#BE185D" stroke-width="1.8" stroke-linecap="round"/>' +
+      '<path d="M66 56c10-2 20 0 22 8 2 8-8 12-18 10-6-1-8-12-4-18z" fill="#EC4899" stroke="#9D174D" stroke-width="2"/>' +
+      '<path d="M66 60c6 0 12 2 16 6M68 66c4 0 8 2 12 4" fill="none" stroke="#9D174D" stroke-width="1.4"/>' +
+      '<path d="M54 54h10l-1 20H55z" fill="#F59E0B" stroke="#B45309" stroke-width="1.8"/>' +
+      '<path d="M55 74h8v44h-8z" fill="#FDE68A" stroke="#D97706" stroke-width="1.8"/>' +
+      '<path d="M55 86l-10 4M63 86l10 4M55 100l-10 4M63 100l10 4" stroke="#F2C14E" stroke-width="2" stroke-linecap="round"/>'),
+
+    /* ── Sistema locomotor ── */
+    /* Esqueleto (cranium 50/10 · clavicle 37/26 · ribs 58/36 · humerus 22/38 · pelvis 50/55 · femur 41/68 · patella 41/78 · tibia 41/89) */
+    skeleton: W('<rect width="120" height="120" fill="#fff"/><g fill="#FFF7E6" stroke="#B89A6A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' +
+      '<ellipse cx="60" cy="13" rx="9" ry="10"/><path d="M54 20h12v4H54z"/>' +
+      '<path d="M44 30q16-6 32 0" fill="none" stroke-width="2.6"/>' +
+      '<path d="M60 26v38" stroke-width="3"/>' +
+      '<path d="M50 34q10-3 20 0M49 39q11-3 22 0M49 44q11-3 22 0M50 49q10-3 20 0" fill="none" stroke-width="2.2"/>' +
+      '<path d="M42 31l-14 24M78 31l14 24" stroke-width="3.2"/><path d="M28 56l-6 22M92 56l6 22" stroke-width="2.6"/>' +
+      '<path d="M48 62q12-6 24 0l-4 8q-8 4-16 0z"/>' +
+      '<path d="M53 70l-4 22M67 70l4 22" stroke-width="3.6"/><circle cx="49" cy="93" r="2.6"/><circle cx="71" cy="93" r="2.6"/>' +
+      '<path d="M49 96l-1 20M71 96l1 20" stroke-width="3"/><path d="M44 117h8M68 117h8" stroke-width="2.4"/></g>' +
+      '<circle cx="59" cy="11" r="0"/><circle cx="56" cy="13" r="2" fill="#B89A6A"/><circle cx="64" cy="13" r="2" fill="#B89A6A"/>'),
+
+    /* Brazo (bone 72/80 · muscle 34/40 · tendon 44/70 · joint 52/78 · ligament 58/88) */
+    'arm-diagram': W('<rect width="120" height="120" fill="#fff"/>' +
+      '<path d="M10 12c8-6 18-4 22 4l-4 8-18-2z" fill="#FFF7E6" stroke="#B89A6A" stroke-width="2"/>' +
+      '<path d="M24 20l26 54" stroke="#FFF7E6" stroke-width="9" stroke-linecap="round"/><path d="M24 20l26 54" stroke="#B89A6A" stroke-width="1.6" stroke-dasharray="0" fill="none" opacity=".0"/>' +
+      '<path d="M20 22l26 54M28 18l26 54" stroke="#B89A6A" stroke-width="1.6"/>' +
+      '<path d="M54 80l52 14M54 84l52 16" stroke="#B89A6A" stroke-width="5" stroke-linecap="round"/><path d="M54 80l52 14M54 84l52 16" stroke="#FFF7E6" stroke-width="3" stroke-linecap="round"/>' +
+      '<path d="M104 92l10-4M104 96l12 0M104 100l10 4" stroke="#B89A6A" stroke-width="2.4" stroke-linecap="round"/>' +
+      '<path d="M30 22c14 6 22 24 18 46" fill="none" stroke="#DC2626" stroke-width="12" stroke-linecap="round"/>' +
+      '<path d="M30 22c14 6 22 24 18 46" fill="none" stroke="#F87171" stroke-width="3" stroke-dasharray="3 4" stroke-linecap="round"/>' +
+      '<path d="M16 26c-2 20 8 36 22 46" fill="none" stroke="#B91C1C" stroke-width="8" stroke-linecap="round" opacity=".85"/>' +
+      '<path d="M48 68l8 14" stroke="#E5E7EB" stroke-width="4" stroke-linecap="round"/><path d="M48 68l8 14" stroke="#94A3B8" stroke-width="1.4"/>' +
+      '<circle cx="53" cy="80" r="7" fill="none" stroke="#7C3AED" stroke-width="2.4" stroke-dasharray="3 2"/>' +
+      '<path d="M50 86c4 4 10 4 12 0" fill="none" stroke="#8B5CF6" stroke-width="3.4" stroke-linecap="round"/>'),
+
+    bone: W(SH + '<g transform="rotate(-35 60 60)"><path d="M30 52h60M30 68h60" stroke="#B89A6A" stroke-width="2.4"/><rect x="30" y="52" width="60" height="16" fill="#FFF7E6"/>' +
+      '<circle cx="26" cy="50" r="11" fill="#FFF7E6" stroke="#B89A6A" stroke-width="2.4"/><circle cx="26" cy="70" r="11" fill="#FFF7E6" stroke="#B89A6A" stroke-width="2.4"/>' +
+      '<circle cx="94" cy="50" r="11" fill="#FFF7E6" stroke="#B89A6A" stroke-width="2.4"/><circle cx="94" cy="70" r="11" fill="#FFF7E6" stroke="#B89A6A" stroke-width="2.4"/>' +
+      '<rect x="26" y="53" width="68" height="14" fill="#FFF7E6"/></g>'),
+
+    muscle: W(SH + '<path d="M12 86H66" stroke="#C48A5E" stroke-width="30" stroke-linecap="round"/><path d="M70 86L78 34" stroke="#C48A5E" stroke-width="26" stroke-linecap="round"/>' +
+      '<path d="M12 86H66" stroke="' + SKIN + '" stroke-width="25" stroke-linecap="round"/><path d="M70 86L78 34" stroke="' + SKIN + '" stroke-width="21" stroke-linecap="round"/>' +
+      '<circle cx="79" cy="26" r="15" fill="' + SKIN + '" stroke="#C48A5E" stroke-width="2.5"/><path d="M70 22h14M70 28h14" stroke="#C48A5E" stroke-width="2" stroke-linecap="round"/>' +
+      '<ellipse cx="42" cy="72" rx="20" ry="13" fill="#F87171" stroke="#B91C1C" stroke-width="2.4"/>' +
+      '<path d="M30 70q12-6 24 0M32 76q10-4 20 0" fill="none" stroke="#B91C1C" stroke-width="1.8" stroke-linecap="round"/>' +
+      '<path d="M98 22l8-6M102 34l10-2M96 12l4-8" stroke="#F59E0B" stroke-width="3.4" stroke-linecap="round"/>'),
+    joint: W(SH + '<path d="M50 8v40M70 8v40" stroke="#B89A6A" stroke-width="2.4"/><rect x="50" y="8" width="20" height="40" fill="#FFF7E6"/>' +
+      '<path d="M42 48c0-8 36-8 36 0s-8 10-18 10-18-2-18-10z" fill="#FFF7E6" stroke="#B89A6A" stroke-width="2.4"/>' +
+      '<path d="M42 66c0 8 36 8 36 0s-8-8-18-8-18 0-18 8z" fill="#FFF7E6" stroke="#B89A6A" stroke-width="2.4"/>' +
+      '<path d="M52 72v40M68 72v40" stroke="#B89A6A" stroke-width="2.4"/><rect x="52" y="72" width="16" height="40" fill="#FFF7E6"/>' +
+      '<path d="M40 52c-4 4-4 10 0 14M80 52c4 4 4 10 0 14" fill="none" stroke="#8B5CF6" stroke-width="4" stroke-linecap="round"/>' +
+      '<ellipse cx="60" cy="58" rx="16" ry="3" fill="#BAE6FD"/>'),
+
+    /* ── Salud y enfermedad ── */
+    virus: W(SH + Array.apply(null, Array(12)).map(function (_, i) { var a = Math.PI * 2 / 12 * i;
+        var x1 = 60 + 30 * Math.cos(a), y1 = 58 + 30 * Math.sin(a), x2 = 60 + 42 * Math.cos(a), y2 = 58 + 42 * Math.sin(a);
+        return '<path d="M' + x1.toFixed(1) + ' ' + y1.toFixed(1) + 'L' + x2.toFixed(1) + ' ' + y2.toFixed(1) + '" stroke="#15803D" stroke-width="3"/><circle cx="' + x2.toFixed(1) + '" cy="' + y2.toFixed(1) + '" r="4.5" fill="#22C55E" stroke="#15803D" stroke-width="1.6"/>'; }).join('') +
+      '<circle cx="60" cy="58" r="31" fill="#4ADE80" stroke="#15803D" stroke-width="2.6"/>' +
+      [[60, 58], [46, 46], [74, 46], [46, 70], [74, 70], [60, 38], [60, 78]].map(function (c) { return '<polygon points="' + hex(c[0], c[1], 7) + '" fill="#86EFAC" stroke="#15803D" stroke-width="1.4"/>'; }).join('')),
+
+    bacteria: W(SH + [[40, 46, -20], [78, 40, 25], [56, 80, 5]].map(function (b) {
+        return '<g transform="rotate(' + b[2] + ' ' + b[0] + ' ' + b[1] + ')"><circle cx="' + (b[0] - 11) + '" cy="' + b[1] + '" r="14" fill="#F87171" stroke="#B91C1C" stroke-width="2.4"/>' +
+          '<circle cx="' + (b[0] + 11) + '" cy="' + b[1] + '" r="14" fill="#F87171" stroke="#B91C1C" stroke-width="2.4"/>' +
+          '<path d="M' + (b[0] - 15) + ' ' + (b[1] - 3) + 'q4 6 8 0M' + (b[0] + 7) + ' ' + (b[1] + 2) + 'q4-6 8 0" fill="none" stroke="#7F1D1D" stroke-width="2.4" stroke-linecap="round"/></g>';
+      }).join('')),
+
+    fungi: W(SH + '<g fill="none" stroke="#4D7C0F" stroke-width="5" stroke-linecap="round"><path d="M14 96C30 80 40 60 60 52s36-22 46-40"/><path d="M40 66c-6-12-6-24 0-34M60 52c10 6 22 8 34 4M76 40c-2-10 2-20 10-26M30 80c14 4 26 14 30 26"/></g>' +
+      [[40, 32], [94, 56], [86, 14], [60, 106], [14, 96], [106, 12], [62, 52], [40, 66]].map(function (c) { return '<circle cx="' + c[0] + '" cy="' + c[1] + '" r="6.5" fill="#F97316" stroke="#9A3412" stroke-width="1.8"/>'; }).join('')),
+
+    protozoa: W(SH + '<path d="M18 74c16-30 34 18 52-12 12-20 26-24 36-14" fill="none" stroke="#A78BFA" stroke-width="16" stroke-linecap="round"/>' +
+      '<path d="M18 74c16-30 34 18 52-12 12-20 26-24 36-14" fill="none" stroke="#7C3AED" stroke-width="3" stroke-linecap="round" stroke-dasharray="2 6"/>' +
+      '<path d="M106 48c6 6 8 0 12-6" fill="none" stroke="#7C3AED" stroke-width="3" stroke-linecap="round"/><circle cx="48" cy="58" r="6" fill="#5B21B6"/>'),
+
+    /* ── Vida sana ── */
+    handwash: W(SH + '<path d="M40 14h40v12H66v8" fill="none" stroke="#94A3B8" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"/>' +
+      '<rect x="52" y="8" width="16" height="8" rx="3" fill="#64748B"/>' +
+      '<path d="M66 40v16" stroke="#38BDF8" stroke-width="5" stroke-linecap="round" stroke-dasharray="4 5"/>' +      '<path d="M30 78c0-14 10-22 22-22h22c10 0 16 8 16 16 0 14-12 22-26 22H44c-8 0-14-6-14-16z" fill="' + SKIN + '" stroke="#C48A5E" stroke-width="2.4"/>' +
+      '<path d="M50 62h22M48 72h26M50 82h22" stroke="#C48A5E" stroke-width="2" stroke-linecap="round"/>' +
+      [[36, 52, 7], [92, 64, 6], [28, 96, 6], [96, 90, 8], [62, 50, 5]].map(function (c) { return '<circle cx="' + c[0] + '" cy="' + c[1] + '" r="' + c[2] + '" fill="#E0F2FE" stroke="#38BDF8" stroke-width="2"/>'; }).join('')),
+
+    'healthy-food': W(SH + '<path d="M38 50c-14-8-30 4-26 24 3 18 16 30 26 26 10 4 24-8 26-26 4-20-12-32-26-24z" fill="#EF4444"/>' +
+      '<path d="M38 50c0-8 2-14 8-18" stroke="#7C4A2D" stroke-width="3" stroke-linecap="round"/><path d="M40 40c8-8 16-6 18-2-6 6-12 6-18 2z" fill="#22C55E"/>' +
+      '<path d="M74 30l30 66-10 6z" fill="#F97316"/><path d="M76 34c-6-10-2-20 4-22M80 30c2-10 10-14 16-12" fill="none" stroke="#16A34A" stroke-width="4" stroke-linecap="round"/>' +
+      '<path d="M84 60h8M88 74h8" stroke="#C2410C" stroke-width="2" stroke-linecap="round"/>'),
+
+    helmet: W(SH + '<path d="M14 76c0-30 20-50 46-50s46 20 46 50z" fill="#3B82F6" stroke="#1E40AF" stroke-width="3"/>' +
+      '<path d="M34 34c8 10 10 26 8 42M60 26v50M86 34c-8 10-10 26-8 42" fill="none" stroke="#93C5FD" stroke-width="5" stroke-linecap="round"/>' +
+      '<rect x="8" y="74" width="104" height="10" rx="5" fill="#1E40AF"/><path d="M30 84q30 26 60 0" fill="none" stroke="#0F172A" stroke-width="3"/>'),
+
+    sport: W(SH + '<defs><clipPath id="asball"><circle cx="66" cy="62" r="34"/></clipPath></defs>' +
+      '<circle cx="66" cy="62" r="34" fill="#fff" stroke="' + INK + '" stroke-width="3"/>' +
+      '<g clip-path="url(#asball)" fill="' + INK + '"><polygon points="' + hex(66, 62, 11).replace(/,/g, ',') + '"/>' +
+      [[66, 24], [102, 50], [90, 96], [42, 96], [30, 50]].map(function (p) { return '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="11"/>'; }).join('') + '</g>' +
+      '<g stroke="' + INK + '" stroke-width="2.2">' + [[66, 51, 66, 35], [76, 58, 92, 52], [72, 72, 82, 86], [60, 72, 50, 86], [56, 58, 40, 52]].map(function (l) {
+        return '<path d="M' + l[0] + ' ' + l[1] + 'L' + l[2] + ' ' + l[3] + '"/>'; }).join('') + '</g>' +
+      '<path d="M10 50h16M6 62h18M10 74h16" stroke="#94A3B8" stroke-width="4" stroke-linecap="round"/>'),
+    doctor: W(SH + '<path d="M36 14v26c0 14 10 22 22 22s22-8 22-22V14" fill="none" stroke="#64748B" stroke-width="5" stroke-linecap="round"/>' +
+      '<circle cx="36" cy="12" r="4" fill="#64748B"/><circle cx="80" cy="12" r="4" fill="#64748B"/>' +
+      '<path d="M58 62v18c0 14 12 22 24 22s20-8 20-20" fill="none" stroke="#64748B" stroke-width="5" stroke-linecap="round"/>' +
+      '<circle cx="102" cy="80" r="11" fill="#CBD5E1" stroke="#475569" stroke-width="3"/><circle cx="102" cy="80" r="5" fill="#94A3B8"/>' +
+      '<rect x="12" y="76" width="30" height="30" rx="6" fill="#fff" stroke="#EF4444" stroke-width="2.4"/><path d="M27 82v18M18 91h18" stroke="#EF4444" stroke-width="5" stroke-linecap="round"/>'),
+
+    friends: W(SH + face(32, 62, 18) + '<path d="M14 58c0-16 8-22 18-22s20 6 18 22c-4-6-10-8-18-8s-14 2-18 8z" fill="#7C4A2D"/>' +
+      face(88, 62, 18) + '<path d="M70 60c-2-18 8-26 18-26s22 8 18 26c-4-10-10-14-18-14s-14 4-18 14z" fill="#F59E0B"/>' +
+      face(60, 48, 20) + '<path d="M40 44c0-16 10-24 20-24s22 8 20 24c-4-8-12-10-20-10s-16 2-20 10z" fill="#1F2937"/>' +
+      '<path d="M14 104c2-12 10-18 18-18M106 104c-2-12-10-18-18-18" stroke="#8B5CF6" stroke-width="10" stroke-linecap="round" fill="none"/>' +
+      '<path d="M40 108c2-24 10-32 20-32s18 8 20 32z" fill="#22C55E"/>'),
+
+    water: W(SH + '<path d="M34 18h52l-8 86H42z" fill="#E0F2FE" stroke="#7DD3FC" stroke-width="3" stroke-linejoin="round"/>' +
+      '<path d="M37 44h46l-5 58H42z" fill="#38BDF8"/><path d="M46 52v40" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".7"/>' +
+      '<path d="M94 22c5 8 7 12 0 16-7-4-5-8 0-16z" fill="#38BDF8"/>'),
+
+    sleep: W(SH + '<path d="M62 18a40 40 0 1 0 42 54 32 32 0 0 1-42-54z" fill="#FDE68A" stroke="#F59E0B" stroke-width="2.6"/>' +
+      '<text x="80" y="38" font-family="Lexend, sans-serif" font-weight="700" font-size="16" fill="#6366F1">Z</text><text x="92" y="24" font-family="Lexend, sans-serif" font-weight="700" font-size="12" fill="#818CF8">z</text>' +
+      '<circle cx="24" cy="24" r="2.5" fill="#A5B4FC"/><circle cx="104" cy="96" r="2.5" fill="#A5B4FC"/>'),
+
+    sweets: W(SH + '<circle cx="42" cy="44" r="22" fill="#F472B6"/><path d="M42 44m-14 0a14 14 0 1 1 28 0a8 8 0 1 1-16 0" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/>' +
+      '<path d="M42 66v42" stroke="#E5E7EB" stroke-width="5" stroke-linecap="round"/>' +
+      '<rect x="66" y="60" width="34" height="22" rx="11" fill="#FBBF24"/><path d="M66 71l-12-10v20zM100 71l12-10v20z" fill="#F59E0B"/>' +
+      '<path d="M74 66l6 10M84 66l6 10" stroke="#fff" stroke-width="3" stroke-linecap="round"/>'),
+
+    screen: W(SH + '<rect x="16" y="20" width="88" height="56" rx="8" fill="#1F2937"/><rect x="22" y="26" width="76" height="44" rx="4" fill="#60A5FA"/>' +
+      '<path d="M30 60l12-14 10 10 8-6 14 10" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round"/><circle cx="84" cy="38" r="5" fill="#FDE68A"/>' +
+      '<path d="M34 86h52a10 10 0 0 1 10 10v2a8 8 0 0 1-14 4l-4-4H42l-4 4a8 8 0 0 1-14-4v-2a10 10 0 0 1 10-10z" fill="#6366F1"/>' +
+      '<path d="M40 92v8M36 96h8" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><circle cx="80" cy="94" r="2.4" fill="#fff"/><circle cx="86" cy="99" r="2.4" fill="#fff"/>')
+  });
 })();
 </script>
 
@@ -2606,7 +3122,59 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
     return { el: p, blank: blank };
   }
 
-  CQ.Engine = { register: register, run: run, promptWithBlank: promptWithBlank, TEAM_COLORS: TEAM_COLORS, templates: templates };
+  /**
+   * Arrastrar con Pointer Events (dedo, lápiz y ratón; la API nativa no funciona en tabletas).
+   * opts = { onDrop(x, y) → true si se colocó, onHover(x, y) }. Devuelve función para desactivar.
+   * Un toque sin mover NO es arrastre (se deja pasar como click).
+   */
+  function draggable(el, opts) {
+    var drag = null;
+    function down(e) {
+      if (el.disabled || (e.button !== undefined && e.button !== 0)) return;
+      drag = { x0: e.clientX, y0: e.clientY, id: e.pointerId, ghost: null };
+      document.addEventListener('pointermove', move);
+      document.addEventListener('pointerup', up);
+      document.addEventListener('pointercancel', cancel);
+    }
+    function move(e) {
+      if (!drag || e.pointerId !== drag.id) return;
+      if (!drag.ghost) {
+        if (Math.abs(e.clientX - drag.x0) + Math.abs(e.clientY - drag.y0) < 10) return;
+        drag.ghost = el.cloneNode(true);
+        drag.ghost.classList.add('drag-ghost');
+        drag.ghost.style.width = el.offsetWidth + 'px';
+        document.body.appendChild(drag.ghost);
+        el.style.opacity = '.3';
+      }
+      e.preventDefault();
+      drag.ghost.style.left = e.clientX + 'px';
+      drag.ghost.style.top = e.clientY + 'px';
+      if (opts.onHover) opts.onHover(e.clientX, e.clientY);
+    }
+    function end() {
+      document.removeEventListener('pointermove', move);
+      document.removeEventListener('pointerup', up);
+      document.removeEventListener('pointercancel', cancel);
+      if (drag && drag.ghost) { drag.ghost.remove(); el.style.opacity = ''; }
+      if (opts.onHover) opts.onHover(-1, -1);
+    }
+    function up(e) {
+      if (!drag || e.pointerId !== drag.id) return;
+      var was = !!drag.ghost;
+      end();
+      drag = null;
+      if (was) {
+        el.dataset.dragged = '1';
+        setTimeout(function () { el.dataset.dragged = ''; }, 60);
+        opts.onDrop(e.clientX, e.clientY);
+      }
+    }
+    function cancel() { end(); drag = null; }
+    el.addEventListener('pointerdown', down);
+    return function () { end(); el.removeEventListener('pointerdown', down); };
+  }
+
+  CQ.Engine = { register: register, run: run, promptWithBlank: promptWithBlank, draggable: draggable, TEAM_COLORS: TEAM_COLORS, templates: templates };
 })();
 </script>
 
@@ -2636,6 +3204,7 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
         var media = ctx.art.render(item.media);
         var pr = CQ.Engine.promptWithBlank(item.prompt);
         var fb = h('div', { class: 'feedback', aria: { live: 'polite' } });
+        var why = h('div', { class: 'why-box', hidden: true });
         var options = ctx.config.shuffleOptions === false ? item.options.slice() : ctx.shuffle(item.options);
         var longest = options.reduce(function (m, o) { return Math.max(m, o.length); }, 0);
         var grid = h('div', { class: 'options' + (longest > 18 ? ' one-col' : ''), role: 'group', aria: { label: 'Answers' } });
@@ -2656,7 +3225,9 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
             lockAll();
             if (pr.blank) { pr.blank.textContent = opt; pr.blank.classList.add('filled'); }
             ctx.say(fb, ctx.praise(), 'good');
-            timer = setTimeout(function () { i++; show(); }, 1300);
+            // Science: explicación breve de por qué (item.why); se deja más tiempo para leerla.
+            if (item.why) { why.hidden = false; why.textContent = item.why; }
+            timer = setTimeout(function () { i++; show(); }, item.why ? 3600 : 1300);
           } else if (res.correct === false) {
             btn.classList.add('is-wrong');
             btn.classList.remove('shake'); void btn.offsetWidth; btn.classList.add('shake');
@@ -2670,7 +3241,7 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
         }
 
         ctx.el.appendChild(h('div', { class: 'stage-inner', style: { display: 'contents' } },
-          media, pr.el, grid, fb));
+          media, pr.el, grid, fb, why));
         if (buttons[0]) buttons[0].focus({ preventScroll: true });
       }
 
@@ -2711,9 +3282,10 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
         var doneInRound = 0;
 
         round.forEach(function (item) {
+          // Imagen o, si no hay (Science: concepto ↔ definición), el texto de la pregunta.
           var media = ctx.art.render(item.media);
-          var card = h('button', { class: 'match-card', aria: { label: 'Picture', pressed: 'false' }, data: { item: item.itemId } },
-            media ? media.firstChild : '?');
+          var card = h('button', { class: 'match-card' + (media ? '' : ' match-text'), aria: { label: media ? 'Picture' : item.prompt, pressed: 'false' }, data: { item: item.itemId } },
+            media ? media.firstChild : (item.prompt || '?'));
           card.addEventListener('click', function () { select('pic', card, item); });
           left.appendChild(card);
         });
@@ -3734,6 +4306,1364 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
 })();
 </script>
 
+  <!-- Science (CLIL) -->
+  <!-- client/tpl_label_image -->
+<script>
+/* Plantilla: label_image (Science) — "Label the picture"
+   Un dibujo (item.media) con puntos numerados (item.x / item.y en %). El alumno coloca
+   cada etiqueta en su punto: arrastrándola, o tocando la etiqueta y después el punto
+   (o al revés). Las preguntas con el mismo dibujo forman una ronda.
+   Las etiquetas vienen de config.bank (barajadas, sin decir cuál va dónde). */
+(function () {
+  'use strict';
+  var CQ = window.CQ;
+
+  CQ.Engine.register('label_image', {
+    mount: function (ctx) {
+      var h = ctx.h;
+      // Rondas: una por dibujo, en el orden de las preguntas
+      var rounds = [];
+      var byMedia = {};
+      ctx.items.forEach(function (it) {
+        if (!byMedia[it.media]) { byMedia[it.media] = []; rounds.push(byMedia[it.media]); }
+        byMedia[it.media].push(it);
+      });
+      var allAnswers = {};
+      ctx.items.forEach(function (it) { if (it.answer) allAnswers[Grading.norm(it.answer)] = true; });
+      var r = 0, done = 0, timer = null, undrag = [];
+
+      function showRound() {
+        undrag.forEach(function (f) { f(); }); undrag = [];
+        if (r >= rounds.length) { ctx.complete(); return; }
+        var round = rounds[r];
+        CQ.Util.clear(ctx.el);
+        var fb = h('div', { class: 'feedback', aria: { live: 'polite' } });
+        var selChip = null, selPin = null, left = round.length;
+
+        // Etiquetas de esta ronda: sus respuestas (si se conocen) + distractores; si no, todo el banco
+        var known = round.every(function (it) { return it.answer; });
+        var words = (ctx.config.bank || []).filter(function (w) {
+          if (!known) return true;
+          var n = Grading.norm(w);
+          return round.some(function (it) { return Grading.norm(it.answer) === n; }) || !allAnswers[n];
+        });
+        if (!words.length) words = round.map(function (it) { return it.answer; });
+
+        var pic = h('div', { class: 'label-pic' }, h('div', { class: 'label-art', svg: CQ.Art.svg(round[0].media.split('+')[0]) }));
+        var pins = round.map(function (it, k) {
+          var right = it.side ? it.side === 'right' : it.x >= 50;
+          var tag = h('span', { class: 'pin-tag ' + (right ? 'tag-right' : 'tag-left'), hidden: true });
+          var pin = h('button', { class: 'pin', style: { left: it.x + '%', top: it.y + '%' }, aria: { label: 'Point ' + (k + 1) } },
+            h('span', { class: 'pin-dot' }, String(k + 1)), tag);
+          var p = { item: it, el: pin, tag: tag, done: false };
+          pin.addEventListener('click', function () {
+            if (p.done) return;
+            if (selChip) { place(selChip, p); return; }
+            setPin(selPin === p ? null : p);
+          });
+          pic.appendChild(pin);
+          return p;
+        });
+        var tray = h('div', { class: 'label-tray', role: 'group', aria: { label: 'Labels' } });
+        var chips = ctx.shuffle(words).map(function (w) {
+          var el = h('button', { class: 'token label-chip' }, w);
+          var c = { word: w, el: el };
+          el.addEventListener('click', function () {
+            if (el.dataset.dragged === '1') return;
+            if (selPin) { place(c, selPin); return; }
+            setChip(selChip === c ? null : c);
+          });
+          undrag.push(CQ.Engine.draggable(el, {
+            onHover: function (x, y) { pins.forEach(function (p) { p.el.classList.toggle('hot', !p.done && near(p, x, y)); }); },
+            onDrop: function (x, y) { var p = pins.filter(function (p) { return !p.done && near(p, x, y); })[0]; if (p) place(c, p); }
+          }));
+          tray.appendChild(el);
+          return c;
+        });
+
+        function near(p, x, y) {
+          var b = p.el.getBoundingClientRect();
+          var cx = b.left + b.width / 2, cy = b.top + b.height / 2;
+          return Math.abs(x - cx) < 56 && Math.abs(y - cy) < 46;
+        }
+        function setChip(c) {
+          if (selChip) selChip.el.classList.remove('selected');
+          selChip = c;
+          if (c) { c.el.classList.add('selected'); CQ.Sfx.play('tap'); }
+        }
+        function setPin(p) {
+          if (selPin) selPin.el.classList.remove('selected');
+          selPin = p;
+          if (p) { p.el.classList.add('selected'); CQ.Sfx.play('tap'); }
+        }
+        function place(c, p) {
+          setChip(null); setPin(null);
+          var res = ctx.attempt(p.item.itemId, c.word);
+          if (res.correct === false) {
+            c.el.classList.remove('shake'); void c.el.offsetWidth; c.el.classList.add('shake');
+            p.el.classList.remove('shake'); void p.el.offsetWidth; p.el.classList.add('shake');
+            ctx.say(fb, ctx.retry(), 'bad');
+            return;
+          }
+          p.done = true;
+          p.el.classList.add(res.correct ? 'ok' : 'placed');
+          p.tag.hidden = false;
+          p.tag.textContent = c.word;
+          c.el.disabled = true;
+          c.el.classList.add('used');
+          done++; left--;
+          ctx.setProgress(done, ctx.items.length);
+          if (res.correct) ctx.say(fb, ctx.praise(), 'good');
+          if (!left) timer = setTimeout(function () { r++; showRound(); }, 1300);
+        }
+
+        if (rounds.length > 1) ctx.el.appendChild(h('div', { class: 'muted' }, 'Picture ' + (r + 1) + ' of ' + rounds.length));
+        ctx.el.appendChild(h('div', { class: 'label-wrap' }, pic, h('div', { class: 'label-side' }, tray, fb)));
+      }
+
+      showRound();
+      return { destroy: function () { clearTimeout(timer); undrag.forEach(function (f) { f(); }); } };
+    }
+  });
+})();
+</script>
+
+  <!-- client/tpl_fill_text -->
+<script>
+/* Plantilla: fill_text (Science) — "Complete the text"
+   Varias frases con un hueco cada una (config.perRound por pantalla) y un banco de palabras.
+   Arrastra la palabra al hueco, o toca la palabra y después el hueco (o al revés).
+   Las palabras vienen de config.bank (barajadas; incluye distractores). */
+(function () {
+  'use strict';
+  var CQ = window.CQ;
+
+  CQ.Engine.register('fill_text', {
+    mount: function (ctx) {
+      var h = ctx.h;
+      var per = ctx.config.perRound || 4;
+      var rounds = [];
+      for (var k = 0; k < ctx.items.length; k += per) rounds.push(ctx.items.slice(k, k + per));
+      var allAnswers = {};
+      ctx.items.forEach(function (it) { if (it.answer) allAnswers[Grading.norm(it.answer)] = true; });
+      var r = 0, done = 0, timer = null, undrag = [];
+      var usedWords = {};
+
+      function showRound() {
+        undrag.forEach(function (f) { f(); }); undrag = [];
+        if (r >= rounds.length) { ctx.complete(); return; }
+        var round = rounds[r];
+        CQ.Util.clear(ctx.el);
+        var fb = h('div', { class: 'feedback', aria: { live: 'polite' } });
+        var selChip = null, selGap = null, left = round.length;
+
+        var known = round.every(function (it) { return it.answer; });
+        var words = (ctx.config.bank || []).filter(function (w) {
+          var n = Grading.norm(w);
+          if (!known) return !usedWords[n];
+          // Las de esta ronda + como mucho 2 distractores
+          return round.some(function (it) { return Grading.norm(it.answer) === n; }) || !allAnswers[n];
+        });
+        if (known) {
+          var extra = words.filter(function (w) { return !round.some(function (it) { return Grading.norm(it.answer) === Grading.norm(w); }); });
+          var keep = ctx.shuffle(extra).slice(0, 2);
+          words = words.filter(function (w) { return extra.indexOf(w) < 0 || keep.indexOf(w) >= 0; });
+        }
+
+        var list = h('ol', { class: 'fill-list' });
+        var gaps = round.map(function (it) {
+          var parts = String(it.prompt || '').split(/_{2,}/);
+          var gap = h('button', { class: 'gap', aria: { label: 'Gap' } }, ' ');
+          var g = { item: it, el: gap, done: false };
+          gap.addEventListener('click', function () {
+            if (g.done) return;
+            if (selChip) { place(selChip, g); return; }
+            setGap(selGap === g ? null : g);
+          });
+          var li = h('li', { class: 'fill-line' }, ctx.art.render(it.media, 'fill-media'),
+            h('p', {}, parts[0] || '', gap, parts.slice(1).join(' ')));
+          list.appendChild(li);
+          return g;
+        });
+        var bank = h('div', { class: 'bank fill-bank', role: 'group', aria: { label: 'Words' } });
+        ctx.shuffle(words).forEach(function (w) {
+          var el = h('button', { class: 'token' }, w);
+          var c = { word: w, el: el };
+          el.addEventListener('click', function () {
+            if (el.dataset.dragged === '1') return;
+            if (selGap) { place(c, selGap); return; }
+            setChip(selChip === c ? null : c);
+          });
+          undrag.push(CQ.Engine.draggable(el, {
+            onHover: function (x, y) { gaps.forEach(function (g) { g.el.classList.toggle('hot', !g.done && hit(g, x, y)); }); },
+            onDrop: function (x, y) { var g = gaps.filter(function (g) { return !g.done && hit(g, x, y); })[0]; if (g) place(c, g); }
+          }));
+          bank.appendChild(el);
+        });
+
+        function hit(g, x, y) {
+          var b = g.el.getBoundingClientRect();
+          return x > b.left - 24 && x < b.right + 24 && y > b.top - 20 && y < b.bottom + 20;
+        }
+        function setChip(c) {
+          if (selChip) selChip.el.classList.remove('selected');
+          selChip = c;
+          if (c) { c.el.classList.add('selected'); CQ.Sfx.play('tap'); }
+        }
+        function setGap(g) {
+          if (selGap) selGap.el.classList.remove('selected');
+          selGap = g;
+          if (g) { g.el.classList.add('selected'); CQ.Sfx.play('tap'); }
+        }
+        function place(c, g) {
+          setChip(null); setGap(null);
+          var res = ctx.attempt(g.item.itemId, c.word);
+          if (res.correct === false) {
+            c.el.classList.remove('shake'); void c.el.offsetWidth; c.el.classList.add('shake');
+            ctx.say(fb, ctx.retry(), 'bad');
+            return;
+          }
+          g.done = true;
+          g.el.textContent = c.word;
+          g.el.classList.add(res.correct ? 'ok' : 'placed');
+          c.el.disabled = true; c.el.classList.add('used');
+          usedWords[Grading.norm(c.word)] = true;
+          done++; left--;
+          ctx.setProgress(done, ctx.items.length);
+          if (res.correct) ctx.say(fb, ctx.praise(), 'good');
+          if (!left) timer = setTimeout(function () { r++; showRound(); }, 1300);
+        }
+
+        if (rounds.length > 1) ctx.el.appendChild(h('div', { class: 'muted' }, 'Part ' + (r + 1) + ' of ' + rounds.length));
+        ctx.el.appendChild(bank);
+        ctx.el.appendChild(list);
+        ctx.el.appendChild(fb);
+      }
+
+      showRound();
+      return { destroy: function () { clearTimeout(timer); undrag.forEach(function (f) { f(); }); } };
+    }
+  });
+})();
+</script>
+
+  <!-- client/tpl_true_false -->
+<script>
+/* Plantilla: true_false (Science)
+   Una afirmación cada vez: True ✔ / False ✘. Después de responder se explica POR QUÉ
+   (item.why), porque en Science lo importante es entender, no adivinar.
+   No se repite: con dos opciones, reintentar sería adivinar. Botón "Next" para leer con calma. */
+(function () {
+  'use strict';
+  var CQ = window.CQ;
+
+  CQ.Engine.register('true_false', {
+    mount: function (ctx) {
+      var h = ctx.h;
+      var i = 0;
+      var timer = null;
+
+      function show() {
+        if (i >= ctx.items.length) { ctx.complete(); return; }
+        var item = ctx.items[i];
+        ctx.setProgress(i, ctx.items.length);
+        CQ.Util.clear(ctx.el);
+        var fb = h('div', { class: 'feedback', aria: { live: 'polite' } });
+        var why = h('div', { class: 'why-box', hidden: true });
+        var next = h('button', { class: 'btn btn-lg', hidden: true, onclick: function () { i++; show(); } },
+          'Next', h('span', { svg: CQ.Icons.play, style: { display: 'flex' } }));
+        var bT = h('button', { class: 'opt tf-btn tf-true', onclick: function () { choose('True', bT); } }, h('span', { class: 'tf-mark' }, '✔'), 'True');
+        var bF = h('button', { class: 'opt tf-btn tf-false', onclick: function () { choose('False', bF); } }, h('span', { class: 'tf-mark' }, '✘'), 'False');
+
+        function choose(val, btn) {
+          var res = ctx.attempt(item.itemId, val);
+          bT.disabled = bF.disabled = true;
+          if (res.correct === null) { btn.classList.add('is-picked'); timer = setTimeout(function () { i++; show(); }, 450); return; }
+          var right = res.correct ? btn : (btn === bT ? bF : bT);
+          right.classList.add('is-correct', 'pop');
+          if (!res.correct) btn.classList.add('is-wrong');
+          ctx.say(fb, res.correct ? ctx.praise() : 'Not quite! It’s ' + item.answer + '.', res.correct ? 'good' : 'bad');
+          if (item.why) {
+            why.hidden = false;
+            CQ.Util.clear(why).appendChild(h('b', {}, res.correct ? 'Yes! ' : 'Remember: '));
+            why.appendChild(document.createTextNode(item.why));
+            next.hidden = false;
+            next.focus({ preventScroll: true });
+          } else {
+            timer = setTimeout(function () { i++; show(); }, 1400);
+          }
+        }
+
+        ctx.el.appendChild(h('div', { class: 'tf' },
+          ctx.art.render(item.media),
+          h('p', { class: 'prompt tf-statement' }, item.prompt),
+          h('div', { class: 'options tf-options', role: 'group', aria: { label: 'True or false' } }, bT, bF),
+          fb, why, next));
+        bT.focus({ preventScroll: true });
+      }
+
+      show();
+      return { destroy: function () { clearTimeout(timer); } };
+    }
+  });
+})();
+</script>
+
+  <!-- client/tpl_order_steps -->
+<script>
+/* Plantilla: order_steps (Science)
+   Ordenar los pasos de un proceso (estímulo → respuesta, el camino del sonido…) o los
+   niveles de organización (cell → tissue → organ → system). Toca las tarjetas en orden;
+   toca una colocada para quitarla; "Check" comprueba. */
+(function () {
+  'use strict';
+  var CQ = window.CQ;
+
+  CQ.Engine.register('order_steps', {
+    mount: function (ctx) {
+      var h = ctx.h;
+      var i = 0;
+      var timer = null;
+
+      function show() {
+        if (i >= ctx.items.length) { ctx.complete(); return; }
+        var item = ctx.items[i];
+        ctx.setProgress(i, ctx.items.length);
+        CQ.Util.clear(ctx.el);
+        var steps = (item.steps || []).map(function (s, k) { return { id: k, text: s }; });
+        var placed = [];
+        var line = h('ol', { class: 'steps-line', aria: { label: 'Your order', live: 'polite' } });
+        var bank = h('div', { class: 'bank steps-bank', role: 'group', aria: { label: 'Steps' } });
+        var fb = h('div', { class: 'feedback', aria: { live: 'polite' } });
+        var why = h('div', { class: 'why-box', hidden: true });
+        var checkBtn = h('button', { class: 'btn btn-lg', onclick: check, disabled: true }, h('span', { svg: CQ.Icons.check, style: { display: 'flex' } }), 'Check');
+        var clearBtn = h('button', { class: 'btn btn-ghost', onclick: function () { placed = []; draw(); } }, 'Clear');
+
+        function draw() {
+          CQ.Util.clear(line); CQ.Util.clear(bank);
+          for (var k = 0; k < steps.length; k++) {
+            var t = placed[k];
+            line.appendChild(h('li', { class: 'step-slot' + (t ? ' on' : '') },
+              h('span', { class: 'step-n' }, String(k + 1)),
+              t ? h('button', { class: 'token in-line', aria: { label: 'Remove ' + t.text }, onclick: (function (tt) { return function () { remove(tt); }; })(t) }, t.text)
+                : h('span', { class: 'hint' }, k === placed.length ? 'Tap a card…' : '')));
+          }
+          steps.forEach(function (t) {
+            if (placed.indexOf(t) >= 0) return;
+            bank.appendChild(h('button', { class: 'token step-card', onclick: function () { add(t); } }, t.text));
+          });
+          checkBtn.disabled = placed.length !== steps.length;
+        }
+        function add(t) { CQ.Sfx.play('tap'); placed.push(t); line.classList.remove('good'); draw(); }
+        function remove(t) { placed.splice(placed.indexOf(t), 1); draw(); }
+
+        function check() {
+          var res = ctx.attempt(item.itemId, placed.map(function (t) { return t.text; }).join(' > '));
+          if (res.correct === true) {
+            line.classList.add('good');
+            Array.prototype.forEach.call(ctx.el.querySelectorAll('.steps-line button, .steps-bank button'), function (b) { b.disabled = true; });
+            checkBtn.disabled = true; clearBtn.disabled = true;
+            ctx.say(fb, ctx.praise(), 'good');
+            if (item.why) { why.hidden = false; why.textContent = item.why; }
+            timer = setTimeout(function () { i++; show(); }, item.why ? 3200 : 1600);
+          } else if (res.correct === false) {
+            line.classList.remove('shake'); void line.offsetWidth; line.classList.add('shake');
+            // Pista: se quedan los pasos que ya están bien colocados desde el principio
+            var good = String(item.answer || '').split(' > ');
+            var keep = [];
+            for (var k = 0; k < placed.length; k++) { if (Grading.norm(placed[k].text) === Grading.norm(good[k])) keep.push(placed[k]); else break; }
+            placed = keep;
+            draw();
+            ctx.say(fb, keep.length ? 'The first ' + (keep.length === 1 ? 'step is' : keep.length + ' steps are') + ' right. Try again!' : ctx.retry(), 'bad');
+          } else {
+            i++;
+            timer = setTimeout(show, 350);
+          }
+        }
+
+        var media = ctx.art.render(item.media);
+        if (media) ctx.el.appendChild(media);
+        if (item.prompt) ctx.el.appendChild(h('p', { class: 'prompt prompt-sm' }, item.prompt));
+        ctx.el.appendChild(line);
+        ctx.el.appendChild(bank);
+        ctx.el.appendChild(h('div', { class: 'row-actions' }, clearBtn, checkBtn));
+        ctx.el.appendChild(fb);
+        ctx.el.appendChild(why);
+        draw();
+      }
+
+      show();
+      return { destroy: function () { clearTimeout(timer); } };
+    }
+  });
+})();
+</script>
+
+  <!-- 3D Lab: motor de simulaciones + simulaciones -->
+  <!-- client/js_sim -->
+<script>
+/* ==========================================================================
+   js_sim — SIMULATIONS (3D Lab): motor reutilizable para simulaciones 3D.
+
+   · Los modelos se hacen en Blender y se exportan a .glb (assets/models/).
+   · three.js se carga SOLO al abrir una simulación (assets/vendor/three/, alojado
+     con la página de GitHub Pages: sin CDN de terceros).
+   · Cada simulación se registra con CQ.Sim.register(id, def) y solo define sus
+     pasos, textos y su interacción; el motor pone todo lo común:
+       escena, luz de laboratorio, cámara con giro/zoom, transiciones de cámara,
+       puntos interactivos (hotspots), panel de aprendizaje, pasos, niveles,
+       reproducir/pausar, reiniciar, pantalla completa y modo pizarra.
+
+   CQ.Sim.open({ root, simId, mode: 'student' | 'board', onExit }) → { destroy }
+
+   def = {
+     title, model: 'models/x.glb', levels: [[id, label]], thumb: '<svg…>',
+     create(api) → { steps: [{ id, level, title, panel(), enter(), leave(), done() }], tick(dt, t), onLevel(id) }
+   }
+   ========================================================================== */
+(function () {
+  'use strict';
+  var CQ = window.CQ, h = CQ.h;
+  var BOOT = window.BOOT || {};
+  var SIMS = {};
+
+  function base() {
+    var b = window.CQ_ASSET_BASE || BOOT.assetBase || 'assets/';
+    return /\/$/.test(b) ? b : b + '/';
+  }
+  function abs(p) { return new URL(base() + p, location.href).href; }
+
+  var libP = null;
+  function loadLib() {
+    if (libP) return libP;
+    var v = 'vendor/three/';
+    libP = Promise.all([
+      import(abs(v + 'three.module.min.js')), import(abs(v + 'GLTFLoader.js')),
+      import(abs(v + 'OrbitControls.js')), import(abs(v + 'RoomEnvironment.js'))
+    ]).then(function (m) {
+      return { THREE: m[0], GLTFLoader: m[1].GLTFLoader, OrbitControls: m[2].OrbitControls, RoomEnvironment: m[3].RoomEnvironment };
+    });
+    libP.catch(function () { libP = null; });
+    return libP;
+  }
+  var models = {};
+  function loadModel(lib, file) {
+    if (!models[file]) {
+      models[file] = new lib.GLTFLoader().loadAsync(abs(file));
+      models[file].catch(function () { delete models[file]; });
+    }
+    return models[file];
+  }
+  function webglOk() {
+    try { var c = document.createElement('canvas'); return !!(window.WebGLRenderingContext && (c.getContext('webgl2') || c.getContext('webgl'))); }
+    catch (e) { return false; }
+  }
+
+  /** Texto con **negritas** → nodos (sin HTML del contenido). */
+  function rich(text) {
+    var p = h('p', {});
+    String(text || '').split(/\*\*/).forEach(function (part, i) {
+      if (!part) return;
+      p.appendChild(i % 2 ? h('b', {}, part) : document.createTextNode(part));
+    });
+    return p;
+  }
+  function plain(text) { return String(text || '').replace(/\*\*/g, ''); }
+  var ease = {
+    inOut: function (t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; },
+    out: function (t) { return 1 - Math.pow(1 - t, 3); },
+    back: function (t) { var c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2); }
+  };
+
+  /* ───────────────────────── escena 3D reutilizable ───────────────────────── */
+  function Stage(lib, el, board) {
+    var T = lib.THREE;
+    var renderer = new T.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, board ? 1.75 : 2));
+    renderer.outputColorSpace = T.SRGBColorSpace;
+    renderer.toneMapping = T.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 0.95;
+    renderer.setClearColor(0x000000, 0);
+    el.appendChild(renderer.domElement);
+
+    var scene = new T.Scene();
+    var pmrem = new T.PMREMGenerator(renderer);
+    var envTex = pmrem.fromScene(new lib.RoomEnvironment(), 0.04).texture;
+    scene.environment = envTex;
+    scene.environmentIntensity = 0.75;
+    var key = new T.DirectionalLight(0xffffff, 1.5); key.position.set(5, 8, 6); scene.add(key);
+    var rim = new T.DirectionalLight(0x7dd3fc, 1.4); rim.position.set(-7, 3, -6); scene.add(rim);
+    scene.add(new T.HemisphereLight(0xe0f2fe, 0x1e1b4b, 0.45));
+
+    var camera = new T.PerspectiveCamera(38, 1, 0.05, 300);
+    camera.position.set(0, 2, 9);
+    var controls = new lib.OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.08;
+    controls.enablePan = false;
+    controls.rotateSpeed = 0.8;
+    controls.minDistance = 2.2;
+    controls.maxDistance = 26;
+
+    var tweens = [];
+    var tickers = [];
+    var hotspots = [];
+    var raf = 0, dirty = true, alive = true, last = performance.now(), interacting = false;
+    var ray = new T.Raycaster();
+    var v3 = new T.Vector3();
+
+    function size() {
+      var w = el.clientWidth || 1, hh = el.clientHeight || 1;
+      renderer.setSize(w, hh, false);
+      camera.aspect = w / hh;
+      camera.updateProjectionMatrix();
+      request();
+    }
+    var ro = window.ResizeObserver ? new ResizeObserver(size) : null;
+    if (ro) ro.observe(el); else window.addEventListener('resize', size);
+
+    controls.addEventListener('start', function () { interacting = true; request(); });
+    controls.addEventListener('end', function () { interacting = false; request(); });
+    controls.addEventListener('change', request);
+
+    function request() { dirty = true; if (!raf && alive) raf = requestAnimationFrame(frame); }
+
+    function frame(now) {
+      raf = 0;
+      if (!alive) return;
+      var dt = Math.min(0.05, (now - last) / 1000);
+      last = now;
+      var busy = interacting;
+      // Interpolaciones (cámara, apariciones…)
+      for (var i = tweens.length - 1; i >= 0; i--) {
+        var tw = tweens[i];
+        var k = Math.min(1, (now - tw.t0) / tw.dur);
+        tw.fn((tw.ease || ease.inOut)(k), k);
+        if (k >= 1) { tweens.splice(i, 1); if (tw.done) tw.done(); } else busy = true;
+      }
+      tickers.forEach(function (fn) { if (fn(dt, now / 1000) === true) busy = true; });
+      if (controls.update()) busy = true;
+      renderer.render(scene, camera);
+      placeHotspots();
+      dirty = false;
+      if (busy || dirty) raf = requestAnimationFrame(frame);
+    }
+
+    /** Puntos interactivos (botones HTML numerados que siguen a un punto 3D). */
+    var layer = h('div', { class: 'sim-hotspots' });
+    el.appendChild(layer);
+    function placeHotspots() {
+      var w = el.clientWidth, hh = el.clientHeight;
+      var camDir = camera.getWorldDirection(new T.Vector3());
+      hotspots.forEach(function (hs) {
+        hs.get(v3);
+        var toP = v3.clone().sub(camera.position);
+        var behind = toP.dot(camDir) < 0;
+        // Oculto si mira "por detrás" del objeto (normal aproximada hacia fuera del eje)
+        var facing = hs.normal ? hs.normal(new T.Vector3()).dot(toP.normalize()) < 0.25 : true;
+        v3.project(camera);
+        var x = (v3.x * 0.5 + 0.5) * w, y = (-v3.y * 0.5 + 0.5) * hh;
+        var show = !behind && facing && hs.visible !== false && x > -20 && x < w + 20 && y > -20 && y < hh + 20;
+        hs.el.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px)';
+        hs.el.classList.toggle('off', !show);
+      });
+    }
+
+    var api = {
+      THREE: T, scene: scene, camera: camera, controls: controls, renderer: renderer, el: el, request: request,
+      /** Interpolación de 0 a 1 durante `ms`. Con `key`, sustituye a la anterior con la misma clave (sin carreras). */
+      tween: function (ms, fn, done, e, key) {
+        if (key) api.cancelTween(key);
+        tweens.push({ t0: performance.now(), dur: Math.max(1, ms), fn: fn, done: done, ease: e, key: key });
+        request();
+      },
+      cancelTween: function (key) { tweens = tweens.filter(function (t) { return t.key !== key; }); },
+      /** fn(dt, t) en cada fotograma; devuelve true mientras necesite animar. */
+      addTicker: function (fn) { tickers.push(fn); request(); return function () { tickers = tickers.filter(function (x) { return x !== fn; }); }; },
+      /** Mueve la cámara suavemente a una posición mirando a un punto. */
+      flyTo: function (pos, target, ms, done) {
+        var p0 = camera.position.clone(), t0 = controls.target.clone();
+        var p1 = new T.Vector3().fromArray(pos), t1 = new T.Vector3().fromArray(target);
+        api.tween(ms || 1400, function (k) {
+          camera.position.lerpVectors(p0, p1, k);
+          controls.target.lerpVectors(t0, t1, k);
+        }, done, null, 'camera');
+      },
+      addHotspot: function (o) {
+        // side 'left': el texto a la izquierda del número (para que no se tapen las etiquetas)
+        var el2 = h('button', { class: 'sim-hs' + (o.side === 'left' ? ' left' : ''), aria: { label: o.label } }, h('span', { class: 'sim-hs-n' }, String(o.n)), h('span', { class: 'sim-hs-l' }, o.label));
+        el2.addEventListener('click', function (e) { e.stopPropagation(); o.onClick && o.onClick(); });
+        var hs = { el: el2, get: o.get, normal: o.normal, visible: true };
+        layer.appendChild(el2);
+        hotspots.push(hs);
+        request();
+        return hs;
+      },
+      clearHotspots: function () { hotspots.forEach(function (x) { x.el.remove(); }); hotspots = []; },
+      setHotspotActive: function (hs) { hotspots.forEach(function (x) { x.el.classList.toggle('on', x === hs); }); },
+      /** Objeto 3D bajo el puntero (entre `list`). */
+      pick: function (clientX, clientY, list) {
+        var b = renderer.domElement.getBoundingClientRect();
+        var p = new T.Vector2((clientX - b.left) / b.width * 2 - 1, -(clientY - b.top) / b.height * 2 + 1);
+        ray.setFromCamera(p, camera);
+        var hit = ray.intersectObjects(list, true)[0];
+        return hit || null;
+      },
+      /** Punto del plano que pasa por `origin` mirando a la cámara, bajo el puntero. */
+      pointerOnPlane: function (clientX, clientY, origin) {
+        var b = renderer.domElement.getBoundingClientRect();
+        var p = new T.Vector2((clientX - b.left) / b.width * 2 - 1, -(clientY - b.top) / b.height * 2 + 1);
+        ray.setFromCamera(p, camera);
+        var n = camera.getWorldDirection(new T.Vector3());
+        var plane = new T.Plane().setFromNormalAndCoplanarPoint(n, origin);
+        var out = new T.Vector3();
+        return ray.ray.intersectPlane(plane, out) ? out : null;
+      },
+      /** Posición en pantalla (px, relativos al lienzo) de un punto 3D. */
+      toScreen: function (vec) {
+        var p = vec.clone().project(camera);
+        return { x: (p.x * 0.5 + 0.5) * el.clientWidth, y: (-p.y * 0.5 + 0.5) * el.clientHeight };
+      },
+      dispose: function () {
+        alive = false;
+        if (raf) cancelAnimationFrame(raf);
+        if (ro) ro.disconnect(); else window.removeEventListener('resize', size);
+        controls.dispose();
+        envTex.dispose(); pmrem.dispose();
+        renderer.dispose();
+        try { renderer.forceContextLoss(); } catch (e) {}
+        renderer.domElement.remove();
+      }
+    };
+    size();
+    return api;
+  }
+
+  /* ───────────────────────── interfaz de una simulación ───────────────────────── */
+  function open(opts) {
+    var def = SIMS[opts.simId];
+    var board = opts.mode === 'board';
+    var root = CQ.Util.clear(opts.root);
+    var destroyed = false;
+    var stage = null, sim = null, stepIdx = -1, playing = false, cleanup = [];
+
+    var canvasBox = h('div', { class: 'sim-canvas' });
+    var loading = h('div', { class: 'sim-loading' }, h('div', { class: 'spinner' }), h('p', {}, 'Getting the lab ready…'));
+    canvasBox.appendChild(loading);
+    var panelBody = h('div', { class: 'sim-panel-body', aria: { live: 'polite' } });
+    var partCard = h('div', { class: 'sim-part', hidden: true });
+    var levelTabs = h('div', { class: 'sim-levels', role: 'tablist', aria: { label: 'Level' } });
+    var stepDots = h('div', { class: 'sim-dots' });
+    var backBtn = h('button', { class: 'btn btn-ghost sim-nav', onclick: function () { go(stepIdx - 1); } }, h('span', { svg: CQ.Icons.back, style: { display: 'flex' } }), 'Back');
+    var nextBtn = h('button', { class: 'btn sim-nav', onclick: function () { go(stepIdx + 1); } }, 'Next', h('span', { svg: CQ.Icons.play, style: { display: 'flex' } }));
+    var playBtn = h('button', { class: 'icon-btn sim-tool', aria: { label: 'Play' }, title: 'Play / Pause', svg: CQ.Icons.play, onclick: function () { setPlaying(!playing); } });
+    var viewBtn = h('button', { class: 'icon-btn sim-tool', aria: { label: 'Reset the view' }, title: 'Reset the view', svg: CQ.Icons.reset, onclick: function () { if (sim && sim.steps[stepIdx].view) sim.steps[stepIdx].view(); } });
+    var restartBtn = h('button', { class: 'btn btn-ghost sim-restart', onclick: function () {
+      CQ.UI.confirm('Start again?', 'The simulation will go back to the beginning.', 'Start again', 'Cancel').then(function (ok) { if (ok) restart(); });
+    } }, 'Start again');
+    var fsBtn = h('button', { class: 'icon-btn sim-tool', aria: { label: 'Full screen' }, title: 'Full screen', svg: CQ.Icons.fullscreen, onclick: function () {
+      try { if (!document.fullscreenElement) wrap.requestFullscreen(); else document.exitFullscreen(); } catch (e) {}
+    } });
+    var listenBtn = CQ.Speech.supported ? h('button', { class: 'icon-btn', aria: { label: 'Listen' }, title: 'Listen', svg: CQ.Icons.listen, onclick: function () {
+      var st = sim && sim.steps[stepIdx];
+      if (st) CQ.Speech.speak(plain(st.title + '. ' + (st.panel().text || []).join(' ')));
+    } }) : null;
+
+    var wrap = h('div', { class: 'sim' + (board ? ' sim-board-mode' : '') },
+      h('header', { class: 'sim-top' },
+        h('button', { class: 'icon-btn', aria: { label: 'Exit' }, svg: CQ.Icons.close, onclick: exit }),
+        h('div', { class: 'sim-title' }, h('span', { class: 'sim-kicker' }, '3D Lab'), h('b', {}, def ? def.title : 'Simulation')),
+        levelTabs),
+      h('div', { class: 'sim-main' },
+        h('div', { class: 'sim-stage' }, canvasBox,
+          h('div', { class: 'sim-tools' }, playBtn, viewBtn, board ? fsBtn : null)),
+        h('aside', { class: 'sim-panel' },
+          h('div', { class: 'sim-panel-head' }, stepDots, listenBtn),
+          partCard, panelBody,
+          h('div', { class: 'sim-panel-foot' }, backBtn, nextBtn),
+          restartBtn)));
+    root.appendChild(wrap);
+    if (board) root.classList.add('sim-host');
+
+    function fail(msg) {
+      CQ.Util.clear(canvasBox).appendChild(h('div', { class: 'sim-loading' }, h('p', {}, msg)));
+      CQ.Util.clear(panelBody).appendChild(h('p', {}, 'Ask your teacher for help.'));
+    }
+    if (!def) { fail('This simulation is not available yet.'); return { destroy: destroy }; }
+    if (!webglOk()) { fail('This device can’t show 3D models. Try another computer or tablet.'); return { destroy: destroy }; }
+
+    loadLib().then(function (lib) {
+      if (destroyed) return null;
+      return loadModel(lib, def.model).then(function (gltf) { return { lib: lib, gltf: gltf }; });
+    }).then(function (x) {
+      if (!x || destroyed) return;
+      loading.remove();
+      stage = Stage(x.lib, canvasBox, board);
+      var api = Object.assign({}, stage, {
+        gltf: x.gltf, mode: opts.mode, board: board,
+        showPart: showPart, hidePart: hidePart, refreshPanel: refreshPanel,
+        setPlaying: setPlaying, isPlaying: function () { return playing; },
+        go: function (id) { go(indexOf(id)); }, stepId: function () { return sim.steps[stepIdx].id; },
+        canNext: function () { refreshNav(); },
+        cleanup: function (fn) { cleanup.push(fn); }
+      });
+      sim = def.create(api);
+      if (sim.tick) stage.addTicker(function (dt, t) { return sim.tick(dt, t, playing); });
+      (def.levels || []).forEach(function (lv) {
+        levelTabs.appendChild(h('button', { class: 'sim-level', role: 'tab', data: { level: lv[0] }, onclick: function () {
+          if (sim.onLevel) { var to = sim.onLevel(lv[0]); if (to) go(indexOf(to)); }
+        } }, lv[1]));
+      });
+      sim.steps.forEach(function (st, i) {
+        stepDots.appendChild(h('button', { class: 'sim-dot', aria: { label: 'Step ' + (i + 1) + ': ' + st.title }, title: st.title, onclick: function () { go(i); } }, String(i + 1)));
+      });
+      go(0);
+    }).catch(function () {
+      if (!destroyed) fail('We couldn’t load the 3D model. Check your connection and try again.');
+    });
+
+    function indexOf(id) { return sim.steps.map(function (s) { return s.id; }).indexOf(id); }
+
+    function go(i) {
+      if (!sim || i < 0 || i >= sim.steps.length || i === stepIdx) return;
+      // Alumno: no se salta un paso sin terminar (p. ej. construir el tejido); volver siempre se puede.
+      // En la pizarra el profesor puede ir a cualquier paso (la simulación lo completa sola).
+      if (!board && i > stepIdx) {
+        for (var k = Math.max(0, stepIdx); k < i; k++) {
+          var sk = sim.steps[k];
+          if (sk.done && !sk.done()) {
+            if (k !== stepIdx) go(k); else CQ.UI.toast(sk.blocked || 'Finish this step first!');
+            return;
+          }
+        }
+      }
+      var prev = sim.steps[stepIdx];
+      if (prev && prev.leave) prev.leave();
+      stepIdx = i;
+      setPlaying(false);
+      hidePart();
+      if (CQ.Speech.supported) try { window.speechSynthesis.cancel(); } catch (e) {}
+      var st = sim.steps[i];
+      if (st.enter) st.enter();
+      refreshPanel();
+    }
+
+    function refreshPanel() {
+      var st = sim.steps[stepIdx];
+      var P = st.panel();
+      CQ.Util.clear(panelBody);
+      panelBody.appendChild(h('div', { class: 'sim-step-kicker' }, 'Step ' + (stepIdx + 1) + ' of ' + sim.steps.length + (P.kicker ? ' · ' + P.kicker : '')));
+      panelBody.appendChild(h('h2', {}, st.title));
+      (P.text || []).forEach(function (t) { panelBody.appendChild(rich(t)); });
+      if (P.task) panelBody.appendChild(P.task);
+      (P.boxes || []).forEach(function (b) {
+        var head = { tip: '👆 How to explore', did: '💡 Did you know?', remember: '⭐ Remember!', job: '⚙️ Important function' }[b[0]] || '';
+        panelBody.appendChild(h('div', { class: 'sim-box box-' + b[0] }, h('b', {}, head), rich(b[1])));
+      });
+      if (P.vocab && P.vocab.length) {
+        panelBody.appendChild(h('div', { class: 'sim-vocab' }, h('b', {}, '📖 Key vocabulary'),
+          h('div', { class: 'sim-vocab-list' }, P.vocab.map(function (v) {
+            return h('button', { class: 'sim-word', title: v[1], onclick: function () { if (CQ.Speech.supported) CQ.Speech.speak(v[0] + '. ' + v[1]); } },
+              h('b', {}, v[0]), h('span', {}, v[1]));
+          }))));
+      }
+      Array.prototype.forEach.call(stepDots.children, function (d, k) { d.classList.toggle('on', k === stepIdx); d.classList.toggle('past', k < stepIdx); });
+      Array.prototype.forEach.call(levelTabs.children, function (t) { t.setAttribute('aria-selected', String(t.dataset.level === st.level)); });
+      playBtn.hidden = !st.animates;
+      refreshNav();
+    }
+
+    function refreshNav() {
+      if (!sim) return;
+      var st = sim.steps[stepIdx];
+      backBtn.disabled = stepIdx === 0;
+      var last = stepIdx === sim.steps.length - 1;
+      nextBtn.hidden = last;
+      nextBtn.classList.toggle('btn-wait', !!(st.done && !st.done()) && !board);
+    }
+
+    function setPlaying(on) {
+      playing = !!on;
+      playBtn.innerHTML = playing ? CQ.Icons.pause : CQ.Icons.play;
+      playBtn.setAttribute('aria-label', playing ? 'Pause' : 'Play');
+      playBtn.classList.toggle('on', playing);
+      if (stage) stage.request();
+    }
+
+    /** Tarjeta de la parte seleccionada (al tocar un punto). */
+    function showPart(name, text, color) {
+      partCard.hidden = false;
+      CQ.Util.clear(partCard);
+      partCard.style.setProperty('--part', color || '#0EA5E9');
+      partCard.appendChild(h('div', { class: 'sim-part-head' }, h('b', {}, name),
+        CQ.Speech.supported ? h('button', { class: 'icon-btn', aria: { label: 'Listen' }, svg: CQ.Icons.listen, onclick: function () { CQ.Speech.speak(name + '. ' + plain(text)); } }) : null,
+        h('button', { class: 'icon-btn', aria: { label: 'Close' }, svg: CQ.Icons.close, onclick: hidePart })));
+      partCard.appendChild(rich(text));
+    }
+    function hidePart() { partCard.hidden = true; if (stage) stage.setHotspotActive(null); }
+
+    function restart() {
+      if (!sim) return;
+      var prev = sim.steps[stepIdx];
+      if (prev && prev.leave) prev.leave();
+      if (sim.reset) sim.reset();
+      stepIdx = -1;
+      go(0);
+    }
+
+    function exit() { destroy(); if (opts.onExit) opts.onExit(); }
+
+    function destroy() {
+      if (destroyed) return;
+      destroyed = true;
+      try { if (CQ.Speech.supported) window.speechSynthesis.cancel(); } catch (e) {}
+      cleanup.forEach(function (fn) { try { fn(); } catch (e) {} });
+      if (stage) stage.dispose();
+      root.classList.remove('sim-host');
+      wrap.remove();
+    }
+
+    return { destroy: destroy };
+  }
+
+  CQ.Sim = {
+    register: function (id, def) { SIMS[id] = def; },
+    open: open,
+    thumb: function (id) { return SIMS[id] ? SIMS[id].thumb : ''; },
+    list: function () { return Object.keys(SIMS); },
+    util: { ease: ease, rich: rich }
+  };
+})();
+</script>
+
+  <!-- client/sim_muscle -->
+<script>
+/* ==========================================================================
+   Simulación piloto: MUSCLE CELL → MUSCLE TISSUE (Science 5º · Unit 2)
+   Modelo: assets/models/muscle.glb (Blender: assets/models/src/muscle.blend)
+     MuscleCell  → Fiber_Membrane (con estrías), Fiber_Nuclei, Fiber_Myofibrils,
+                   Fiber_CutFace, Fiber_Rim + puntos HS_Nucleus, HS_Stripes, HS_Myofibrils, HS_Membrane
+     Tissue_Sheath → envoltura de tejido conectivo (translúcida)
+   La célula está a lo largo del eje X. El tejido = 7 células (hexágono) + envoltura.
+
+   Pasos: 1 Meet a muscle cell · 2 Contract and expand · 3 Build muscle tissue · 4 Muscle tissue
+   ========================================================================== */
+(function () {
+  'use strict';
+  var CQ = window.CQ, h = CQ.h;
+  if (!CQ.Sim) return;
+
+  var THUMB = '<svg viewBox="0 0 120 120" aria-hidden="true"><defs><linearGradient id="smbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0F2A4A"/><stop offset="1" stop-color="#0B1B33"/></linearGradient>' +
+    '<pattern id="smst" width="7" height="10" patternUnits="userSpaceOnUse"><rect width="7" height="10" fill="#E9877B"/><rect x="2" width="3.6" height="10" fill="#B9373A"/></pattern></defs>' +
+    '<rect width="120" height="120" rx="22" fill="url(#smbg)"/>' +
+    [[30, 0], [46, 0], [62, 0], [38, 14], [54, 14], [38, -14], [54, -14]].map(function (p) {
+      return '<g transform="translate(' + (p[0] - 14) + ' ' + (60 + p[1]) + ') rotate(-18)"><rect x="0" y="-6.5" width="74" height="13" rx="6.5" fill="url(#smst)"/>' +
+        '<ellipse cx="74" cy="0" rx="3" ry="6.5" fill="#FFC9BC"/></g>';
+    }).join('') +
+    '<path d="M14 96h92" stroke="#38BDF8" stroke-width="2" stroke-dasharray="3 4" opacity=".5"/></svg>';
+
+  var PARTS = {
+    nucleus: { name: 'Nucleus', color: '#7C3AED',
+      text: 'The **nucleus** is the control centre of the cell. Muscle cells are so long that they have **many nuclei**!' },
+    stripes: { name: 'Stripes', color: '#DC2626',
+      text: 'Muscle cells have light and dark **stripes**. The stripes come from the tiny threads inside the cell.' },
+    myofibrils: { name: 'Myofibrils', color: '#EA580C',
+      text: 'Inside the cell there are lots of tiny threads called **myofibrils**. They **pull** to make the cell shorter.' },
+    membrane: { name: 'Cell membrane', color: '#DB2777',
+      text: 'The **cell membrane** covers the cell, like a thin skin. It keeps everything inside.' },
+    cell: { name: 'One muscle cell', color: '#DC2626',
+      text: 'Each long tube is **one muscle cell**. All the cells in this tissue are the **same type**.' },
+    wrap: { name: 'Connective tissue', color: '#0EA5E9',
+      text: 'A thin layer **wraps** the muscle cells and keeps them **together**.' },
+    ends: { name: 'Side by side', color: '#16A34A',
+      text: 'Look at the ends: the cells are **side by side**, like pencils in a bundle. They all point the **same way**.' }
+  };
+
+  CQ.Sim.register('muscle-tissue', {
+    title: 'From muscle cell to muscle tissue',
+    model: 'models/muscle.glb',
+    levels: [['cell', 'Muscle cell'], ['tissue', 'Muscle tissue']],
+    thumb: THUMB,
+
+    create: function (api) {
+      var T = api.THREE;
+      var src = api.gltf.scene;
+      var cellTpl = src.getObjectByName('MuscleCell');
+      var sheathTpl = src.getObjectByName('Tissue_Sheath');
+      var board = api.board;
+
+      /* ── materiales (los del .glb se sustituyen por materiales físicos con brillo orgánico) ── */
+      var orig = {};
+      cellTpl.traverse(function (o) { if (o.isMesh) orig[o.material.name] = o.material; });
+      var tex = orig.CQ_Fiber && orig.CQ_Fiber.map;
+      if (tex) { tex.anisotropy = api.renderer.capabilities.getMaxAnisotropy(); tex.wrapS = T.RepeatWrapping; tex.needsUpdate = true; }
+      function makeMats() {
+        var fiber = new T.MeshPhysicalMaterial({ map: tex || null, color: tex ? '#ffd9d3' : 0xd0504a, roughness: 0.45,
+          clearcoat: 0.3, clearcoatRoughness: 0.4, sheen: 0.35, sheenColor: new T.Color('#ff9f92'), sheenRoughness: 0.6 });
+        return {
+          CQ_Fiber: fiber,
+          myo: fiber.clone(),
+          CQ_Nucleus: new T.MeshPhysicalMaterial({ color: '#5B34C9', roughness: 0.3, clearcoat: 0.8, clearcoatRoughness: 0.25, emissive: '#2E1065', emissiveIntensity: 0.25 }),
+          CQ_Cytoplasm: new T.MeshStandardMaterial({ color: '#A3262C', roughness: 0.7 }),
+          CQ_Membrane: new T.MeshPhysicalMaterial({ color: '#FFC9BC', roughness: 0.35, clearcoat: 0.5 })
+        };
+      }
+      function dress(obj, mats) {
+        obj.traverse(function (o) {
+          if (!o.isMesh) return;
+          var key = o.name === 'Fiber_Myofibrils' ? 'myo' : o.material.name;
+          if (mats[key]) o.material = mats[key];
+        });
+      }
+      var mainMats = makeMats();
+      var otherMats = makeMats();
+      var allOther = Object.keys(otherMats).map(function (k) { return otherMats[k]; });
+
+      /* ── escena: 7 células (la 0 es "nuestra" célula) + envoltura ── */
+      var bundle = new T.Group();
+      api.scene.add(bundle);
+      var R = 1.03;
+      var SLOTS = [[0, 0]];
+      for (var k = 0; k < 6; k++) SLOTS.push([R * Math.cos(Math.PI / 3 * k + Math.PI / 6), R * Math.sin(Math.PI / 3 * k + Math.PI / 6)]);
+      var cells = SLOTS.map(function (s, i) {
+        var c = cellTpl.clone(true);
+        dress(c, i === 0 ? mainMats : otherMats);
+        c.position.set(0, s[0], s[1]);
+        // Pequeñas diferencias naturales (no son copias perfectas)
+        if (i) { c.rotation.x = i * 0.9; c.position.x = (i % 3 - 1) * 0.12; }
+        bundle.add(c);
+        return c;
+      });
+      var sheathMat = new T.MeshPhysicalMaterial({ color: '#F3E8DA', roughness: 0.55, transparent: true, opacity: 0,
+        depthWrite: false, side: T.DoubleSide, clearcoat: 0.3 });
+      var sheath = sheathTpl.clone();
+      sheath.material = sheathMat;
+      sheath.renderOrder = 2;
+      bundle.add(sheath);
+
+      // Huecos "fantasma" (brillan) donde se colocan las células al construir el tejido
+      var ghostGeo = new T.CylinderGeometry(0.5, 0.5, 6.2, 40, 1, true);
+      ghostGeo.rotateZ(Math.PI / 2);
+      var ringGeo = new T.TorusGeometry(0.5, 0.03, 8, 48);
+      ringGeo.rotateY(Math.PI / 2);
+      var ghosts = SLOTS.map(function (s, i) {
+        var g = new T.Group();
+        var mat = new T.MeshBasicMaterial({ color: '#38BDF8', transparent: true, opacity: 0.14, depthWrite: false });
+        var ringMat = new T.MeshBasicMaterial({ color: '#7DD3FC', transparent: true, opacity: 0.85 });
+        var tube = new T.Mesh(ghostGeo, mat);
+        var r1 = new T.Mesh(ringGeo, ringMat); r1.position.x = 3.15;
+        var r2 = new T.Mesh(ringGeo, ringMat); r2.position.x = -2.95;
+        g.add(tube, r1, r2);
+        g.position.set(0.15, s[0], s[1]);
+        g.userData = { slot: i, mat: mat, ringMat: ringMat, tube: tube };
+        g.visible = false;
+        bundle.add(g);
+        return g;
+      });
+
+      /* ── estado ── */
+      var placed = [true, false, false, false, false, false, false];
+      var built = false;
+      var othersOpacity = 0;      // 0 = solo nuestra célula; 1 = tejido completo
+      var phase = 0, squeeze = 0; // contracción
+      var highlight = null, hlT = 0;
+      var drag = null, armed = false, hotGhost = null;
+
+      function setOthers(o, fromTween) {
+        if (!fromTween) api.cancelTween('others');
+        othersOpacity = o;
+        allOther.forEach(function (m) { m.transparent = o < 0.999; m.opacity = o; m.depthWrite = o > 0.6; });
+        cells.forEach(function (c, i) { if (i) c.visible = o > 0.01 && placed[i]; });
+        api.request();
+      }
+      function setSheath(o, fromTween) {
+        if (!fromTween) api.cancelTween('sheath');
+        sheathMat.opacity = 0.26 * o; sheath.visible = o > 0.01; api.request();
+      }
+      function fadeOthers(to, ms) {
+        var from = othersOpacity;
+        api.tween(ms || 900, function (k) { setOthers(from + (to - from) * k, true); }, null, null, 'others');
+      }
+      function fadeSheath(to, ms) {
+        var from = sheathMat.opacity / 0.26;
+        api.tween(ms || 900, function (k) { setSheath(from + (to - from) * k, true); }, null, null, 'sheath');
+      }
+      function showGhosts(on) { ghosts.forEach(function (g, i) { g.visible = on && !placed[i]; }); api.request(); }
+      function count() { return placed.filter(Boolean).length; }
+
+      function setHighlight(mat) {
+        if (highlight && highlight !== mat) { highlight.emissive && highlight.emissive.setRGB(0, 0, 0); }
+        highlight = mat; hlT = 0; api.request();
+      }
+
+      /* ── puntos interactivos ── */
+      var tmp = new T.Vector3();
+      function radialNormal(obj) {
+        return function (out) { obj.getWorldPosition(out); out.x = 0; return out.lengthSq() ? out.normalize() : out.set(0, 1, 0); };
+      }
+      function hotspot(n, key, getObj, normal, mat, side) {
+        var hs = api.addHotspot({
+          n: n, label: PARTS[key].name, side: side,
+          get: function (out) { return getObj(out); },
+          normal: normal,
+          onClick: function () {
+            api.showPart(PARTS[key].name, PARTS[key].text, PARTS[key].color);
+            api.setHotspotActive(hs);
+            setHighlight(mat || null);
+          }
+        });
+        return hs;
+      }
+      /** Punto fijo de la célula (coordenadas de la célula) + normal hacia fuera (para ocultarlo si queda detrás). */
+      function local(cell, x, y, z) { return function (out) { return cell.localToWorld(out.set(x, y, z)); }; }
+      function outward(y, z) { return function (out) { return out.set(0, y, z).normalize(); }; }
+      function cellHotspots() {
+        api.clearHotspots();
+        var c = cells[0];
+        // Núcleo de delante (x = -1.15), estrías, extremo cortado (miofibrillas) y membrana
+        hotspot(1, 'nucleus', local(c, -1.15, 0.17, 0.6), outward(0.26, 0.97), mainMats.CQ_Nucleus, 'left');
+        hotspot(2, 'stripes', local(c, 0.6, 0.4, 0.33), outward(0.75, 0.65), mainMats.CQ_Fiber);
+        hotspot(3, 'myofibrils', local(c, 3.38, 0.05, 0.12), function (out) { return out.set(1, 0, 0.3).normalize(); }, mainMats.myo);
+        hotspot(4, 'membrane', local(c, -2.3, -0.3, 0.4), outward(-0.6, 0.8), mainMats.CQ_Membrane, 'left');
+      }
+      function tissueHotspots() {
+        api.clearHotspots();
+        hotspot(1, 'cell', function (out) { return cells[0].localToWorld(out.set(-1.2, 0, 0.5)); }, function (out) { return out.set(0.2, 1, 0.6).normalize(); }, mainMats.CQ_Fiber);
+        hotspot(2, 'wrap', function (out) { return sheath.localToWorld(out.set(-1.2, 1.68, 0)); }, function (out) { return out.set(0, 1, 0); });
+        hotspot(3, 'ends', function (out) { return bundle.localToWorld(out.set(3.45, -1.05, 0.2)); }, function (out) { return out.set(1, 0, 0); });
+      }
+
+      /* ── vistas de cámara (cada paso tiene la suya; "Reset the view" vuelve a ella) ── */
+      var VIEWS = {
+        cell: [[2.3, 2.3, 8.8], [0.3, 0, 0]],
+        contract: [[3.0, 1.5, 6.2], [0.9, 0, 0]],
+        build: [[9.6, 3.6, 6.2], [0.7, 0, 0]],
+        tissue: [[8.2, 4.6, 9.8], [0.4, 0, 0]]
+      };
+      /** Encuadre adaptado a la pantalla: si el lienzo es estrecho (tableta en vertical, móvil), la cámara se aleja. */
+      function view(name, ms, done) {
+        var el = api.el, aspect = (el.clientWidth || 1) / (el.clientHeight || 1);
+        var f = Math.max(1, Math.pow(1.5 / aspect, 0.75));
+        var p = VIEWS[name][0], t = VIEWS[name][1];
+        api.flyTo([t[0] + (p[0] - t[0]) * f, t[1] + (p[1] - t[1]) * f, t[2] + (p[2] - t[2]) * f], t, ms, done);
+      }
+
+      /* ── construir el tejido: arrastrar células a los huecos ── */
+      var stack = null, counter = null;
+      function buildTask() {
+        var left = 7 - count();
+        counter = h('div', { class: 'sim-counter' }, h('b', {}, String(count())), ' / 7 muscle cells');
+        stack = h('button', { class: 'sim-stack' + (armed ? ' armed' : ''), disabled: built, aria: { label: 'Muscle cells to place: ' + left } },
+          h('span', { class: 'sim-stack-art', svg: THUMB }),
+          h('span', {}, h('b', {}, built ? 'Done!' : 'Muscle cell'), h('small', {}, built ? 'All cells are in place' : left + ' left · drag me!')));
+        stack.addEventListener('pointerdown', startDrag);
+        stack.addEventListener('click', function () {
+          if (stack.dataset.dragged === '1' || built) return;
+          armed = !armed;
+          stack.classList.toggle('armed', armed);
+          if (armed) CQ.Sfx.play('tap');
+        });
+        var auto = board && !built ? h('button', { class: 'btn btn-ghost', onclick: autoBuild }, '▶ Build it for me') : null;
+        return h('div', { class: 'sim-task' }, counter, stack, auto);
+      }
+      function nextFreeCell() { for (var i = 1; i < 7; i++) if (!placed[i]) return i; return -1; }
+
+      function startDrag(e) {
+        if (built || nextFreeCell() < 0) return;
+        drag = { id: e.pointerId, x0: e.clientX, y0: e.clientY, cell: -1 };
+        document.addEventListener('pointermove', onMove, { passive: false });
+        document.addEventListener('pointerup', onUp);
+        document.addEventListener('pointercancel', onUp);
+      }
+      /** Hueco libre más cercano al puntero: distancia en pantalla a TODO el tubo (de un extremo a otro), no solo a su centro. */
+      function nearestGhost(x, y) {
+        var b = api.renderer.domElement.getBoundingClientRect();
+        var px = x - b.left, py = y - b.top;
+        var best = null, bd = board ? 70 : 52;
+        ghosts.forEach(function (g, i) {
+          if (placed[i]) return;
+          var a = api.toScreen(g.localToWorld(tmp.set(-2.9, 0, 0)));
+          var c = api.toScreen(g.localToWorld(tmp.set(3.1, 0, 0)));
+          var vx = c.x - a.x, vy = c.y - a.y, len = vx * vx + vy * vy || 1;
+          var t = Math.max(0, Math.min(1, ((px - a.x) * vx + (py - a.y) * vy) / len));
+          var d = Math.hypot(a.x + vx * t - px, a.y + vy * t - py);
+          if (d < bd) { bd = d; best = g; }
+        });
+        return best;
+      }
+      function setHot(g) {
+        if (hotGhost === g) return;
+        hotGhost = g;
+        ghosts.forEach(function (x) { x.userData.mat.opacity = x === g ? 0.4 : 0.14; });
+        api.request();
+      }
+      function onMove(e) {
+        if (!drag || e.pointerId !== drag.id) return;
+        if (drag.cell < 0) {
+          if (Math.abs(e.clientX - drag.x0) + Math.abs(e.clientY - drag.y0) < 8) return;
+          drag.cell = nextFreeCell();
+          api.controls.enabled = false;
+          var c = cells[drag.cell];
+          c.visible = true;
+          c.rotation.x = drag.cell * 0.9;
+          if (stack) stack.classList.add('dragging');
+        }
+        e.preventDefault();
+        var p = api.pointerOnPlane(e.clientX, e.clientY, new T.Vector3(0.5, 0, 0));
+        if (p) { bundle.worldToLocal(p); cells[drag.cell].position.set(p.x - 0.2, p.y, p.z); }
+        setHot(nearestGhost(e.clientX, e.clientY));
+        api.request();
+      }
+      function onUp(e) {
+        if (!drag || (e.pointerId !== undefined && e.pointerId !== drag.id)) return;
+        document.removeEventListener('pointermove', onMove);
+        document.removeEventListener('pointerup', onUp);
+        document.removeEventListener('pointercancel', onUp);
+        api.controls.enabled = true;
+        var d = drag; drag = null;
+        if (stack) stack.classList.remove('dragging');
+        if (d.cell < 0) return;   // fue un toque (lo gestiona el click)
+        stack.dataset.dragged = '1';
+        setTimeout(function () { if (stack) stack.dataset.dragged = ''; }, 60);
+        var g = hotGhost;
+        setHot(null);
+        if (g) snap(d.cell, g.userData.slot);
+        else {
+          // No estaba cerca de un hueco: la célula vuelve al montón
+          var c = cells[d.cell];
+          var from = c.position.clone();
+          api.tween(380, function (k) { c.position.lerpVectors(from, new T.Vector3(-8, 4, 6), k); }, function () { c.visible = false; api.request(); });
+          CQ.UI.announce('Drop the cell on a glowing space.');
+        }
+      }
+      /** Coloca la célula `ci` en el hueco `slot` (con un pequeño "clic" elástico). */
+      function snap(ci, slot, ms) {
+        var c = cells[ci];
+        // La célula pasa a ocupar ese hueco: intercambiamos el índice para que cells[slot] sea la colocada
+        if (ci !== slot) { var t = cells[slot]; cells[slot] = c; cells[ci] = t; }
+        placed[slot] = true;
+        var from = c.position.clone();
+        var to = new T.Vector3((slot % 3 - 1) * 0.12, SLOTS[slot][0], SLOTS[slot][1]);
+        c.visible = true;
+        ghosts[slot].visible = false;
+        api.tween(ms || 420, function (k) { c.position.lerpVectors(from, to, k); }, null, CQ.Sim.util.ease.back);
+        CQ.Sfx.play('correct');
+        armed = false;
+        refreshTask();
+        if (count() === 7) setTimeout(finishBuild, (ms || 420) + 150);
+      }
+      function refreshTask() { api.refreshPanel(); }
+
+      function finishBuild() {
+        if (built) return;
+        built = true;
+        showGhosts(false);
+        CQ.Sfx.play('win');
+        // La envoltura de tejido conectivo "abraza" el haz de células y la cámara se aleja
+        sheath.scale.set(1, 1.25, 1.25);
+        api.tween(1100, function (k) { setSheath(k, true); var s = 1.25 - 0.25 * k; sheath.scale.set(1, s, s); }, null, null, 'sheath');
+        setTimeout(function () { view('tissue', 1600); }, 500);
+        api.refreshPanel();
+        api.canNext();
+      }
+
+      /** Pizarra: el profesor puede mostrar la construcción animada. */
+      function autoBuild() {
+        var order = [];
+        for (var i = 1; i < 7; i++) if (!placed[i]) order.push(i);
+        order.forEach(function (slot, n) {
+          setTimeout(function () {
+            if (placed[slot] || stepId() !== 'build') return;
+            var c = cells[slot];
+            c.position.set(-6, 3.5, 5);
+            c.visible = true;
+            snap(slot, slot, 650);
+          }, n * 420);
+        });
+      }
+      function stepId() { return api.stepId(); }
+
+      // Toque en un hueco brillante (modo "tocar el montón y después el hueco")
+      function onCanvasTap(e) {
+        if (!armed || built || api.stepId() !== 'build') return;
+        var hit = api.pick(e.clientX, e.clientY, ghosts.filter(function (g) { return g.visible; }));
+        var g = hit && (function (o) { while (o && !o.userData.mat) o = o.parent; return o; })(hit.object);
+        if (!g) return;
+        var ci = nextFreeCell();
+        var c = cells[ci];
+        c.position.set(-6, 3.5, 5);
+        c.visible = true;
+        snap(ci, g.userData.slot, 600);
+      }
+      api.renderer.domElement.addEventListener('click', onCanvasTap);
+      api.cleanup(function () {
+        api.renderer.domElement.removeEventListener('click', onCanvasTap);
+        document.removeEventListener('pointermove', onMove);
+        document.removeEventListener('pointerup', onUp);
+      });
+
+      function completeInstantly() {
+        for (var i = 1; i < 7; i++) {
+          placed[i] = true;
+          cells[i].position.set((i % 3 - 1) * 0.12, SLOTS[i][0], SLOTS[i][1]);
+        }
+        built = true;
+        showGhosts(false);
+      }
+
+      /* ── pasos ── */
+      var steps = [
+        {
+          id: 'cell', level: 'cell', title: 'This is a muscle cell',
+          view: function () { view('cell'); },
+          enter: function () {
+            showGhosts(false);
+            var fromTissue = othersOpacity > 0.05;
+            fadeOthers(0, 1000); fadeSheath(0, 700);
+            view('cell', 1500);
+            // Si venimos del tejido, los puntos aparecen cuando ya solo se ve nuestra célula
+            api.clearHotspots();
+            setTimeout(function () { if (api.stepId() === 'cell') cellHotspots(); }, fromTissue ? 1000 : 0);
+          },
+          leave: function () { setHighlight(null); },
+          panel: function () {
+            return {
+              kicker: 'Cell',
+              text: ['Our body is made of **cells**. The cell is the **smallest unit of life**.',
+                'Cells have different shapes, depending on their job. **Muscle cells** are **elongated**: they are long and thin.'],
+              boxes: [['tip', 'Drag to turn the cell. Pinch or scroll to zoom. Tap the **numbers** to discover its parts.']],
+              vocab: [['muscle cell', 'a long, thin cell that can contract'], ['elongated', 'longer and narrower than usual'], ['nucleus', 'the control centre of a cell']]
+            };
+          }
+        },
+        {
+          id: 'contract', level: 'cell', title: 'Muscle cells contract', animates: true,
+          view: function () { view('contract'); },
+          enter: function () {
+            showGhosts(false);
+            fadeOthers(0, 600); fadeSheath(0, 500);
+            view('contract', 1300);
+            cellHotspots();
+            if (!board) setTimeout(function () { if (api.stepId() === 'contract') api.setPlaying(true); }, 1500);
+          },
+          leave: function () { setHighlight(null); },
+          panel: function () {
+            return {
+              kicker: 'Cell',
+              text: ['Press **Play** and watch the muscle cell.',
+                'When it **contracts**, it gets **shorter and fatter**. When it **expands**, it gets long again.',
+                'This **allows muscles to move**.'],
+              boxes: [['did', 'Look at the **stripes**: they get closer together when the cell contracts!'],
+                ['job', 'Muscle cells **expand and contract**.']],
+              vocab: [['contract', 'to get shorter'], ['expand', 'to get longer again']]
+            };
+          }
+        },
+        {
+          id: 'build', level: 'tissue', title: 'Build muscle tissue!',
+          done: function () { return built; },
+          blocked: 'First, build the muscle tissue!',
+          view: function () { view(built ? 'tissue' : 'build'); },
+          enter: function () {
+            api.clearHotspots();
+            api.setPlaying(false);
+            setOthers(1);
+            cells.forEach(function (c, i) { c.visible = placed[i]; if (placed[i] && i) c.position.set((i % 3 - 1) * 0.12, SLOTS[i][0], SLOTS[i][1]); });
+            setSheath(built ? 1 : 0);
+            showGhosts(!built);
+            view(built ? 'tissue' : 'build', 1500);
+          },
+          leave: function () { armed = false; setHot(null); showGhosts(false); },
+          panel: function () {
+            if (built) {
+              return {
+                kicker: 'Tissue',
+                text: ['**Well done!** You have made **muscle tissue**.', 'Many muscle cells of the **same type** are now **together**.'],
+                boxes: [['remember', 'Cells of the same type group together to form a **tissue**.']]
+              };
+            }
+            return {
+              kicker: 'Tissue',
+              text: ['One muscle cell can’t do much on its own. Cells of the **same type** group together.',
+                'Drag each **muscle cell** to a **glowing space**. Put them **side by side**.'],
+              task: buildTask(),
+              boxes: [['tip', 'You can also **tap** the muscle cell and then **tap** a glowing space.']]
+            };
+          }
+        },
+        {
+          id: 'tissue', level: 'tissue', title: 'This is muscle tissue', animates: true,
+          view: function () { view('tissue'); },
+          enter: function () {
+            if (!built) completeInstantly();   // pizarra: el profesor puede saltar aquí
+            setOthers(othersOpacity);
+            cells.forEach(function (c) { c.visible = true; });
+            fadeOthers(1, 900);
+            fadeSheath(1, 900);
+            view('tissue', 1500);
+            tissueHotspots();
+          },
+          leave: function () { setHighlight(null); },
+          panel: function () {
+            return {
+              kicker: 'Tissue',
+              text: ['A **tissue** is a **set of one type of cells** that do **the same job**.',
+                'In **muscle tissue**, lots of muscle cells are side by side. Press **Play**: they all **contract together**, so the tissue gets shorter and **pulls**.'],
+              boxes: [['remember', '**cell → tissue → organ → system → organism**. Different tissues together make an **organ**, like the **stomach**.']],
+              vocab: [['tissue', 'a set of one type of cells with the same job'], ['set', 'a group of things that belong together']]
+            };
+          }
+        }
+      ];
+
+      // El panel del paso "Build" se redibuja al colocar cada célula (contador).
+      refreshTask = function () { if (api.stepId() === 'build') api.refreshPanel(); };
+
+      return {
+        steps: steps,
+        onLevel: function (lv) {
+          if (lv === 'cell') return 'cell';
+          return built || board ? 'tissue' : 'build';
+        },
+        reset: function () {
+          placed = [true, false, false, false, false, false, false];
+          built = false; armed = false;
+          cells.forEach(function (c, i) { c.visible = i === 0; c.position.set(0, SLOTS[i][0], SLOTS[i][1]); });
+          setOthers(0); setSheath(0); showGhosts(false);
+          bundle.scale.set(1, 1, 1); squeeze = 0; phase = 0;
+          api.clearHotspots();
+        },
+        tick: function (dt, t, playing) {
+          var busy = false;
+          // Contracción: más corta y más gruesa (mismo volumen). Al pausar vuelve suavemente a relajada.
+          if (playing) { phase += dt; busy = true; }
+          var target = playing ? (0.5 - 0.5 * Math.cos(phase * Math.PI * 2 / 2.6)) : 0;
+          var ns = squeeze + (target - squeeze) * Math.min(1, dt * (playing ? 60 : 5));
+          if (Math.abs(ns - squeeze) > 0.0005) busy = true;
+          squeeze = ns;
+          var s = 1 - 0.22 * squeeze;
+          bundle.scale.set(s, 1 / Math.sqrt(s), 1 / Math.sqrt(s));
+          // Huecos que "respiran" para invitar a colocar células
+          if (ghosts.some(function (g) { return g.visible; })) {
+            var pulse = 0.55 + 0.45 * Math.sin(t * 3.2);
+            ghosts.forEach(function (g) { g.userData.ringMat.opacity = 0.45 + 0.5 * pulse; });
+            busy = true;
+          }
+          // Brillo de la parte seleccionada
+          if (highlight && highlight.emissive) {
+            hlT += dt;
+            highlight.emissive.set(highlight === mainMats.CQ_Nucleus ? '#8B5CF6' : '#F97316');
+            highlight.emissiveIntensity = 0.25 + 0.2 * Math.sin(hlT * 5);
+            busy = true;
+          }
+          return busy;
+        }
+      };
+    }
+  });
+})();
+</script>
+
   <!-- Panel de profesor (Teacher login): se arranca desde js_student -->
   <!-- client/js_teacher -->
 <script>
@@ -3802,7 +5732,7 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
         h('span', { class: 'brand-name' }, (BOOT.appName || 'ClassQuest') + (teacher ? ' · Teacher' : ' · Admin'))),
       teacher ? h('button', { class: 'g-current', title: 'Cambiar de grupo',
         onclick: function () { if (myGroups.length > 1) { state.group = ''; state.board.data = null; shell(); } } },
-        'Grupo ' + state.group, myGroups.length > 1 ? h('span', { class: 'muted' }, ' ▾') : null) : null,
+        (isJoined(groupInfo(state.group)) ? gLabel(state.group) : 'Grupo ' + state.group), myGroups.length > 1 ? h('span', { class: 'muted' }, ' ▾') : null) : null,
       h('div', { class: 'spacer' }),
       tabBar,
       teacher
@@ -3842,9 +5772,9 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
         h('p', { class: 'sub' }, gs.length ? '¿Con qué grupo vas a trabajar?' : 'Todavía no tienes grupos asignados. Pídeselo al administrador.'))));
       var grid = h('div', { class: 'grid g-pick' });
       gs.forEach(function (g) {
-        var n = ov.students.filter(function (s) { return s.group === g.groupId; }).length;
+        var n = ov.students.filter(function (s) { return inGroup(s.group, g.groupId, ov.groups); }).length;
         grid.appendChild(h('button', { class: 'tile g-tile', onclick: function () { state.group = g.groupId; state.board.data = null; state.tab = 'students'; shell(); } },
-          h('span', { class: 'g-tile-id' }, g.groupId),
+          h('span', { class: 'g-tile-id' + (isJoined(g) ? ' sci' : '') }, isJoined(g) ? 'Sci ' + g.groupId.charAt(0) + 'º' : g.groupId),
           h('span', { class: 'g-tile-name' }, g.name),
           h('span', { class: 'muted' }, n + (n === 1 ? ' alumno' : ' alumnos') + ' · ' + g.courseIds.map(courseName).join(', '))));
       });
@@ -3943,24 +5873,46 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
   function groupInfo(id) {
     return ((state.overview && state.overview.groups) || []).filter(function (g) { return g.groupId === id; })[0] || null;
   }
+  /** Grupo que junta clases (Science 5º = 5A + 5B): sus alumnos son los de sus clases. */
+  function isJoined(g) { return !!(g && g.members && g.members.length); }
+  /** Nombre corto: "5A" o, para los grupos de Science, "Science 5º". */
+  function gLabel(id, groups) {
+    var g = (groups || (state.overview && state.overview.groups) || []).filter(function (x) { return x.groupId === id; })[0];
+    return isJoined(g) ? 'Science ' + id.charAt(0) + 'º' : id;
+  }
+  /** ¿Es un alumno (de la clase `home`) del grupo `gid`? */
+  function inGroup(home, gid, groups) {
+    var g = (groups || (state.overview && state.overview.groups) || []).filter(function (x) { return x.groupId === gid; })[0];
+    return isJoined(g) ? g.members.indexOf(home) >= 0 : home === gid;
+  }
+  /** Clases donde se crean alumnos (no los grupos de Science). */
+  function homeGroups(ov) { return (ov.groups || []).filter(function (g) { return !isJoined(g); }); }
+  /** Cursos de una clase: los suyos + los de los grupos de Science que la incluyen. */
+  function homeCourses(gid) {
+    var out = [];
+    ((state.overview && state.overview.groups) || []).forEach(function (g) {
+      if (g.groupId === gid || (g.members || []).indexOf(gid) >= 0) g.courseIds.forEach(function (c) { if (out.indexOf(c) < 0) out.push(c); });
+    });
+    return out;
+  }
 
   function createForm(ov) {
-    var groups = ov.groups || [];
-    var first = state.newGroup || (state.filterGroup && groupInfo(state.filterGroup) ? state.filterGroup : (groups[0] ? groups[0].groupId : ''));
+    var groups = homeGroups(ov);
+    var ok = function (id) { return groups.some(function (g) { return g.groupId === id; }); };
+    var first = (ok(state.newGroup) && state.newGroup) || (ok(state.filterGroup) ? state.filterGroup : (groups[0] ? groups[0].groupId : ''));
     var group = h('select', { class: 't-select', id: 'grp' }, groups.map(function (g) {
       return h('option', { value: g.groupId, selected: g.groupId === first }, g.groupId + ' · ' + g.name);
     }));
-    var firstInfo = groupInfo(first);
-    var checks = h('div', {}, courseChecks(ov.courses, firstInfo ? firstInfo.courseIds : [], 'newc'));
+    var checks = h('div', {}, courseChecks(ov.courses, homeCourses(first), 'newc'));
     var lines = h('textarea', { class: 't-textarea', id: 'lines', placeholder: 'JM 1\nAL 2\nPR 3' });
     var msg = h('div', { class: 't-help', aria: { live: 'polite' } });
     var btn = h('button', { class: 'btn t-btn', type: 'submit' }, 'Crear y generar PIN');
 
     group.addEventListener('change', function () {
       state.newGroup = group.value;
-      var g = groupInfo(group.value);
+      var cs = homeCourses(group.value);
       Array.prototype.forEach.call(checks.querySelectorAll('input'), function (i) {
-        i.checked = !!g && g.courseIds.indexOf(i.value) >= 0;
+        i.checked = cs.indexOf(i.value) >= 0;
       });
     });
 
@@ -3968,7 +5920,7 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
       h('h2', {}, 'Crear alumnos'),
       h('div', { class: 't-note' }, 'Solo iniciales y número de lista. El código de acceso será grupo + iniciales + número (ej. 3AJM07). Los PIN se muestran UNA vez: imprime las tarjetas.'),
       h('div', { class: 't-field' }, h('label', { for: 'grp' }, 'Grupo'), group,
-        h('span', { class: 't-help' }, 'Las clases del grupo se marcan solas. Para añadir grupos, edita la pestaña Groups de la hoja.')),
+        h('span', { class: 't-help' }, 'Las clases del grupo se marcan solas (5A → Science 5º, que junta 5A y 5B). Para añadir grupos, edita la pestaña Groups de la hoja.')),
       h('div', { class: 't-field' }, h('span', { class: 't-label' }, 'Clases asignadas'), checks),
       h('div', { class: 't-field' }, h('label', { for: 'lines' }, 'Alumnos (uno por línea: iniciales y número)'), lines),
       msg, btn);
@@ -4024,17 +5976,19 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
         aria: { pressed: String(current === id) }, onclick: function () { onPick(id); } },
         label, counts ? h('span', { class: 'g-count' }, String(counts(id))) : null);
     };
+    // Clases primero; los grupos de Science (que juntan clases) aparte, en verde
     return h('div', { class: 'g-tabs', role: 'group', aria: { label: 'Grupo' } },
       chip('', 'Todos'),
-      defined.map(function (g) { return chip(g, g); }),
+      (ov.groups || []).filter(function (g) { return !isJoined(g); }).map(function (g) { return chip(g.groupId, g.groupId); }),
+      (ov.groups || []).filter(isJoined).map(function (g) { return chip(g.groupId, gLabel(g.groupId, ov.groups), 'g-sci'); }),
       legacy.map(function (g) { return chip(g, g + ' ⚠', 'legacy'); }));
   }
 
   function studentTable(ov) {
-    var count = function (g) { return ov.students.filter(function (s) { return !g || s.group === g; }).length; };
-    var tabs = groupTabs(ov, state.filterGroup, function (g) { state.filterGroup = g; if (groupInfo(g)) state.newGroup = g; shell(); }, count);
+    var count = function (g) { return ov.students.filter(function (s) { return !g || inGroup(s.group, g, ov.groups); }).length; };
+    var tabs = groupTabs(ov, state.filterGroup, function (g) { state.filterGroup = g; if (groupInfo(g) && !isJoined(groupInfo(g))) state.newGroup = g; shell(); }, count);
 
-    var list = ov.students.filter(function (s) { return !state.filterGroup || s.group === state.filterGroup; });
+    var list = ov.students.filter(function (s) { return !state.filterGroup || inGroup(s.group, state.filterGroup, ov.groups); });
     var printAll = h('button', { class: 'btn btn-ghost t-btn', onclick: function () {
       UI.toast('Los PIN no se guardan: para reimprimir una tarjeta usa "Nuevo PIN".');
     } }, 'Sobre los PIN');
@@ -4064,7 +6018,7 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
       }
       bulk.className = 't-bulk on';
       var dest = h('select', { class: 't-select t-select-sm', aria: { label: 'Grupo de destino' } },
-        (ov.groups || []).map(function (g) { return h('option', { value: g.groupId, selected: g.groupId === state.bulkGroup }, g.groupId); }));
+        homeGroups(ov).map(function (g) { return h('option', { value: g.groupId, selected: g.groupId === state.bulkGroup }, g.groupId); }));
       dest.addEventListener('change', function () { state.bulkGroup = dest.value; });
       var go = h('button', { class: 'btn t-btn', onclick: function () { moveStudents(ids, dest.value, go); } }, 'Mover');
       bulk.appendChild(h('b', {}, ids.length + (ids.length === 1 ? ' seleccionado' : ' seleccionados')));
@@ -4098,7 +6052,7 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
 
     return h('div', { class: 'card t-card' },
       h('div', { class: 't-toolbar' }, h('h2', { class: 'grow', style: { margin: 0 } },
-        (state.filterGroup ? 'Grupo ' + state.filterGroup : 'Alumnos') + ' (' + list.length + ')'), printAll),
+        (state.filterGroup ? (isJoined(groupInfo(state.filterGroup)) ? gLabel(state.filterGroup) + ' (' + groupInfo(state.filterGroup).members.join(' + ') + ')' : 'Grupo ' + state.filterGroup) : 'Alumnos') + ' (' + list.length + ')'), printAll),
       tabs,
       legacyCount ? h('div', { class: 't-note' }, '⚠ ' + legacyCount + ' alumno' + (legacyCount > 1 ? 's' : '') +
         ' sin grupo con letra. Márcalos y usa "Mover al grupo" (su código de acceso no cambia).') : null,
@@ -4133,20 +6087,21 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
 
   /** Profesor: lista de SU grupo (sin crear alumnos ni cambiar PIN/grupo), con super estrellas. */
   function teacherStudentTable(ov) {
-    var list = ov.students.filter(function (s) { return s.group === state.group; })
-      .sort(function (a, b) { return a.listNumber - b.listNumber; });
+    var joined = isJoined(groupInfo(state.group));
+    var list = ov.students.filter(function (s) { return inGroup(s.group, state.group, ov.groups); })
+      .sort(function (a, b) { return a.group === b.group ? a.listNumber - b.listNumber : (a.group < b.group ? -1 : 1); });
     var table = h('table', { class: 't-table' },
       h('thead', {}, h('tr', {}, ['Nº', 'Alumno', 'Código', 'Super 🌟', 'Último acceso'].map(function (t) { return h('th', {}, t); }))),
       h('tbody', {}, list.map(function (s) {
         return h('tr', {},
-          h('td', { class: 'muted' }, String(s.listNumber)),
+          h('td', { class: 'muted' }, (joined ? s.group + '-' : '') + String(s.listNumber)),
           h('td', { style: { fontWeight: 700 } }, s.displayName, s.isTest ? h('span', { class: 'pill pill-test' }, 'prueba') : null),
           h('td', { class: 'code' }, s.loginCode),
           superCell(s),
           h('td', { class: 'muted' }, U.fmtDate(s.lastLoginAt)));
       })));
     var btn = h('button', { class: 'btn btn-ghost t-btn', onclick: function () {
-      UI.confirm('¿Quitar 1 super estrella a todo ' + state.group + '?',
+      UI.confirm('¿Quitar 1 super estrella a todo ' + gLabel(state.group) + '?',
         list.filter(function (s) { return !s.isTest; }).length + ' alumnos (sin cuentas de prueba). Quien se quede en negativo verá 0 en su perfil.', 'Quitar', 'Cancelar')
         .then(function (ok) {
           if (!ok) return;
@@ -4156,9 +6111,9 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
             state.overview = null; shell();
           }).catch(function (e) { btn.disabled = false; UI.toast(errMsg(e)); });
         });
-    } }, '−1 a todo ' + state.group);
+    } }, '−1 a todo ' + gLabel(state.group));
     return h('div', { class: 'card t-card' },
-      h('div', { class: 't-toolbar' }, h('h2', { class: 'grow', style: { margin: 0 } }, 'Grupo ' + state.group + ' (' + list.length + ')'),
+      h('div', { class: 't-toolbar' }, h('h2', { class: 'grow', style: { margin: 0 } }, (joined ? gLabel(state.group) + ' · ' + groupInfo(state.group).members.join(' + ') : 'Grupo ' + state.group) + ' (' + list.length + ')'),
         h('button', { class: 'btn btn-ghost t-btn', onclick: function () { state.overview = null; shell(); } }, 'Recargar')),
       h('div', { class: 't-toolbar t-super-bar' }, h('span', { class: 'grow muted' }, '🌟 Super estrellas: − / + en cada alumno, o a todo el grupo'), btn),
       list.length ? h('div', { class: 't-table-wrap' }, table) : h('p', { class: 'empty' }, 'Todavía no hay alumnos en este grupo.'));
@@ -4166,26 +6121,26 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
 
   /* ── Super estrellas: quitar a todo un grupo o a un alumno ── */
   function superClassBar(ov) {
-    var groups = (ov.groups || []).filter(function (g) { return ov.students.some(function (s) { return s.group === g.groupId; }); });
+    var groups = (ov.groups || []).filter(function (g) { return ov.students.some(function (s) { return inGroup(s.group, g.groupId, ov.groups); }); });
     if (!groups.length) return null;
     var fixed = groupInfo(state.filterGroup) ? state.filterGroup : '';
     var sel = fixed ? null : h('select', { class: 't-select', style: { width: 'auto' }, aria: { label: 'Grupo' } },
-      groups.map(function (g) { return h('option', { value: g.groupId, selected: state.superGroup === g.groupId }, g.groupId); }));
+      groups.map(function (g) { return h('option', { value: g.groupId, selected: state.superGroup === g.groupId }, gLabel(g.groupId, ov.groups)); }));
     if (sel) sel.addEventListener('change', function () { state.superGroup = sel.value; });
     var btn = h('button', { class: 'btn btn-ghost t-btn', onclick: function () {
       var gid = fixed || sel.value;
-      var n = ov.students.filter(function (s) { return s.status === 'active' && !s.isTest && s.group === gid; }).length;
-      UI.confirm('¿Quitar 1 super estrella a todo ' + gid + '?',
+      var n = ov.students.filter(function (s) { return s.status === 'active' && !s.isTest && inGroup(s.group, gid, ov.groups); }).length;
+      UI.confirm('¿Quitar 1 super estrella a todo ' + gLabel(gid) + '?',
         n + ' alumnos (sin cuentas de prueba). Quien se quede en negativo verá 0 en su perfil.', 'Quitar', 'Cancelar')
         .then(function (ok) {
           if (!ok) return;
           btn.disabled = true;
           CQ.Api.admin('adjustSuper', { group: gid, amount: -1, note: 'group' }).then(function (r) {
-            UI.toast('Quitada 1 super estrella a ' + r.count + ' alumnos de ' + gid + '.');
+            UI.toast('Quitada 1 super estrella a ' + r.count + ' alumnos de ' + gLabel(gid) + '.');
             state.overview = null; shell();
           }).catch(function (e) { btn.disabled = false; UI.toast(errMsg(e)); });
         });
-    } }, fixed ? '−1 a todo ' + fixed : '−1 a todo el grupo');
+    } }, fixed ? '−1 a todo ' + gLabel(fixed) : '−1 a todo el grupo');
     return h('div', { class: 't-toolbar t-super-bar' },
       h('span', { class: 'grow muted' }, '🌟 Quitar super estrellas (o − / + en cada alumno)'),
       sel, btn);
@@ -4193,7 +6148,7 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
 
   /** Desplegable para cambiar de grupo a un alumno. */
   function groupCell(s, ov) {
-    var groups = ov.groups || [];
+    var groups = homeGroups(ov);
     var sel = h('select', { class: 't-select t-select-sm' + (s.inGroupList ? '' : ' warn'), aria: { label: 'Grupo de ' + s.displayName } },
       s.inGroupList ? null : h('option', { value: '', selected: true }, s.group + ' → ?'),
       groups.map(function (g) { return h('option', { value: g.groupId, selected: g.groupId === s.group }, g.groupId); }));
@@ -4318,12 +6273,24 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
     main.appendChild(UI.loading());
     CQ.Api.admin('listTeachers').then(function (d) {
       U.clear(main);
-      var groups = d.groups || [];
+      // Solo los grupos con asignatura. Por grupo Y asignatura: "2A" = English Y2; "Science 2º" = 2A + 2B en Science.
+      var groups = (d.groups || []).filter(function (g) { return g.courseIds.length; });
+      var isSci = function (g) { return isJoined(g) || g.courseIds.every(function (c) { return /^SCI-/.test(c); }); };
       var groupChecks = function (selected, name) {
-        return h('div', { class: 'checks' }, groups.map(function (g) {
-          return h('label', { class: 'check' },
-            h('input', { type: 'checkbox', name: name, value: g.groupId, checked: selected.indexOf(g.groupId) >= 0 }), g.groupId);
-        }));
+        var box = function (g) {
+          return h('label', { class: 'check' + (isSci(g) ? ' check-sci' : '') },
+            h('input', { type: 'checkbox', name: name, value: g.groupId, checked: selected.indexOf(g.groupId) >= 0 }),
+            isJoined(g) ? gLabel(g.groupId, groups) + ' (' + g.members.join('+') + ')' : g.groupId);
+        };
+        return h('div', { class: 'subject-checks' },
+          h('div', { class: 'subject-row' }, h('span', { class: 'subject-tag eng' }, 'English'),
+            h('div', { class: 'checks' }, groups.filter(function (g) { return !isSci(g); }).map(box))),
+          h('div', { class: 'subject-row' }, h('span', { class: 'subject-tag sci' }, 'Science bilingüe'),
+            h('div', { class: 'checks' }, groups.filter(isSci).map(box))));
+      };
+      var teacherGroupPill = function (gid) {
+        var g = groups.filter(function (x) { return x.groupId === gid; })[0];
+        return h('span', { class: 'pill' + (g && isSci(g) ? ' pill-sci' : '') }, g && isJoined(g) ? gLabel(gid, groups) : gid);
       };
 
       // Alta
@@ -4335,7 +6302,8 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
         h('h2', {}, 'Nuevo profesor'),
         h('div', { class: 't-note' }, 'Se crea un código (p. ej. TK7QX) y una contraseña que se muestran UNA vez: imprímelos o anótalos. El profesor entra desde la página de alumnos → "Teacher login" y solo ve sus grupos (pizarra, deberes, resultados y super estrellas). No puede crear alumnos ni profesores.'),
         h('div', { class: 't-field' }, h('label', { for: 'tname' }, 'Nombre (lo verá en su panel)'), name),
-        h('div', { class: 't-field' }, h('span', { class: 't-label' }, 'Grupos que da'), checks),
+        h('div', { class: 't-field' }, h('span', { class: 't-label' }, 'Grupos y asignaturas que da'), checks,
+          h('span', { class: 't-help' }, 'Science junta las clases A y B de cada curso. Un profesor de Science de 2º no ve el English de 2A ni de 2B, y al revés.')),
         msg, btn);
       form.addEventListener('submit', function (e) {
         e.preventDefault();
@@ -4358,7 +6326,7 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
           var tr = h('tr', { class: active ? '' : 'off' },
             h('td', { style: { fontWeight: 700 } }, t.displayName),
             h('td', { class: 'code' }, t.loginCode),
-            h('td', {}, t.groups.length ? t.groups.map(function (g) { return h('span', { class: 'pill' }, g); }) : h('span', { class: 'muted' }, '—')),
+            h('td', {}, t.groups.length ? t.groups.map(teacherGroupPill) : h('span', { class: 'muted' }, '—')),
             h('td', { class: 'muted' }, U.fmtDate(t.lastLoginAt)),
             h('td', {}, active ? 'Activo' : 'Desactivado'),
             h('td', {}, h('div', { class: 'actions' },
@@ -4526,12 +6494,36 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
                 h('span', { svg: CQ.Icons.play, style: { display: 'flex' } }), 'Con actividades') : null));
           });
         }
-        KIND_ORDER.forEach(function (kind) {
-          var acts = u.activities.filter(function (a) { return a.kind === kind; });
-          if (!acts.length) return;
-          body.appendChild(h('div', { class: 'kind-head' }, UI.kindBadge(kind), h('span', { class: 'muted' }, acts.length + (acts.length > 1 ? ' actividades' : ' actividad'))));
-          acts.forEach(function (a) { body.appendChild(boardRow(a)); });
-        });
+        // 3D Lab (simulaciones) primero: es el apoyo visual para explicar
+        var sims = u.activities.filter(function (a) { return a.kind === 'simulation'; });
+        if (sims.length) {
+          body.appendChild(h('div', { class: 'kind-head' }, h('span', { class: 'badge badge-lab' }, '3D Lab'),
+            h('span', { class: 'muted' }, sims.length + (sims.length > 1 ? ' simulaciones' : ' simulación'))));
+          sims.forEach(function (a) { body.appendChild(boardRow(a)); });
+        }
+        if (u.sections && u.sections.length) {
+          // Science: por apartados temáticos (Cells, Senses…), cada uno con sus actividades en orden
+          u.sections.forEach(function (s) {
+            var acts = u.activities.filter(function (a) { return a.section === s.id && a.kind !== 'simulation'; });
+            if (!acts.length) return;
+            body.appendChild(h('div', { class: 'kind-head sec-head', style: { '--sec': s.color || '#0E9F87' } },
+              h('span', { class: 'sec-dot', svg: CQ.Art.svg(s.icon) }), h('b', {}, s.title),
+              h('span', { class: 'muted' }, acts.length + (acts.length > 1 ? ' actividades' : ' actividad'))));
+            acts.forEach(function (a) { body.appendChild(boardRow(a)); });
+          });
+          var rest = u.activities.filter(function (a) { return a.kind !== 'simulation' && !u.sections.some(function (s) { return s.id === a.section; }); });
+          if (rest.length) {
+            body.appendChild(h('div', { class: 'kind-head' }, UI.kindBadge('homework'), h('span', { class: 'muted' }, rest.length + ' más')));
+            rest.forEach(function (a) { body.appendChild(boardRow(a)); });
+          }
+        } else {
+          KIND_ORDER.forEach(function (kind) {
+            var acts = u.activities.filter(function (a) { return a.kind === kind; });
+            if (!acts.length) return;
+            body.appendChild(h('div', { class: 'kind-head' }, UI.kindBadge(kind), h('span', { class: 'muted' }, acts.length + (acts.length > 1 ? ' actividades' : ' actividad'))));
+            acts.forEach(function (a) { body.appendChild(boardRow(a)); });
+          });
+        }
         var chevron = h('span', { class: 'chev', svg: CQ.Icons.back });
         var head = h('button', { class: 'unit-toggle' + (open ? ' open' : ''), aria: { expanded: String(open) },
           onclick: function () {
@@ -4559,6 +6551,13 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
   }
 
   function boardRow(a) {
+    if (a.kind === 'simulation') {
+      return h('div', { class: 'board-row' },
+        h('div', { class: 'tpl-icon kind-lab', svg: CQ.Icons.cube }),
+        h('div', { class: 'name' }, a.title, ' ', h('span', { class: 'muted', style: { fontWeight: 400 } }, '· modelo 3D interactivo')),
+        h('button', { class: 'btn t-btn', onclick: function () { openSimOnBoard(a); } },
+          h('span', { svg: CQ.Icons.cube, style: { display: 'flex' } }), 'Abrir'));
+    }
     return h('div', { class: 'board-row' },
       h('div', { class: 'tpl-icon kind-' + a.kind, svg: a.kind === 'extra' ? CQ.Icons.gamepad : (CQ.Icons.tpl[a.template] || '') }),
       h('div', { class: 'name' }, a.title, ' ', h('span', { class: 'muted', style: { fontWeight: 400 } }, '· ' + a.items.length + (a.template.indexOf('listen') === 0 || a.kind === 'extra' ? ' palabras' : ' preguntas'))),
@@ -4583,6 +6582,15 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
     if (!state.board.teams) Wheel.mount(boardRoot);
   }
 
+  /** Simulación 3D en la pizarra (modo profesor: botones grandes, pasos, reproducir/pausar, reiniciar). */
+  function openSimOnBoard(a) {
+    if (!CQ.Sim) { UI.toast('El visor 3D no está disponible.'); return; }
+    boardRoot.className = 'board-mode sim-board';
+    try { if (boardRoot.requestFullscreen && !document.fullscreenElement) boardRoot.requestFullscreen().catch(function () {}); } catch (e) {}
+    U.clear(boardRoot);
+    state.sim = CQ.Sim.open({ root: boardRoot, simId: a.config.simId, mode: 'board', onExit: closeBoard });
+  }
+
   /** Vídeo en la pizarra, a pantalla completa. */
   function playVideoOnBoard(v) {
     boardRoot.className = 'board-mode';
@@ -4596,6 +6604,7 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
 
   function closeBoard() {
     CQ.Music.stop();
+    if (state.sim) { var s = state.sim; state.sim = null; s.destroy(); }
     U.clear(boardRoot);
     boardRoot.className = '';
     try { if (document.fullscreenElement) document.exitFullscreen(); } catch (e) {}
@@ -5048,10 +7057,32 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
     challenge: { label: 'Challenges', sub: 'Easy · Medium · Hard', icon: CQ.Icons.trophy },
     extra: { label: 'Extra', sub: 'Fun mini-games', icon: CQ.Icons.gamepad },
     homework: { label: 'Homework', sub: 'From your teacher', icon: CQ.Icons.homework },
-    videos: { label: 'Videos', sub: 'Watch and learn', icon: CQ.Icons.video }
+    videos: { label: 'Videos', sub: 'Watch and learn', icon: CQ.Icons.video },
+    lab: { label: '3D Lab', sub: 'Explore in 3D', icon: CQ.Icons.cube }
   };
   // Homework va primero: si el profesor ha publicado deberes, es lo primero que ve el alumno.
   var SECTION_ORDER = ['homework', 'vocabulary', 'grammar', 'challenge', 'extra'];
+
+  /**
+   * Science: cada unidad define sus apartados temáticos (Cells, Senses…, Final Review).
+   * secInfo → { label, sub, icon(svg), color, custom } del apartado de esa unidad.
+   */
+  function secInfo(u, id) {
+    var s = (u && u.sections || []).filter(function (x) { return x.id === id; })[0];
+    if (s) return { label: s.title, sub: s.sub, icon: CQ.Art.svg(s.icon) || CQ.Icons.book, color: s.color || '#0E9F87', custom: true, sim: s.sim || '' };
+    return SECTIONS[id] || null;
+  }
+  function sectionOrder(u) {
+    if (u && u.sections && u.sections.length) return ['homework'].concat(u.sections.map(function (s) { return s.id; })).concat(['lab']);
+    return SECTION_ORDER.concat(['lab']);
+  }
+  /** Clase y estilo de un apartado (los de Science llevan su propio color). */
+  function secAttrs(info, id, base) {
+    if (info && info.custom) return { cls: base + ' sec-custom', style: { '--sec': info.color, '--sec-dark': shade(info.color, -45), '--sec-tint': tint(info.color) } };
+    return { cls: base + ' sec-' + id, style: {} };
+  }
+  /** Las simulaciones 3D no tienen nota: no cuentan para estrellas ni "hechas". */
+  function graded(acts) { return acts.filter(function (a) { return a.kind !== 'simulation'; }); }
   var LEVELS = { easy: 'Easy', medium: 'Medium', hard: 'Hard' };
   var LEVEL_HINT = { easy: 'A good start', medium: 'Getting harder', hard: 'For experts!' };
   var LEVEL_ORDER = ['easy', 'medium', 'hard'];
@@ -5135,6 +7166,7 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
       case 'section': return renderSection(r);
       case 'unit': return renderCourse(r);
       case 'play': return renderPlay(r);
+      case 'sim': return renderSim(r);
       case 'progress': return renderProgress(r);
       case 'shop': return renderShop(r);
       default: return renderHome(r);
@@ -5147,6 +7179,12 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
     if (isNaN(n)) return hex;
     var c = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map(function (v) { return Math.max(0, Math.min(255, v + amt)); });
     return '#' + c.map(function (v) { return ('0' + v.toString(16)).slice(-2); }).join('');
+  }
+  /** Color muy claro (14 % del color + blanco) para el fondo de las tarjetas de Science. */
+  function tint(hex) {
+    var n = parseInt(String(hex).replace('#', ''), 16);
+    if (isNaN(n)) return '#F1F5F9';
+    return '#' + [(n >> 16) & 255, (n >> 8) & 255, n & 255].map(function (v) { return ('0' + Math.round(255 - (255 - v) * 0.14).toString(16)).slice(-2); }).join('');
   }
   function unitLabel(u) { return u.number ? 'Unit ' + u.number + ' - ' + u.title : u.title; }
   function starIcon() { return h('span', { class: 'star-on star-inline', svg: CQ.Icons.star }); }
@@ -5484,18 +7522,20 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
       if (pendingHw.length) main.appendChild(homeworkBanner(pendingHw));
 
       data.units.forEach(function (u) {
-        var done = doneCount(u.activities);
+        var gacts = graded(u.activities);
+        var done = doneCount(gacts);
         main.appendChild(h('div', { class: 'unit-head' },
           h('div', { class: 'unit-art', svg: CQ.Art.svg(u.icon) }),
           h('h2', {}, unitLabel(u)),
           h('div', { class: 'unit-meta' },
-            UI.bar(done, u.activities.length),
-            h('span', {}, done + '/' + u.activities.length),
-            h('span', { class: 'stars-count' }, starIcon(), starCount(u.activities) + ' / ' + u.activities.length * MAX))));
+            UI.bar(done, gacts.length),
+            h('span', {}, done + '/' + gacts.length),
+            h('span', { class: 'stars-count' }, starIcon(), starCount(gacts) + ' / ' + gacts.length * MAX))));
         var grid = h('div', { class: 'grid grid-3' });
-        SECTION_ORDER.forEach(function (sec, i) {
+        sectionOrder(u).forEach(function (sec, i) {
           var acts = u.activities.filter(function (a) { return a.section === sec; });
-          if (acts.length) grid.appendChild(sectionCard(c.courseId, u, sec, acts, i));
+          if (!acts.length) return;
+          grid.appendChild(sec === 'lab' ? labCard(c.courseId, u, acts, i) : sectionCard(c.courseId, u, sec, acts, i));
         });
         if (u.videos && u.videos.length) grid.appendChild(videosCard(c.courseId, u));
         main.appendChild(grid);
@@ -5505,11 +7545,12 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
   }
 
   function sectionCard(courseId, u, sec, acts, i) {
-    var S = SECTIONS[sec];
+    var S = secInfo(u, sec);
+    var A = secAttrs(S, sec, 'tile tile-section with-badge');
     var done = doneCount(acts);
     var todo = sec === 'homework' ? acts.length - done : 0;
     return h('button', {
-      class: 'tile tile-section with-badge sec-' + sec, style: { animationDelay: (i * 70) + 'ms' },
+      class: A.cls, style: Object.assign({ animationDelay: (i * 70) + 'ms' }, A.style),
       aria: { label: S.label + '. ' + done + ' of ' + acts.length + ' done.' + (todo ? ' ' + todo + ' to do!' : '') },
       onclick: function () { CQ.Nav.go({ name: 'section', courseId: courseId, unitId: u.unitId, section: sec }); }
     },
@@ -5522,6 +7563,54 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
         h('div', { class: 'sec-row' },
           h('span', { class: 'stars-count' }, starIcon(), starCount(acts) + ' / ' + acts.length * MAX),
           h('span', { class: 'play' }, 'Open', h('span', { svg: CQ.Icons.play, style: { display: 'flex' } })))));
+  }
+
+  /** Tarjeta "3D Lab" (simulaciones 3D): estilo de laboratorio, sin estrellas. */
+  function labCard(courseId, u, acts, i) {
+    var S = SECTIONS.lab;
+    var n = acts.length;
+    return h('button', {
+      class: 'tile tile-section sec-lab', style: { animationDelay: (i * 70) + 'ms' },
+      aria: { label: S.label + '. ' + n + (n > 1 ? ' simulations' : ' simulation') + '.' },
+      onclick: function () { CQ.Nav.go({ name: 'section', courseId: courseId, unitId: u.unitId, section: 'lab' }); }
+    },
+      h('div', { class: 'sec-band' },
+        h('span', { class: 'sec-icon', svg: S.icon }),
+        h('div', {}, h('h3', {}, S.label), h('span', { class: 'sec-sub' }, S.sub))),
+      h('div', { class: 'sec-body' },
+        h('div', { class: 'sec-row' }, h('span', { class: 'muted' }, n + (n > 1 ? ' simulations' : ' simulation'))),
+        h('div', { class: 'sec-row' }, h('span', {}, ''),
+          h('span', { class: 'play' }, 'Explore', h('span', { svg: CQ.Icons.play, style: { display: 'flex' } })))));
+  }
+
+  /** Lista de simulaciones 3D de una unidad. */
+  function renderLab(main, data, u, r) {
+    U.clear(main);
+    main.appendChild(hero({
+      cls: 'sec-lab', art: u.icon,
+      back: backButton(data.course.subjectName, { name: 'course', courseId: r.courseId }),
+      kicker: unitLabel(u), title: '3D Lab', sub: 'Look, turn, zoom and build!'
+    }));
+    var grid = h('div', { class: 'grid' });
+    u.activities.filter(function (a) { return a.section === 'lab'; }).forEach(function (a, i) {
+      grid.appendChild(h('button', { class: 'tile sim-tile', style: { animationDelay: (i * 60) + 'ms' },
+        aria: { label: 'Open the simulation: ' + a.title },
+        onclick: function () { CQ.Nav.go({ name: 'sim', courseId: r.courseId, unitId: u.unitId, section: 'lab', simId: a.simId, title: a.title }); } },
+        h('div', { class: 'sim-thumb', svg: (CQ.Sim && CQ.Sim.thumb(a.simId)) || CQ.Icons.cube }),
+        h('h3', {}, a.title),
+        h('span', { class: 'play' }, 'Explore', h('span', { svg: CQ.Icons.play, style: { display: 'flex' } }))));
+    });
+    main.appendChild(grid);
+  }
+
+  /** Simulación 3D a pantalla completa (modo alumno: explorar y construir por su cuenta). */
+  function renderSim(r) {
+    U.clear(app);
+    if (!CQ.Sim) { showError(page(), { code: 'NOT_FOUND' }); return; }
+    state.runner = CQ.Sim.open({
+      root: app, simId: r.simId, mode: 'student',
+      onExit: function () { state.runner = null; CQ.Nav.go({ name: 'section', courseId: r.courseId, unitId: r.unitId, section: 'lab' }); }
+    });
   }
 
   /** Tarjeta "Videos" (rosa pastel) de una unidad. */
@@ -5577,18 +7666,52 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
     main.appendChild(UI.loading());
     loadCourse(r.courseId).then(function (data) {
       var u = data.units.filter(function (x) { return x.unitId === r.unitId; })[0];
-      var S = SECTIONS[r.section];
+      var S = u && secInfo(u, r.section);
       if (!u || !S) { showError(main, { code: 'NOT_FOUND' }); return; }
       if (r.section === 'videos') { renderVideos(main, data, u, r); return; }
+      if (r.section === 'lab') { renderLab(main, data, u, r); return; }
       var acts = u.activities.filter(function (a) { return a.section === r.section; });
       U.clear(main);
-      main.appendChild(hero({
-        cls: 'sec-' + r.section, art: u.icon,
+      var A = secAttrs(S, r.section, 'hero-sec');
+      var hr = hero({
+        cls: A.cls, art: u.icon,
         back: backButton(data.course.subjectName, { name: 'course', courseId: r.courseId }),
         kicker: unitLabel(u), title: S.label,
         sub: doneCount(acts) + ' of ' + acts.length + ' activities done'
-      }));
-      if (r.section === 'challenge') {
+      });
+      Object.keys(A.style).forEach(function (k) { hr.style.setProperty(k, A.style[k]); });
+      if (S.custom) {
+        // El dibujo del apartado (célula, ojo, cerebro…) en lugar del de la unidad
+        var art = hr.querySelector('.hero-art');
+        if (art) art.innerHTML = S.icon;
+      }
+      main.appendChild(hr);
+      if (S.custom) {
+        // Science: un módulo de aprendizaje → Learn (descubrir) · Practise (entender) · Check (aplicar) · Games
+        var STAGES = [['learn', 'Learn', 'Look, listen and discover', ['review']],
+          ['practise', 'Practise', 'Understand and connect', ['game', 'practice']],
+          ['check', 'Check', 'Show what you know', ['challenge']],
+          ['games', 'Games', 'Play with the words', ['extra']]];
+        STAGES.forEach(function (st) {
+          var list = acts.filter(function (a) { return st[3].indexOf(a.kind) >= 0; });
+          if (!list.length) return;
+          main.appendChild(h('div', { class: 'level-head stage-head' },
+            h('span', { class: 'stage-chip st-' + st[0] }, st[1]), h('span', { class: 'muted' }, st[2])));
+          var g = h('div', { class: 'grid' });
+          list.forEach(function (a, i) { g.appendChild(activityTile(r, a, i, u)); });
+          main.appendChild(g);
+        });
+        // Si el apartado tiene una simulación 3D relacionada: acceso directo al laboratorio
+        var sim = S.sim && u.activities.filter(function (a) { return a.section === 'lab' && a.simId === S.sim; })[0];
+        if (sim) {
+          main.insertBefore(h('button', { class: 'lab-banner', onclick: function () {
+            CQ.Nav.go({ name: 'sim', courseId: r.courseId, unitId: u.unitId, section: 'lab', simId: sim.simId, title: sim.title });
+          } },
+            h('span', { class: 'lab-banner-icon', svg: CQ.Icons.cube }),
+            h('span', { class: 'grow' }, h('b', {}, 'See it in 3D! '), sim.title),
+            h('span', { class: 'play' }, 'Explore', h('span', { svg: CQ.Icons.play, style: { display: 'flex' } }))), hr.nextSibling);
+        }
+      } else if (r.section === 'challenge') {
         LEVEL_ORDER.forEach(function (lv) {
           var list = acts.filter(function (a) { return a.level === lv; });
           if (!list.length) return;
@@ -5607,12 +7730,13 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
     }).catch(function (err) { showError(main, err, function () { renderSection(r); }); });
   }
 
-  function activityTile(r, a, i) {
+  function activityTile(r, a, i, u) {
     var p = a.progress;
     var label = a.locked ? 'Locked' : (p ? 'Play again' : 'Play');
+    var A = secAttrs(u ? secInfo(u, a.section) : null, a.section, 'tile tile-act' + (a.locked ? ' locked' : ''));
     return h('button', {
-      class: 'tile tile-act sec-' + a.section + (a.locked ? ' locked' : ''),
-      style: { animationDelay: ((i || 0) * 50) + 'ms' },
+      class: A.cls,
+      style: Object.assign({ animationDelay: ((i || 0) * 50) + 'ms' }, A.style),
       aria: { label: a.title + '. ' + label + (p ? '. ' + p.bestStars + ' of 5 stars' : '') },
       onclick: function () {
         if (a.locked) { UI.toast(MSG.LOCKED_ACTIVITY); return; }
@@ -5712,7 +7836,9 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
       correct = local.local.correct;
       stars = Grading.starsFor(total ? Math.round(correct / total * 100) : 0);
     }
-    var S = SECTIONS[r.section] || { label: 'the unit' };
+    var cu = state.courses[r.courseId];
+    var uu = cu && cu.units.filter(function (x) { return x.unitId === r.unitId; })[0];
+    var S = (uu ? secInfo(uu, r.section) : SECTIONS[r.section]) || { label: 'the unit' };
     var box = h('section', { class: 'results card', aria: { live: 'polite' } },
       UI.stars(stars, MAX, 'lg'),
       h('h1', {}, TITLES[stars] || TITLES[0]),
@@ -5778,11 +7904,11 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
     loadCourse(r.courseId, true).then(function (data) {
       U.clear(main);
       var acts = [];
-      data.units.forEach(function (u) { acts = acts.concat(u.activities); });
+      data.units.forEach(function (u) { acts = acts.concat(graded(u.activities)); });
       var done = doneCount(acts);
       var stars = starCount(acts);
       var perfect = acts.filter(function (a) { return a.progress && a.progress.bestStars === MAX; }).length;
-      var unitDone = data.units.some(function (u) { return u.activities.every(function (a) { return a.progress && a.progress.completed; }); });
+      var unitDone = data.units.some(function (u) { return graded(u.activities).every(function (a) { return a.progress && a.progress.completed; }); });
       var champ = acts.some(function (a) { return a.section === 'challenge' && a.progress && a.progress.bestStars >= 4; });
 
       main.appendChild(hero({
@@ -5814,14 +7940,17 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
       main.appendChild(mg);
 
       data.units.forEach(function (u) {
-        var ud = doneCount(u.activities);
+        var ga = graded(u.activities);
+        var ud = doneCount(ga);
         var card = h('div', { class: 'card progress-card' },
           h('div', { class: 'progress-card-head' },
-            h('h3', {}, unitLabel(u)), UI.bar(ud, u.activities.length), h('span', { class: 'muted' }, ud + '/' + u.activities.length)));
-        SECTION_ORDER.forEach(function (sec) {
-          var list = u.activities.filter(function (a) { return a.section === sec; });
+            h('h3', {}, unitLabel(u)), UI.bar(ud, ga.length), h('span', { class: 'muted' }, ud + '/' + ga.length)));
+        sectionOrder(u).forEach(function (sec) {
+          var list = graded(u.activities).filter(function (a) { return a.section === sec; });
           if (!list.length) return;
-          card.appendChild(h('div', { class: 'progress-sec sec-' + sec }, h('span', { svg: SECTIONS[sec].icon, style: { display: 'flex', width: '22px' } }), SECTIONS[sec].label));
+          var SI = secInfo(u, sec);
+          var A = secAttrs(SI, sec, 'progress-sec');
+          card.appendChild(h('div', { class: A.cls, style: A.style }, h('span', { svg: SI.icon, style: { display: 'flex', width: '22px' } }), SI.label));
           list.forEach(function (a) {
             card.appendChild(h('div', { class: 'list-row' },
               h('span', { class: 'name' }, a.title),
