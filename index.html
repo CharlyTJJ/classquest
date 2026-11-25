@@ -1240,6 +1240,28 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
 .kind-head.sec-head { border-left: 6px solid var(--sec); padding-left: 10px; }
 .sec-dot { width: 34px; height: 34px; display: inline-flex; }
 .sec-dot svg { width: 100%; height: 100%; }
+
+/* Pizarra: un bloque de color por apartado (Science) o por tipo de actividad (English) */
+.bsec { margin: 14px 0 6px; border-radius: 20px; overflow: hidden; border: 2px solid var(--sec-line, #E2E8F0);
+  background: var(--sec-tint, #F8FAFC); box-shadow: 0 4px 0 var(--sec-line, #E2E8F0); }
+.bsec-head { display: flex; align-items: center; gap: 14px; width: 100%; padding: 12px 16px; border: 0; text-align: left; color: #fff;
+  background: linear-gradient(120deg, var(--sec, #0E9F87), var(--sec-dark, #065F46)); cursor: pointer; }
+.bsec-icon { width: 46px; height: 46px; flex: none; border-radius: 14px; background: #fff; padding: 3px; box-shadow: 0 2px 0 rgba(0, 0, 0, .15); display: grid; place-items: center; }
+.bsec-icon svg { width: 100%; height: 100%; }
+.bsec-icon.glyph { color: var(--sec, #0E9F87); padding: 9px; }
+.bsec-titles { flex: 1; display: flex; flex-direction: column; min-width: 0; line-height: 1.2; }
+.bsec-titles b { font-size: 20px; text-shadow: 0 1px 0 rgba(0, 0, 0, .15); }
+.bsec-titles small { font-size: 14px; font-weight: 600; opacity: .9; }
+.bsec-count { flex: none; padding: 5px 12px; border-radius: 999px; background: rgba(255, 255, 255, .22); font-weight: 700; font-size: 14px; }
+.bsec-chev { width: 26px; height: 26px; flex: none; transform: rotate(-90deg); transition: transform .2s; opacity: .9; }
+.bsec-chev svg { width: 100%; height: 100%; }
+.bsec-head.open .bsec-chev { transform: rotate(90deg); }
+.bsec-body { padding: 10px 12px 12px; display: flex; flex-direction: column; gap: 8px; }
+.bsec-body .board-row { margin: 0; border-color: var(--sec-line, #E2E8F0); }
+.bsec-lab { border-color: #1E3A5F; background: #EEF6FF; box-shadow: 0 4px 0 #0B1B33; }
+.bsec-lab .bsec-head { background: radial-gradient(circle at 15% 20%, #1E4E7E, #0B1B33 75%); }
+.bsec-lab .bsec-icon { background: rgba(56, 189, 248, .18); color: #7DD3FC; box-shadow: none; }
+.bsec-lab .bsec-body .board-row { border-color: #BFDBFE; }
 </style>
 
 </head>
@@ -6417,6 +6439,60 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
   var KIND_HEAD = { review: 'Review', game: 'Games', practice: 'Practice', challenge: 'Challenges', extra: 'Extra', homework: 'Homework' };
   var LEVEL_LABEL = { easy: 'Easy', medium: 'Medium', hard: 'Hard' };
 
+  /** "1 activity" / "5 activities" (la pizarra va en inglés). */
+  function plural(n, one, many) { return n + ' ' + (n === 1 ? one : (many || one + 's')); }
+
+  /** Color de cada tipo de actividad (bloques de English en la pizarra). */
+  var KIND_STYLE = {
+    review: { color: '#10B981', sub: 'Listen and repeat', icon: CQ.Icons.tpl.listen_learn },
+    game: { color: '#F97316', sub: 'Play and learn the words', icon: CQ.Icons.gamepad },
+    practice: { color: '#3B82F6', sub: 'Practise the grammar', icon: CQ.Icons.puzzle },
+    challenge: { color: '#F59E0B', sub: 'Easy · Medium · Hard', icon: CQ.Icons.trophy },
+    extra: { color: '#8B5CF6', sub: 'Fun mini-games', icon: CQ.Icons.gamepad },
+    homework: { color: '#0F766E', sub: 'Check it together in class', icon: CQ.Icons.homework }
+  };
+
+  /** Color muy claro para el fondo de un bloque. */
+  function tintOf(hex, k) {
+    var n = parseInt(String(hex).replace('#', ''), 16);
+    if (isNaN(n)) return '#F8FAFC';
+    return '#' + [(n >> 16) & 255, (n >> 8) & 255, n & 255].map(function (v) { return ('0' + Math.round(255 - (255 - v) * k).toString(16)).slice(-2); }).join('');
+  }
+  function darken(hex, amt) {
+    var n = parseInt(String(hex).replace('#', ''), 16);
+    if (isNaN(n)) return hex;
+    return '#' + [(n >> 16) & 255, (n >> 8) & 255, n & 255].map(function (v) { return ('0' + Math.max(0, v - amt).toString(16)).slice(-2); }).join('');
+  }
+
+  /**
+   * Bloque de color de la pizarra: cabecera con el color del apartado (icono, título, subtítulo y
+   * número de actividades) y, debajo, sus actividades sobre un fondo suave del mismo color.
+   * Se puede plegar; la pizarra recuerda qué bloques dejaste plegados.
+   */
+  function secBlock(unitId, id, o, rows, count) {
+    var key = unitId + '::' + id;
+    var closed = !!(CQ.Store.local.get('cq_board_closed') || {})[key];
+    var color = o.color || '#0E9F87';
+    var bodyEl = h('div', { class: 'bsec-body', hidden: closed }, rows);
+    var headEl = h('button', { class: 'bsec-head' + (closed ? '' : ' open'), aria: { expanded: String(!closed) },
+      onclick: function () {
+        var nowOpen = bodyEl.hidden;
+        bodyEl.hidden = !nowOpen;
+        headEl.classList.toggle('open', nowOpen);
+        headEl.setAttribute('aria-expanded', String(nowOpen));
+        var s = CQ.Store.local.get('cq_board_closed') || {};
+        if (nowOpen) delete s[key]; else s[key] = true;
+        CQ.Store.local.set('cq_board_closed', s);
+      } },
+      h('span', { class: 'bsec-icon' + (o.icon || o.lab ? ' glyph' : ''), svg: o.iconSvg || '' }),
+      h('span', { class: 'bsec-titles' }, h('b', {}, o.title), o.sub ? h('small', {}, o.sub) : null),
+      h('span', { class: 'bsec-count' }, count),
+      h('span', { class: 'bsec-chev', svg: CQ.Icons.back }));
+    return h('section', { class: 'bsec' + (o.lab ? ' bsec-lab' : ''),
+      style: o.lab ? {} : { '--sec': color, '--sec-dark': darken(color, 55), '--sec-tint': tintOf(color, 0.09), '--sec-line': tintOf(color, 0.3) } },
+      headEl, bodyEl);
+  }
+
   function unitOpen(id) { return !!(CQ.Store.local.get('cq_board_open') || {})[id]; }
   function setUnitOpen(id, v) {
     var s = CQ.Store.local.get('cq_board_open') || {};
@@ -6435,7 +6511,7 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
       });
     });
     if (!isTeacherMode()) {
-      ov.courses.forEach(function (c) { out.push({ value: '|' + c.courseId, group: '', courseId: c.courseId, label: c.title + ' (todos los grupos)', whole: true }); });
+      ov.courses.forEach(function (c) { out.push({ value: '|' + c.courseId, group: '', courseId: c.courseId, label: c.title + ' (all groups)', whole: true }); });
     }
     return out;
   }
@@ -6460,17 +6536,18 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
       var targets = boardTargets(ov);
       var current = (state.board.group || '') + '|' + state.board.courseId;
       var opt = function (t) { return h('option', { value: t.value, selected: t.value === current }, t.label); };
-      var sel = h('select', { class: 't-select', style: { width: 'auto' }, aria: { label: 'Grupo y clase' } },
-        h('optgroup', { label: 'Por grupo' }, targets.filter(function (t) { return !t.whole; }).map(opt)),
-        isTeacherMode() ? null : h('optgroup', { label: 'Curso completo' }, targets.filter(function (t) { return t.whole; }).map(opt)));
+      // La pizarra se proyecta en clase: todo su texto va en inglés.
+      var sel = h('select', { class: 't-select', style: { width: 'auto' }, aria: { label: 'Group and class' } },
+        h('optgroup', { label: 'By group' }, targets.filter(function (t) { return !t.whole; }).map(opt)),
+        isTeacherMode() ? null : h('optgroup', { label: 'Whole course' }, targets.filter(function (t) { return t.whole; }).map(opt)));
       sel.addEventListener('change', function () {
         var t = targets.filter(function (x) { return x.value === sel.value; })[0];
         state.board.courseId = t.courseId; state.board.group = t.group; state.board.data = null;
         CQ.Store.local.set('cq_board_target', t.value);
         shell();
       });
-      var teams = h('select', { class: 't-select', style: { width: 'auto' }, aria: { label: 'Equipos' } },
-        [[0, 'Sin equipos (con ruleta)'], [2, '2 equipos'], [3, '3 equipos'], [4, '4 equipos']].map(function (o) {
+      var teams = h('select', { class: 't-select', style: { width: 'auto' }, aria: { label: 'Teams' } },
+        [[0, 'No teams (with the wheel)'], [2, '2 teams'], [3, '3 teams'], [4, '4 teams']].map(function (o) {
           return h('option', { value: o[0], selected: state.board.teams === o[0] }, o[1]);
         }));
       teams.addEventListener('change', function () { state.board.teams = parseInt(teams.value, 10); });
@@ -6481,47 +6558,46 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
         var open = unitOpen(u.unitId);
         var body = h('div', { class: 'unit-body', hidden: !open });
         if (u.videos && u.videos.length) {
-          body.appendChild(h('div', { class: 'kind-head' }, h('span', { class: 'badge badge-videos' }, 'Videos'),
-            h('span', { class: 'muted' }, u.videos.length + (u.videos.length > 1 ? ' vídeos' : ' vídeo'))));
-          u.videos.forEach(function (v) {
+          var vrows = u.videos.map(function (v) {
             var quiz = u.activities.filter(function (a) { return a.template === 'video_quiz' && a.config && a.config.videoId === v.videoId; })[0];
-            body.appendChild(h('div', { class: 'board-row' },
+            return h('div', { class: 'board-row' },
               h('div', { class: 'tpl-icon kind-videos', svg: CQ.Icons.video }),
-              h('div', { class: 'name' }, v.title, quiz ? h('span', { class: 'muted', style: { fontWeight: 400 } }, ' · 🎯 ' + quiz.items.length + ' preguntas dentro') : null),
+              h('div', { class: 'name' }, v.title, quiz ? h('span', { class: 'muted', style: { fontWeight: 400 } }, ' · 🎯 ' + quiz.items.length + ' questions inside') : null),
               h('button', { class: 'btn btn-ghost t-btn', onclick: function () { playVideoOnBoard(v); } },
-                h('span', { svg: CQ.Icons.play, style: { display: 'flex' } }), 'Ver'),
+                h('span', { svg: CQ.Icons.play, style: { display: 'flex' } }), 'Watch'),
               quiz ? h('button', { class: 'btn t-btn', onclick: function () { playOnBoard(quiz); } },
-                h('span', { svg: CQ.Icons.play, style: { display: 'flex' } }), 'Con actividades') : null));
+                h('span', { svg: CQ.Icons.play, style: { display: 'flex' } }), 'With activities') : null);
           });
+          body.appendChild(secBlock(u.unitId, 'videos', { title: 'Videos', sub: 'Watch, listen and sing', iconSvg: CQ.Icons.video, color: '#EC4899', icon: true },
+            vrows, plural(u.videos.length, 'video')));
         }
         // 3D Lab (simulaciones) primero: es el apoyo visual para explicar
         var sims = u.activities.filter(function (a) { return a.kind === 'simulation'; });
         if (sims.length) {
-          body.appendChild(h('div', { class: 'kind-head' }, h('span', { class: 'badge badge-lab' }, '3D Lab'),
-            h('span', { class: 'muted' }, sims.length + (sims.length > 1 ? ' simulaciones' : ' simulación'))));
-          sims.forEach(function (a) { body.appendChild(boardRow(a)); });
+          body.appendChild(secBlock(u.unitId, 'lab', { title: '3D Lab', sub: 'Explore in 3D', iconSvg: CQ.Icons.cube, lab: true, icon: true },
+            sims.map(boardRow), plural(sims.length, 'simulation')));
         }
         if (u.sections && u.sections.length) {
-          // Science: por apartados temáticos (Cells, Senses…), cada uno con sus actividades en orden
+          // Science: un bloque de color por apartado temático (Cells, Senses…), con sus actividades en orden
           u.sections.forEach(function (s) {
             var acts = u.activities.filter(function (a) { return a.section === s.id && a.kind !== 'simulation'; });
             if (!acts.length) return;
-            body.appendChild(h('div', { class: 'kind-head sec-head', style: { '--sec': s.color || '#0E9F87' } },
-              h('span', { class: 'sec-dot', svg: CQ.Art.svg(s.icon) }), h('b', {}, s.title),
-              h('span', { class: 'muted' }, acts.length + (acts.length > 1 ? ' actividades' : ' actividad'))));
-            acts.forEach(function (a) { body.appendChild(boardRow(a)); });
+            body.appendChild(secBlock(u.unitId, s.id, { title: s.title, sub: s.sub, iconSvg: CQ.Art.svg(s.icon), color: s.color || '#0E9F87' },
+              acts.map(boardRow), plural(acts.length, 'activity', 'activities')));
           });
           var rest = u.activities.filter(function (a) { return a.kind !== 'simulation' && !u.sections.some(function (s) { return s.id === a.section; }); });
           if (rest.length) {
-            body.appendChild(h('div', { class: 'kind-head' }, UI.kindBadge('homework'), h('span', { class: 'muted' }, rest.length + ' más')));
-            rest.forEach(function (a) { body.appendChild(boardRow(a)); });
+            body.appendChild(secBlock(u.unitId, 'homework', { title: 'Homework', sub: 'Check it together in class', iconSvg: CQ.Icons.homework, color: '#0F766E', icon: true },
+              rest.map(boardRow), plural(rest.length, 'activity', 'activities')));
           }
         } else {
+          // English: un bloque de color por tipo (Review, Games, Practice, Challenges, Extra, Homework)
           KIND_ORDER.forEach(function (kind) {
             var acts = u.activities.filter(function (a) { return a.kind === kind; });
             if (!acts.length) return;
-            body.appendChild(h('div', { class: 'kind-head' }, UI.kindBadge(kind), h('span', { class: 'muted' }, acts.length + (acts.length > 1 ? ' actividades' : ' actividad'))));
-            acts.forEach(function (a) { body.appendChild(boardRow(a)); });
+            var K = KIND_STYLE[kind];
+            body.appendChild(secBlock(u.unitId, 'k-' + kind, { title: KIND_HEAD[kind], sub: K.sub, iconSvg: K.icon, color: K.color, icon: true },
+              acts.map(boardRow), plural(acts.length, 'activity', 'activities')));
           });
         }
         var chevron = h('span', { class: 'chev', svg: CQ.Icons.back });
@@ -6535,17 +6611,17 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
           } },
           h('span', { class: 'unit-toggle-art', svg: CQ.Art.svg(u.icon) }),
           h('span', { class: 'unit-toggle-title' }, u.number ? 'Unit ' + u.number + ' - ' + u.title : u.title),
-          h('span', { class: 'muted' }, u.activities.length + ' actividades'),
+          h('span', { class: 'muted' }, plural(u.activities.length, 'activity', 'activities')),
           chevron);
         list.appendChild(h('div', { class: 'unit-block' }, head, body));
       });
-      if (!d.units.length) list.appendChild(h('p', { class: 'empty' }, 'Este curso todavía no tiene actividades.'));
+      if (!d.units.length) list.appendChild(h('p', { class: 'empty' }, 'There are no activities in this course yet.'));
 
       var rewardsBtn = h('button', { class: 'btn btn-buy t-btn', onclick: openRewards },
         h('span', { svg: CQ.Icons.superstar, style: { display: 'flex', width: '24px' } }), 'Class rewards');
 
       main.appendChild(h('div', { class: 'card t-card' },
-        h('div', { class: 't-toolbar' }, h('h2', { class: 'grow', style: { margin: 0 } }, 'Modo pizarra'), rewardsBtn, sel, teams),
+        h('div', { class: 't-toolbar' }, h('h2', { class: 'grow', style: { margin: 0 } }, 'Board mode'), rewardsBtn, sel, teams),
         list));
     }).catch(function (e) { U.clear(main).appendChild(h('p', { class: 'empty' }, errMsg(e))); });
   }
@@ -6554,18 +6630,19 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
     if (a.kind === 'simulation') {
       return h('div', { class: 'board-row' },
         h('div', { class: 'tpl-icon kind-lab', svg: CQ.Icons.cube }),
-        h('div', { class: 'name' }, a.title, ' ', h('span', { class: 'muted', style: { fontWeight: 400 } }, '· modelo 3D interactivo')),
+        h('div', { class: 'name' }, a.title, ' ', h('span', { class: 'muted', style: { fontWeight: 400 } }, '· interactive 3D model')),
         h('button', { class: 'btn t-btn', onclick: function () { openSimOnBoard(a); } },
-          h('span', { svg: CQ.Icons.cube, style: { display: 'flex' } }), 'Abrir'));
+          h('span', { svg: CQ.Icons.cube, style: { display: 'flex' } }), 'Open'));
     }
     return h('div', { class: 'board-row' },
       h('div', { class: 'tpl-icon kind-' + a.kind, svg: a.kind === 'extra' ? CQ.Icons.gamepad : (CQ.Icons.tpl[a.template] || '') }),
-      h('div', { class: 'name' }, a.title, ' ', h('span', { class: 'muted', style: { fontWeight: 400 } }, '· ' + a.items.length + (a.template.indexOf('listen') === 0 || a.kind === 'extra' ? ' palabras' : ' preguntas'))),
+      h('div', { class: 'name' }, a.title, ' ', h('span', { class: 'muted', style: { fontWeight: 400 } }, '· ' +
+        (a.template.indexOf('listen') === 0 || a.kind === 'extra' ? plural(a.items.length, 'word') : plural(a.items.length, 'question')))),
       a.status !== 'published' ? h('span', { class: 'badge badge-draft' }, a.status) : null,
       a.kind === 'challenge' && a.level ? h('span', { class: 'level-chip small lv-' + a.level }, LEVEL_LABEL[a.level] || a.level) : null,
       UI.kindBadge(a.kind),
       h('button', { class: 'btn t-btn', onclick: function () { playOnBoard(a); } },
-        h('span', { svg: CQ.Icons.play, style: { display: 'flex' } }), 'Jugar'));
+        h('span', { svg: CQ.Icons.play, style: { display: 'flex' } }), 'Play'));
   }
 
   function playOnBoard(activity) {
@@ -6584,7 +6661,7 @@ table.t-table { width: 100%; border-collapse: collapse; font-size: 15px; }
 
   /** Simulación 3D en la pizarra (modo profesor: botones grandes, pasos, reproducir/pausar, reiniciar). */
   function openSimOnBoard(a) {
-    if (!CQ.Sim) { UI.toast('El visor 3D no está disponible.'); return; }
+    if (!CQ.Sim) { UI.toast('The 3D viewer is not available.'); return; }
     boardRoot.className = 'board-mode sim-board';
     try { if (boardRoot.requestFullscreen && !document.fullscreenElement) boardRoot.requestFullscreen().catch(function () {}); } catch (e) {}
     U.clear(boardRoot);
