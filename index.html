@@ -201,6 +201,8 @@ button.tile:active { transform: translateY(0) scale(.99); }
 .media { display: flex; justify-content: center; align-items: center; gap: 10px; }
 .media .art { width: clamp(150px, 28vw, 230px); height: clamp(150px, 28vw, 230px); background: var(--surface); border-radius: 28px; box-shadow: var(--shadow); padding: 14px; }
 .media.duo .art:first-child { width: clamp(100px, 18vw, 150px); height: clamp(100px, 18vw, 150px); background: #FFF6E5; }
+.media.duo-mark .art:first-child { width: clamp(150px, 28vw, 230px); height: clamp(150px, 28vw, 230px); background: var(--surface); }
+.media.duo-mark .art.mark { width: clamp(70px, 11vw, 100px); height: clamp(70px, 11vw, 100px); background: transparent; box-shadow: none; padding: 0; align-self: flex-end; }
 .media img.art { object-fit: contain; }
 .prompt { font-size: clamp(24px, 3.4vw, 34px); font-weight: 700; text-align: center; }
 .blank { display: inline-block; min-width: 3.2em; border-bottom: 4px dashed var(--brand); color: var(--brand); padding: 0 6px; margin: 0 4px; }
@@ -614,6 +616,69 @@ button.tile:active { box-shadow: 0 2px 0 #D3D9EE; transform: translateY(3px); }
 .super-cell .t-mini { min-width: 30px; padding-left: 0; padding-right: 0; font-size: 16px; line-height: 1; }
 .super-net { min-width: 24px; text-align: center; color: #7E22CE; }
 .super-net.neg { color: #DC2626; }
+/* ── Homework (verde azulado) ── */
+.sec-homework { --c1: #2DD4BF; --c2: #0F766E; --tint: #CCFBF1; --ink-sec: #115E59; }
+.hero.sec-homework { background: linear-gradient(135deg, var(--c1), var(--c2)); }
+.badge-homework { background: #CCFBF1; color: #115E59; }
+.kind-homework { background: linear-gradient(135deg, #2DD4BF, #0F766E); }
+.tile-section.sec-homework { overflow: visible; }
+.tile-section.sec-homework .sec-band { border-top-left-radius: var(--radius); border-top-right-radius: var(--radius); }
+.hw-todo { position: absolute; top: -12px; right: 12px; z-index: 2; background: #EF4444; color: #fff; font-weight: 800; font-size: 14px;
+  padding: 5px 12px; border-radius: 999px; box-shadow: 0 3px 0 #B91C1C; animation: hwPulse 1.6s ease-in-out infinite; }
+@keyframes hwPulse { 50% { transform: scale(1.08); } }
+.hw-new { background: #FEF3C7; color: #92400E; font-weight: 800; font-size: 13px; padding: 4px 10px; border-radius: 999px; }
+.hw-done { background: #DCFCE7; color: #166534; font-weight: 800; font-size: 13px; padding: 4px 10px; border-radius: 999px; }
+.hw-banner { border: 3px solid #5EEAD4; background: linear-gradient(135deg, #F0FDFA, #CCFBF1); margin-bottom: 20px; padding: 18px 20px; }
+.hw-banner-head { display: flex; align-items: center; gap: 14px; }
+.hw-banner-head h2 { margin: 0; color: #115E59; }
+.hw-banner-head p { margin: 2px 0 0; font-weight: 600; color: #134E4A; }
+.hw-banner-icon { width: 52px; height: 52px; border-radius: 16px; background: linear-gradient(135deg, #2DD4BF, #0F766E); color: #fff; display: grid; place-items: center; flex: none; }
+.hw-banner-icon svg { width: 30px; height: 30px; }
+.hw-list { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+.hw-item { display: inline-flex; align-items: center; gap: 8px; border: 0; border-radius: 14px; padding: 10px 16px; background: #0D9488; color: #fff;
+  font-weight: 700; font-size: 16px; box-shadow: 0 4px 0 #115E59; }
+.hw-item svg { width: 18px; height: 18px; }
+
+/* ── Vídeos (rosa pastel) ── */
+.sec-videos { --c1: #FBCFE8; --c2: #F9A8D4; --tint: #FDF2F8; --ink-sec: #9D174D; }
+.sec-videos .sec-band, .hero.sec-videos { background: linear-gradient(135deg, #FCE7F3, #F9A8D4); color: #831843; }
+.sec-videos .sec-band h3 { color: #831843; text-shadow: none; }
+.sec-videos .sec-icon { background: rgba(255, 255, 255, .6); color: #DB2777; }
+.sec-videos .play { color: #BE185D; }
+.hero.sec-videos h1, .hero.sec-videos .sub, .hero.sec-videos .hero-kicker { color: #831843; text-shadow: none; }
+.hero.sec-videos .back-btn { color: #831843; background: rgba(255, 255, 255, .55); border-color: rgba(131, 24, 67, .2); }
+.badge-videos { background: #FCE7F3; color: #9D174D; }
+.kind-videos { background: linear-gradient(135deg, #F9A8D4, #EC4899); }
+.video-grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+.video-tile { padding: 0; overflow: hidden; text-align: left; border: 3px solid #FBCFE8; }
+.video-tile h3 { padding: 12px 16px 16px; font-size: 18px; }
+.video-thumb { position: relative; aspect-ratio: 16 / 9; background: #FCE7F3; }
+.video-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.video-play { position: absolute; left: 50%; top: 50%; width: 64px; height: 64px; margin: -32px 0 0 -32px; border-radius: 50%;
+  background: rgba(236, 72, 153, .92); color: #fff; display: grid; place-items: center; box-shadow: 0 6px 18px rgba(0, 0, 0, .3); }
+.video-play svg { width: 30px; height: 30px; margin-left: 4px; }
+.video-overlay { position: fixed; inset: 0; z-index: 1000; background: rgba(20, 10, 30, .85); display: grid; place-items: center; padding: 16px; }
+.video-box { width: min(1200px, 100%); background: #FDF2F8; border-radius: 22px; overflow: hidden; box-shadow: 0 20px 60px rgba(0, 0, 0, .5); }
+.video-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 14px; color: #831843; }
+.video-wrap { position: relative; aspect-ratio: 16 / 9; max-height: calc(100vh - 110px); background: #000; }
+.video-frame { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+/* ── Panel: pestañas de grupo y deberes ── */
+.g-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 12px; }
+.g-chip { border: 2px solid var(--card-line); background: #fff; border-radius: 999px; padding: 6px 14px; font-weight: 800; font-size: 15px; display: inline-flex; align-items: center; gap: 6px; }
+.g-chip.on { background: var(--brand); border-color: var(--brand); color: #fff; }
+.g-chip.legacy { border-style: dashed; border-color: #F59E0B; }
+.g-count { background: rgba(0, 0, 0, .08); border-radius: 999px; padding: 0 8px; font-size: 13px; }
+.g-chip.on .g-count { background: rgba(255, 255, 255, .25); }
+.t-select-sm { padding: 4px 8px; min-height: 0; font-size: 14px; width: auto; min-width: 84px; }
+.t-select-sm.warn { border-color: #F59E0B; background: #FFFBEB; }
+.hw-course { margin: 18px 0 6px; }
+.hw-unit { font-weight: 800; color: var(--brand); margin: 8px 0; }
+.hw-row { border: 1px solid var(--card-line); border-radius: 14px; padding: 10px 14px; margin-bottom: 10px; display: flex; flex-direction: column; gap: 8px; }
+.hw-groups { display: flex; flex-wrap: wrap; gap: 10px; }
+.hw-chip { display: flex; align-items: center; gap: 10px; border: 2px solid var(--card-line); border-radius: 12px; padding: 6px 8px 6px 12px; background: #fff; }
+.hw-chip.on { border-color: #2DD4BF; background: #F0FDFA; }
+.hw-state { font-size: 13px; }
 .t-super-bar { background: #FAF5FF; border: 1px solid #E9D5FF; border-radius: 14px; padding: 8px 12px; margin: 4px 0 12px; }
 
 /* ruleta */
@@ -1279,6 +1344,8 @@ button.tile:active { box-shadow: 0 2px 0 #D3D9EE; transform: translateY(3px); }
     star: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.6l2.9 6 6.6.8-4.9 4.6 1.3 6.5L12 17.3l-5.9 3.2 1.3-6.5L2.5 9.4l6.6-.8z"/></svg>',
     shop: I('<path d="M4 9l1.6-5h12.8L20 9"/><path d="M4 9h16v1.5a2.7 2.7 0 0 1-5.3 0 2.7 2.7 0 0 1-5.4 0 2.7 2.7 0 0 1-5.3 0z"/><path d="M5.5 13.5V20h13v-6.5"/><path d="M10 20v-4h4v4"/>'),
     book: I('<path d="M12 6.5C10 5 7 4.5 3.5 5v13c3.5-.5 6.5 0 8.5 1.5 2-1.5 5-2 8.5-1.5V5C17 4.5 14 5 12 6.5z"/><path d="M12 6.5v13"/>'),
+    video: I('<rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.2v5.6l4.8-2.8z" fill="currentColor"/>'),
+    homework: I('<path d="M6 4h9l3 3v13H6z"/><path d="M15 4v3h3M9 11h6M9 15h4"/><path d="M14.5 19.5l5-5 1.5 1.5-5 5H14.5z"/>'),
     puzzle: I('<path d="M9 4h3.5v2.2a1.8 1.8 0 1 0 3.6 0V4H20v5h-2.2a1.8 1.8 0 1 0 0 3.6H20V20h-5v-2.2a1.8 1.8 0 1 0-3.6 0V20H4v-6.5h2.2a1.8 1.8 0 1 0 0-3.6H4V4z"/>'),
     gamepad: I('<path d="M7 7h10a5 5 0 0 1 4.9 6l-.9 4.5a2.5 2.5 0 0 1-4.3 1.1L14.5 16h-5l-2.2 2.6A2.5 2.5 0 0 1 3 17.5L2.1 13A5 5 0 0 1 7 7z"/><path d="M7 10v4M5 12h4"/><circle cx="15.5" cy="11" r=".9" fill="currentColor"/><circle cx="17.5" cy="13" r=".9" fill="currentColor"/>'),
     sparkle: I('<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/>'),
@@ -1352,8 +1419,31 @@ button.tile:active { box-shadow: 0 2px 0 #D3D9EE; transform: translateY(3px); }
       return h('div', { class: 'bar', role: 'progressbar', aria: { valuemin: 0, valuemax: max || 0, valuenow: value } },
         h('i', { style: { width: pct + '%' } }));
     },
+    /**
+     * Reproductor de YouTube a pantalla casi completa (dominio sin cookies, sin vídeos
+     * recomendados de otros canales al final). Solo acepta un identificador de 11 caracteres.
+     */
+    videoPlayer: function (v, root) {
+      if (!/^[A-Za-z0-9_-]{11}$/.test(String(v.youtubeId || ''))) return null;
+      var frame = h('iframe', {
+        class: 'video-frame', title: v.title,
+        src: 'https://www.youtube-nocookie.com/embed/' + v.youtubeId + '?autoplay=1&rel=0&modestbranding=1&playsinline=1',
+        allow: 'autoplay; encrypted-media; picture-in-picture; fullscreen', allowfullscreen: 'true',
+        referrerpolicy: 'strict-origin-when-cross-origin'
+      });
+      var ov = h('div', { class: 'video-overlay', role: 'dialog', aria: { label: v.title } },
+        h('div', { class: 'video-box' },
+          h('div', { class: 'video-head' }, h('b', {}, v.title),
+            h('button', { class: 'icon-btn', aria: { label: 'Close' }, svg: CQ.Icons.close, onclick: close })),
+          h('div', { class: 'video-wrap' }, frame)));
+      function close() { ov.remove(); document.removeEventListener('keydown', onKey); }
+      function onKey(e) { if (e.key === 'Escape') close(); }
+      document.addEventListener('keydown', onKey);
+      (root || document.body).appendChild(ov);
+      return { close: close };
+    },
     kindBadge: function (kind) {
-      var label = { review: 'Review', game: 'Game', practice: 'Practice', challenge: 'Challenge', extra: 'Extra' }[kind] || kind;
+      var label = { review: 'Review', game: 'Game', practice: 'Practice', challenge: 'Challenge', extra: 'Extra', homework: 'Homework' }[kind] || kind;
       return h('span', { class: 'badge badge-' + kind }, label);
     },
     loading: function () {
@@ -1598,6 +1688,108 @@ button.tile:active { box-shadow: 0 2px 0 #D3D9EE; transform: translateY(3px); }
     '<rect x="54" y="76" width="12" height="12" fill="#64748B"/><rect x="38" y="87" width="44" height="6" rx="3" fill="#475569"/>' +
     '<rect x="26" y="98" width="68" height="9" rx="3" fill="#CBD5E1"/>');
 
+  /* ── Hobbies (English Year 2 · Unit 2): un objeto por afición ───────── */
+  var NOTE = function (x, y, c) {
+    return '<g fill="' + c + '"><ellipse cx="' + x + '" cy="' + (y + 16) + '" rx="6" ry="4.5" transform="rotate(-20 ' + x + ' ' + (y + 16) + ')"/>' +
+      '<rect x="' + (x + 4) + '" y="' + y + '" width="3" height="17" rx="1.5"/><path d="M' + (x + 5) + ' ' + y + 'q8 3 9 11-4-5-9-5z"/></g>';
+  };
+
+  ART.karate = wrap(SHADOW +
+    '<path d="M36 24l12-6h24l12 6 18 30-13 8-9-14v52H40V48l-9 14-13-8z" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="3" stroke-linejoin="round"/>' +
+    '<path d="M48 18l12 28 12-28" fill="none" stroke="#CBD5E1" stroke-width="3" stroke-linejoin="round"/>' +
+    '<rect x="38" y="60" width="44" height="9" rx="3" fill="#FFC53D"/>' +
+    '<path d="M55 67l-9 24 8-1 5-20zM65 67l9 24-8-1-5-20z" fill="#F59E0B"/><rect x="54" y="58" width="12" height="12" rx="3" fill="#F59E0B"/>');
+
+  ART.paint = wrap(SHADOW +
+    '<path d="M58 20c-28 0-46 18-46 40 0 18 15 32 32 32 8 0 11-6 8-12-3-7 1-13 9-13h14c13 0 22-8 22-19 0-16-16-28-39-28z" fill="#F4D6A8" stroke="#C99A5B" stroke-width="3"/>' +
+    '<circle cx="34" cy="48" r="7" fill="#FF5A5F"/><circle cx="50" cy="34" r="7" fill="#FFC53D"/><circle cx="70" cy="32" r="7" fill="#4C8DFF"/>' +
+    '<circle cx="86" cy="44" r="7" fill="#19B39B"/><circle cx="32" cy="68" r="7" fill="#7C5CFC"/><circle cx="56" cy="70" r="5" fill="#F4F6FB"/>' +
+    '<g transform="rotate(38 92 80)"><rect x="88" y="54" width="8" height="46" rx="3" fill="#8C5A35"/><rect x="87" y="47" width="10" height="9" fill="#94A3B8"/>' +
+    '<path d="M87 47c0-9 5-16 5-16s5 7 5 16z" fill="#FF5A5F"/></g>');
+
+  ART.juggle = wrap(SHADOW +
+    '<path d="M28 78Q60-8 92 78" fill="none" stroke="#CBD5E1" stroke-width="3" stroke-dasharray="5 6"/>' +
+    [[32, 46, '#FF5A5F'], [60, 24, '#FFC53D'], [88, 46, '#19B39B']].map(function (b) {
+      return '<circle cx="' + b[0] + '" cy="' + b[1] + '" r="13" fill="' + b[2] + '"/>' +
+        '<path d="M' + (b[0] - 12) + ' ' + b[1] + 'h24" stroke="#fff" stroke-width="3" opacity=".7"/>' +
+        '<circle cx="' + (b[0] - 4) + '" cy="' + (b[1] - 5) + '" r="3" fill="#fff" opacity=".6"/>';
+    }).join('') +
+    '<ellipse cx="26" cy="90" rx="15" ry="9" fill="#F4C7A1"/><ellipse cx="94" cy="90" rx="15" ry="9" fill="#F4C7A1"/>' +
+    '<path d="M16 88h20M84 88h20" stroke="#E2A97E" stroke-width="2"/>');
+
+  ART.bike = wrap(SHADOW +
+    '<circle cx="30" cy="78" r="21" fill="none" stroke="#3A3F5C" stroke-width="6"/><circle cx="90" cy="78" r="21" fill="none" stroke="#3A3F5C" stroke-width="6"/>' +
+    '<circle cx="30" cy="78" r="4" fill="#94A3B8"/><circle cx="90" cy="78" r="4" fill="#94A3B8"/>' +
+    '<path d="M30 78L50 48h32L90 78M50 48l10 30 22-30M30 78h30" fill="none" stroke="#4C8DFF" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>' +
+    '<rect x="40" y="38" width="20" height="7" rx="3.5" fill="#23264A"/><path d="M50 45v4" stroke="#23264A" stroke-width="4"/>' +
+    '<path d="M82 48l-4-14h12" fill="none" stroke="#23264A" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>' +
+    '<circle cx="60" cy="78" r="6" fill="#FFC53D"/>');
+
+  ART.sing = wrap(SHADOW +
+    '<g transform="rotate(-28 52 56)"><rect x="46" y="54" width="13" height="50" rx="6" fill="#3A3F5C"/><rect x="44" y="52" width="17" height="8" rx="3" fill="#94A3B8"/>' +
+    '<circle cx="52.5" cy="36" r="20" fill="#64748B"/>' +
+    '<path d="M36 30h33M34 38h37M38 46h29M44 20v32M52 17v38M61 19v34" stroke="#94A3B8" stroke-width="2"/></g>' +
+    NOTE(78, 20, '#FF6F91') + NOTE(92, 54, '#7C5CFC'));
+
+  // Niño/a bailando: brazos arriba, una pierna doblada, notas y líneas de movimiento.
+  ART.dance = wrap(SHADOW +
+    '<g stroke-linecap="round" stroke-linejoin="round" fill="none">' +
+    '<path d="M50 84l-8 22" stroke="#4C8DFF" stroke-width="9"/><path d="M70 84l12 8 2 14" stroke="#4C8DFF" stroke-width="9"/>' +
+    '<path d="M46 66L30 50l-4-14" stroke="#F4C7A1" stroke-width="7"/><path d="M74 66l16-14 10-12" stroke="#F4C7A1" stroke-width="7"/></g>' +
+    '<ellipse cx="40" cy="108" rx="8" ry="4" fill="#FF5A5F"/><ellipse cx="88" cy="108" rx="8" ry="4" fill="#FF5A5F"/>' +
+    kid(60, 42, 1, '#C26A2B', '#FF6F91') +
+    NOTE(10, 12, '#7C5CFC') + NOTE(98, 60, '#19B39B') +
+    '<path d="M14 70q-6 6 0 12M106 26q6 6 0 12" fill="none" stroke="#FFC53D" stroke-width="3" stroke-linecap="round"/>');
+
+  ART.models = wrap(SHADOW +
+    '<rect x="30" y="52" width="60" height="50" fill="#CBD5E1"/>' +
+    '<path d="M30 52h8v-8h8v8h8v-8h8v8h8v-8h8v8h4" fill="#CBD5E1"/>' +
+    '<rect x="16" y="34" width="20" height="68" fill="#94A3B8"/><rect x="84" y="34" width="20" height="68" fill="#94A3B8"/>' +
+    '<path d="M16 34h5v-6h5v6h5v-6h5v6M84 34h5v-6h5v6h5v-6h5v6" fill="#94A3B8"/>' +
+    '<path d="M50 102V82a10 10 0 0 1 20 0v20z" fill="#8C5A35"/>' +
+    '<rect x="22" y="50" width="8" height="10" rx="4" fill="#3A3F5C"/><rect x="90" y="50" width="8" height="10" rx="4" fill="#3A3F5C"/>' +
+    '<path d="M60 52V22" stroke="#64748B" stroke-width="3"/><path d="M60 22h18l-5 6 5 6H60z" fill="#FF5A5F"/>');
+
+  ART.drums = wrap(SHADOW +
+    '<ellipse cx="60" cy="50" rx="38" ry="12" fill="#F4F6FB" stroke="#94A3B8" stroke-width="3"/>' +
+    '<path d="M22 50v36c0 7 17 13 38 13s38-6 38-13V50c0 7-17 12-38 12S22 57 22 50z" fill="#FF5A5F"/>' +
+    '<path d="M22 58l16 30M38 62l16 32M60 62v36M82 62l-16 32M98 58l-16 30" stroke="#FFC53D" stroke-width="3"/>' +
+    '<g stroke="#8C5A35" stroke-width="6" stroke-linecap="round"><path d="M30 14l26 32"/><path d="M92 12l-24 34"/></g>' +
+    '<circle cx="30" cy="14" r="5" fill="#C08457"/><circle cx="92" cy="12" r="5" fill="#C08457"/>');
+
+  ART.piano = wrap(SHADOW +
+    '<rect x="10" y="34" width="100" height="62" rx="8" fill="#23264A"/>' +
+    '<rect x="16" y="52" width="88" height="40" rx="3" fill="#FFFFFF"/>' +
+    [27, 38, 49, 60, 71, 82, 93].map(function (x) { return '<path d="M' + x + ' 52v40" stroke="#CBD5E1" stroke-width="2"/>'; }).join('') +
+    [23, 34, 56, 67, 78, 99 - 10].map(function (x) { return '<rect x="' + x + '" y="52" width="7" height="24" rx="1.5" fill="#23264A"/>'; }).join('') +
+    '<rect x="22" y="40" width="24" height="6" rx="3" fill="#7C5CFC"/><circle cx="96" cy="43" r="3.5" fill="#3DDC97"/>' +
+    NOTE(56, 6, '#FF6F91'));
+
+  ART.swim = wrap(
+    '<path d="M0 74q15-10 30 0t30 0 30 0 30 0V120H0z" fill="#4C8DFF" opacity=".85"/>' +
+    '<path d="M0 90q15-10 30 0t30 0 30 0 30 0" fill="none" stroke="#fff" stroke-width="3" opacity=".7"/>' +
+    '<path d="M22 44h76" stroke="#23264A" stroke-width="5" stroke-linecap="round"/>' +
+    '<rect x="26" y="32" width="30" height="24" rx="12" fill="#19B39B" stroke="#0E8A77" stroke-width="3"/>' +
+    '<rect x="64" y="32" width="30" height="24" rx="12" fill="#19B39B" stroke="#0E8A77" stroke-width="3"/>' +
+    '<path d="M56 44h8" stroke="#0E8A77" stroke-width="4"/>' +
+    '<path d="M32 38q5-3 10 0M70 38q5-3 10 0" stroke="#fff" stroke-width="3" fill="none" opacity=".8"/>');
+
+  ART.skate = wrap(SHADOW +
+    '<path d="M10 62c0-6 6-8 10-6l8 4h64l8-4c4-2 10 0 10 6 0 4-4 8-10 8H20c-6 0-10-4-10-8z" fill="#7C5CFC"/>' +
+    '<path d="M28 62h64" stroke="#B9A8FF" stroke-width="3" stroke-dasharray="6 6"/>' +
+    '<rect x="30" y="70" width="10" height="8" fill="#94A3B8"/><rect x="80" y="70" width="10" height="8" fill="#94A3B8"/>' +
+    '<circle cx="28" cy="86" r="10" fill="#FFC53D"/><circle cx="44" cy="86" r="10" fill="#FFC53D"/>' +
+    '<circle cx="76" cy="86" r="10" fill="#FFC53D"/><circle cx="92" cy="86" r="10" fill="#FFC53D"/>' +
+    '<circle cx="28" cy="86" r="3.5" fill="#E0A100"/><circle cx="44" cy="86" r="3.5" fill="#E0A100"/><circle cx="76" cy="86" r="3.5" fill="#E0A100"/><circle cx="92" cy="86" r="3.5" fill="#E0A100"/>');
+
+  /* Sí puedo / no puedo (para "I can / I can't"): se combinan con la afición, p. ej. "art:dance+art:can" */
+  ART.can = wrap(
+    '<circle cx="60" cy="60" r="44" fill="#22C55E"/><circle cx="60" cy="60" r="44" fill="none" stroke="#15803D" stroke-width="4"/>' +
+    '<path d="M38 62l15 15 30-34" fill="none" stroke="#fff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>');
+  ART.cant = wrap(
+    '<circle cx="60" cy="60" r="44" fill="#EF4444"/><circle cx="60" cy="60" r="44" fill="none" stroke="#B91C1C" stroke-width="4"/>' +
+    '<path d="M42 42l36 36M78 42L42 78" stroke="#fff" stroke-width="11" stroke-linecap="round"/>');
+
   /* ── Astronautas para el fondo espacial (estilo de "07 Recursos/Referencias") ── */
   function astronaut(withBalloon) {
     var o = 'stroke="#2A1B3D" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"';
@@ -1793,11 +1985,14 @@ button.tile:active { box-shadow: 0 2px 0 #D3D9EE; transform: translateY(3px); }
   function render(media, cls) {
     var parts = String(media || '').split('+').map(function (s) { return s.trim(); }).filter(Boolean);
     if (!parts.length) return null;
-    var box = CQ.h('div', { class: 'media' + (parts.length > 1 ? ' duo' : '') + (cls ? ' ' + cls : '') });
+    // ✔ / ✘ (art:can, art:cant) son una marca pequeña junto a la afición, que va en grande.
+    var hasMark = parts.some(function (p) { return p === 'art:can' || p === 'art:cant'; });
+    var box = CQ.h('div', { class: 'media' + (parts.length > 1 ? ' duo' : '') + (hasMark ? ' duo-mark' : '') + (cls ? ' ' + cls : '') });
     parts.forEach(function (p) {
       if (p.indexOf('art:') === 0) {
         var key = p.slice(4);
-        if (ART[key]) box.appendChild(CQ.h('div', { class: 'art', svg: ART[key] }));
+        var mark = key === 'can' || key === 'cant';
+        if (ART[key]) box.appendChild(CQ.h('div', { class: 'art' + (mark ? ' mark' : ''), svg: ART[key] }));
       } else if (/^https:\/\//.test(p)) {
         box.appendChild(CQ.h('img', { class: 'art', src: p, alt: '' }));
       }
@@ -3218,9 +3413,12 @@ button.tile:active { box-shadow: 0 2px 0 #D3D9EE; transform: translateY(3px); }
     vocabulary: { label: 'Vocabulary', sub: 'Learn the words', icon: CQ.Icons.book },
     grammar: { label: 'Grammar', sub: 'Build your sentences', icon: CQ.Icons.puzzle },
     challenge: { label: 'Challenges', sub: 'Easy · Medium · Hard', icon: CQ.Icons.trophy },
-    extra: { label: 'Extra', sub: 'Fun mini-games', icon: CQ.Icons.gamepad }
+    extra: { label: 'Extra', sub: 'Fun mini-games', icon: CQ.Icons.gamepad },
+    homework: { label: 'Homework', sub: 'From your teacher', icon: CQ.Icons.homework },
+    videos: { label: 'Videos', sub: 'Watch and learn', icon: CQ.Icons.video }
   };
-  var SECTION_ORDER = ['vocabulary', 'grammar', 'challenge', 'extra'];
+  // Homework va primero: si el profesor ha publicado deberes, es lo primero que ve el alumno.
+  var SECTION_ORDER = ['homework', 'vocabulary', 'grammar', 'challenge', 'extra'];
   var LEVELS = { easy: 'Easy', medium: 'Medium', hard: 'Hard' };
   var LEVEL_HINT = { easy: 'A good start', medium: 'Getting harder', hard: 'For experts!' };
   var LEVEL_ORDER = ['easy', 'medium', 'hard'];
@@ -3485,6 +3683,7 @@ button.tile:active { box-shadow: 0 2px 0 #D3D9EE; transform: translateY(3px); }
         title: 'Hi, ' + data.student.displayName + '! 👋',
         sub: data.courses.length ? 'Choose your class.' : 'You don’t have any classes yet. Ask your teacher.'
       }));
+      if (data.homework && data.homework.length) main.appendChild(homeworkBanner(data.homework));
       var grid = h('div', { class: 'grid' });
       data.courses.forEach(function (c, i) {
         grid.appendChild(h('button', {
@@ -3502,6 +3701,20 @@ button.tile:active { box-shadow: 0 2px 0 #D3D9EE; transform: translateY(3px); }
       });
       main.appendChild(grid);
     }).catch(function (err) { showError(main, err, function () { renderHome(r); }); });
+  }
+
+  /** Aviso de deberes pendientes en la portada: cada uno abre su actividad directamente. */
+  function homeworkBanner(list) {
+    return h('section', { class: 'hw-banner card', aria: { label: 'Homework' } },
+      h('div', { class: 'hw-banner-head' },
+        h('span', { class: 'hw-banner-icon', svg: CQ.Icons.homework }),
+        h('div', {}, h('h2', {}, 'Homework'),
+          h('p', {}, 'You have ' + list.length + ' task' + (list.length > 1 ? 's' : '') + ' to do. Let’s go!'))),
+      h('div', { class: 'hw-list' }, list.map(function (x) {
+        return h('button', { class: 'hw-item', onclick: function () {
+          CQ.Nav.go({ name: 'play', courseId: x.courseId, unitId: x.unitId, section: 'homework', activityId: x.activityId });
+        } }, h('span', { svg: CQ.Icons.play, style: { display: 'flex' } }), x.title);
+      })));
   }
 
   /** Si la clase ha ganado super estrellas desde la última vez, se celebra al entrar. */
@@ -3545,6 +3758,17 @@ button.tile:active { box-shadow: 0 2px 0 #D3D9EE; transform: translateY(3px); }
           h('span', { svg: CQ.Icons.chart, style: { display: 'flex' } }), 'My Progress')
       }));
 
+      // Deberes pendientes de este curso (también aquí, porque con una sola clase no se pasa por la portada).
+      var pendingHw = [];
+      data.units.forEach(function (u) {
+        u.activities.forEach(function (a) {
+          if (a.section === 'homework' && !(a.progress && a.progress.completed)) {
+            pendingHw.push({ activityId: a.activityId, courseId: c.courseId, unitId: u.unitId, title: a.title });
+          }
+        });
+      });
+      if (pendingHw.length) main.appendChild(homeworkBanner(pendingHw));
+
       data.units.forEach(function (u) {
         var done = doneCount(u.activities);
         main.appendChild(h('div', { class: 'unit-head' },
@@ -3559,6 +3783,7 @@ button.tile:active { box-shadow: 0 2px 0 #D3D9EE; transform: translateY(3px); }
           var acts = u.activities.filter(function (a) { return a.section === sec; });
           if (acts.length) grid.appendChild(sectionCard(c.courseId, u, sec, acts, i));
         });
+        if (u.videos && u.videos.length) grid.appendChild(videosCard(c.courseId, u));
         main.appendChild(grid);
       });
       if (!data.units.length) main.appendChild(h('p', { class: 'empty card' }, 'New activities are coming soon!'));
@@ -3568,11 +3793,13 @@ button.tile:active { box-shadow: 0 2px 0 #D3D9EE; transform: translateY(3px); }
   function sectionCard(courseId, u, sec, acts, i) {
     var S = SECTIONS[sec];
     var done = doneCount(acts);
+    var todo = sec === 'homework' ? acts.length - done : 0;
     return h('button', {
-      class: 'tile tile-section sec-' + sec, style: { animationDelay: (i * 70) + 'ms' },
-      aria: { label: S.label + '. ' + done + ' of ' + acts.length + ' done.' },
+      class: 'tile tile-section with-badge sec-' + sec, style: { animationDelay: (i * 70) + 'ms' },
+      aria: { label: S.label + '. ' + done + ' of ' + acts.length + ' done.' + (todo ? ' ' + todo + ' to do!' : '') },
       onclick: function () { CQ.Nav.go({ name: 'section', courseId: courseId, unitId: u.unitId, section: sec }); }
     },
+      todo ? h('span', { class: 'hw-todo' }, todo + ' to do!') : null,
       h('div', { class: 'sec-band' },
         h('span', { class: 'sec-icon', svg: S.icon }),
         h('div', {}, h('h3', {}, S.label), h('span', { class: 'sec-sub' }, S.sub))),
@@ -3583,6 +3810,44 @@ button.tile:active { box-shadow: 0 2px 0 #D3D9EE; transform: translateY(3px); }
           h('span', { class: 'play' }, 'Open', h('span', { svg: CQ.Icons.play, style: { display: 'flex' } })))));
   }
 
+  /** Tarjeta "Videos" (rosa pastel) de una unidad. */
+  function videosCard(courseId, u) {
+    var S = SECTIONS.videos;
+    var n = u.videos.length;
+    return h('button', {
+      class: 'tile tile-section sec-videos',
+      aria: { label: S.label + '. ' + n + (n > 1 ? ' videos' : ' video') + '.' },
+      onclick: function () { CQ.Nav.go({ name: 'section', courseId: courseId, unitId: u.unitId, section: 'videos' }); }
+    },
+      h('div', { class: 'sec-band' },
+        h('span', { class: 'sec-icon', svg: S.icon }),
+        h('div', {}, h('h3', {}, S.label), h('span', { class: 'sec-sub' }, S.sub))),
+      h('div', { class: 'sec-body' },
+        h('div', { class: 'sec-row' }, h('span', { class: 'muted' }, n + (n > 1 ? ' videos' : ' video'))),
+        h('div', { class: 'sec-row' }, h('span', {}, ''),
+          h('span', { class: 'play' }, 'Watch', h('span', { svg: CQ.Icons.play, style: { display: 'flex' } })))));
+  }
+
+  /** Lista de vídeos de una unidad: miniatura + título; al tocar, se abre el reproductor. */
+  function renderVideos(main, data, u, r) {
+    U.clear(main);
+    main.appendChild(hero({
+      cls: 'sec-videos', art: u.icon,
+      back: backButton(data.course.subjectName, { name: 'course', courseId: r.courseId }),
+      kicker: unitLabel(u), title: 'Videos', sub: 'Watch, listen and sing!'
+    }));
+    var grid = h('div', { class: 'grid video-grid' });
+    u.videos.forEach(function (v, i) {
+      grid.appendChild(h('button', { class: 'tile video-tile', style: { animationDelay: (i * 60) + 'ms' },
+        aria: { label: 'Watch: ' + v.title }, onclick: function () { UI.videoPlayer(v); } },
+        h('div', { class: 'video-thumb' },
+          h('img', { src: 'https://i.ytimg.com/vi/' + v.youtubeId + '/hqdefault.jpg', alt: '', loading: 'lazy' }),
+          h('span', { class: 'video-play', svg: CQ.Icons.play })),
+        h('h3', {}, v.title)));
+    });
+    main.appendChild(grid);
+  }
+
   /* ───────────────────────── SECTION ───────────────────────── */
   function renderSection(r) {
     var main = page();
@@ -3591,6 +3856,7 @@ button.tile:active { box-shadow: 0 2px 0 #D3D9EE; transform: translateY(3px); }
       var u = data.units.filter(function (x) { return x.unitId === r.unitId; })[0];
       var S = SECTIONS[r.section];
       if (!u || !S) { showError(main, { code: 'NOT_FOUND' }); return; }
+      if (r.section === 'videos') { renderVideos(main, data, u, r); return; }
       var acts = u.activities.filter(function (a) { return a.section === r.section; });
       U.clear(main);
       main.appendChild(hero({
@@ -3631,8 +3897,9 @@ button.tile:active { box-shadow: 0 2px 0 #D3D9EE; transform: translateY(3px); }
       }
     },
       h('div', { class: 'top' },
-        h('div', { class: 'tpl-icon', svg: a.kind === 'extra' ? CQ.Icons.gamepad : (CQ.Icons.tpl[a.template] || CQ.Icons.tpl.multiple_choice) }),
-        a.section === 'challenge' ? h('span', { class: 'level-chip small lv-' + a.level }, LEVELS[a.level]) : UI.kindBadge(a.kind)),
+        h('div', { class: 'tpl-icon', svg: a.kind === 'extra' ? CQ.Icons.gamepad : (a.section === 'homework' ? CQ.Icons.homework : (CQ.Icons.tpl[a.template] || CQ.Icons.tpl.multiple_choice)) }),
+        a.section === 'challenge' ? h('span', { class: 'level-chip small lv-' + a.level }, LEVELS[a.level])
+          : (a.section === 'homework' ? (p && p.completed ? h('span', { class: 'hw-done' }, '✔ Done') : h('span', { class: 'hw-new' }, 'To do')) : UI.kindBadge(a.kind))),
       h('h3', {}, a.title),
       h('div', { class: 'foot' },
         UI.stars(p ? p.bestStars : 0, MAX),
